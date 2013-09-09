@@ -1,0 +1,11 @@
+<section ng-controller="FantasyTeamsController" ng-init="findOne()">
+  <h2>{{ fantasyteam.name }}</h2>
+  <p><strong>Owner: </strong>{{ fantasyteam.owner.name }}</p>
+  <p><strong>League: </strong>{{ fantasyteam.league.name }}</p>
+  <p><strong>Players:</strong></p>
+  <ul ng-repeat="player in fantasyteam.players">
+    <li>{{ player }}</li>
+  </ul>  
+  <br>
+  <a href="#!/fantasyteams">View all fantasy teams</a>
+</section>

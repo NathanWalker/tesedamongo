@@ -1,0 +1,132 @@
+<div class="hero-unit">
+    <div class="ac">
+      <span>Client <strong>support</strong></span>
+    </div>
+  </div>
+
+
+<div class="well row">
+  <div class="span3" style="margin-right:18px;">
+    <h4>Customer Service</h4>
+    <p>Mon-Fri: 8 a.m. - 7 p.m. PST<br/><br/>
+      <a href="tel:503-223-3315" data-icon="u">&nbsp;&nbsp;503-223-3315</a>
+    </p>
+      <br/>
+      <br/>
+      <span data-ng-if="!global.isSignedIn()">
+        <h4>Register your client profile</h4>
+        Gain access to exclusive training and software tutorial videos.<br/><br/>
+        In addition, you will have access to our customer care ticket tracking system. If you encounter an issue, our engineers are here to help. Once you have registered using your Client ID, you will be able to create a support ticket and track it's progress.
+      </span>
+    </p>
+  </div>
+  <div class="span8" data-ng-if="global.isSignedIn()">
+    <div class="well" style="background-color:#eef0e8;">
+      <h3>Client Profile</h3>
+      <p>
+        <strong>{{global.currentUser().name}}</strong><br/>
+        <span data-ng-show="global.currentUser().company">{{global.currentUser().company}}<br/></span>
+        <br/>
+        {{global.currentUser().username}}<br/><br/>
+        <a href="/signout" data-icon="!">&nbsp;&nbsp;Log out</a>
+      </p>
+    </div>
+  </div>
+<tabset class="span9" id="form-area" data-ng-if="!global.isSignedIn()">
+    <tab heading="Login">
+        <div class="tab-pane" data-ng-controller="LoginCtrl">
+            <form class="form-horizontal" action="/users/session" method="post">
+              <p style="font-style:italic; color:red;" data-ng-show="failed">Invalid login and/or password</p>
+              <fieldset>
+                <div class="control-group">
+                  <label class="control-label"  for="username">Login</label>
+                  <div class="controls">
+                    <input type="text" id="username" placeholder="Your email" name="username" class="input-xlarge">
+                  </div>
+                </div>
+
+                <div class="control-group">
+                  <label class="control-label" for="password">Password</label>
+                  <div class="controls">
+                    <input type="password" id="password" placeholder="Password" name="password" class="input-xlarge">
+                  </div>
+                </div>
+
+
+                <div class="control-group">
+                  <div class="controls">
+                    <button class="btn btn-success">Login</button>
+                    <span style="color:#666;font-size:12px; margin-left:8px;">Need a login? <a data-ng-click="selectRegister()">Register</a></span>
+                  </div>
+                </div>
+              </fieldset>
+            </form>
+          </div>
+
+    </tab>
+
+    <tab heading="Register">
+      <div class="tab-pane" data-ng-controller="RegisterCtrl">
+            <form class="form-horizontal" action="/users" method="post">
+              <p style="font-style:italic; color:red;" data-ng-show="failed">Registration failed, please verify your input.</p>
+              <fieldset>
+                <div class="control-group">
+                  <label class="control-label"  for="create-name">Name</label>
+                  <div class="controls">
+                    <input type="text" id="create-name" placeholder="Name" name="name" class="input-xlarge">
+                  </div>
+                </div>
+
+                <div class="control-group">
+                  <label class="control-label"  for="create-company">Company</label>
+                  <div class="controls">
+                    <input type="text" id="create-company" placeholder="Company name" name="company" class="input-xlarge">
+                  </div>
+                </div>
+
+                <div class="control-group">
+                  <label class="control-label"  for="create-client-id">Client ID</label>
+                  <div class="controls">
+                    <input type="text" id="create-client-id" placeholder="Client ID" name="clientId" class="input-xlarge">
+                  </div>
+                </div>
+
+                <hr/>
+                <div class="control-group">
+                  <label class="control-label"  for="create-username">Login</label>
+                  <div class="controls">
+                    <input type="text" id="create-username" placeholder="Your email" name="username" class="input-xlarge">
+                  </div>
+                </div>
+
+                <div class="control-group">
+                  <!-- Password-->
+                  <label class="control-label" for="create-password">Password</label>
+                  <div class="controls">
+                    <input type="password" id="create-password" name="password" placeholder="Password" class="input-xlarge">
+                  </div>
+                </div>
+
+                <div class="control-group">
+                  <!-- Password-->
+                  <label class="control-label" for="create-confirm">Confirm</label>
+                  <div class="controls">
+                    <input type="password" id="create-confirm" placeholder="Confirm password" class="input-xlarge">
+                  </div>
+                </div>
+
+
+                <div class="control-group">
+                  <div class="controls">
+                    <button class="btn btn-primary">Create Account</button>
+                  </div>
+                </div>
+              </fieldset>
+            </form>
+          </div>
+    </tab>
+  </tabset>
+</div>
+
+
+

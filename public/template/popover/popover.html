@@ -1,0 +1,22 @@
+
+<div
+  class="popover {{placement}}"
+  data-ng-class="{ in: isOpen(), fade: animation() }"
+  >
+  <div
+    class="arrow"
+    ></div>
+  <div
+    class="popover-inner"
+    >
+    <h3
+      class="popover-title"
+      data-ng-bind="title"
+      data-ng-show="title"
+      ></h3>
+    <div
+      class="popover-content"
+      data-ng-bind="content"
+      ></div>
+  </div>
+</div>
