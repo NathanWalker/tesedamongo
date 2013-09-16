@@ -62,6 +62,11 @@ exports.session = function (req, res) {
 exports.create = function (req, res) {
   var user = new User(req.body)
   user.provider = 'local'
+
+  // hard coded client ids for administration
+  if(user.clientId == 'TesedaAdmin123'){
+    user.admin = true;
+  }
   user.save(function (err) {
     if (err) {
       var errors = err.errors.toString();
@@ -70,7 +75,7 @@ exports.create = function (req, res) {
     }
     req.logIn(user, function(err) {
       if (err) return next(err)
-      return res.redirect('/?a=1')
+      return res.redirect('/#!/support?a=1')
     })
   })
 }
@@ -91,6 +96,17 @@ exports.me = function (req, res) {
   res.jsonp(req.user || null);
 }
 
+exports.all = function(req, res){
+  var query = req.query ? req.query : {};
+ User.find(query).exec(function(err, users) {
+   if (err) {
+      res.render('error', {status: 500});
+   } else {
+      res.jsonp(users);
+   }
+ });
+}
+
 /**
  * Find user by id
  */
@@ -104,4 +120,23 @@ exports.user = function (req, res, next, id) {
       req.profile = user
       next()
     })
+}
+
+exports.update = function(req, res){
+  var user = req.profile
+  user = _.extend(user, req.body)
+  user.save(function(err) {
+    res.jsonp(user)
+  })
+}
+
+exports.destroy = function(req, res){
+  var user = req.profile
+  user.remove(function(err){
+    if (err) {
+      res.render('error', {status: 500});
+    } else {
+      res.jsonp(1);
+    }
+  })
 }

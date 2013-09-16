@@ -5,6 +5,7 @@
     "angular": "1.2.0-rc.2",
     "angular-resource": "1.2.0-rc.2",
     "angular-cookies": "1.2.0-rc.2",
+    "angular-sanitize": "1.2.0-rc.2",
     "angular-route": "1.2.0-rc.2",
     "infowrap-ui-bootstrap": "infowrap0.1.4",
     "infowrap-isotope": "~0.1.0",

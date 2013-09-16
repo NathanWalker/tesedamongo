@@ -1,0 +1,83 @@
+<div class="hero-unit">
+  <div class="container">
+    <div class="btn btn-primary" data-ng-click="openNewForm()" style="float:right;">New</div>
+  </div>
+</div>
+
+<div class="container" data-ng-if="showNewForm">
+  <form class="form-horizontal">
+              <p style="font-style:italic; color:red;" data-ng-show="failed">Product save failed, please verify your input.</p>
+              <fieldset>
+                <div class="control-group">
+                  <label class="control-label"  for="create-name">Name</label>
+                  <div class="controls">
+                    <input type="text" id="create-name" placeholder="Name" name="name" class="input-xlarge" data-ng-model="activeProduct.name">
+                  </div>
+                </div>
+
+                <div class="control-group">
+                  <label class="control-label"  for="create-content-desc">Description</label>
+                  <div class="controls">
+                    <textarea id="create-content-desc" placeholder="Description" name="description" class="input-xlarge" data-ng-model="activeProduct.description" style="width:500px;height:60px;"></textarea>
+                  </div>
+                </div>
+
+                <div class="control-group">
+                  <label class="control-label"  for="create-content">Content</label>
+                  <div class="controls">
+                    <textarea id="create-content" placeholder="Content" name="content" class="input-xlarge" data-ng-model="activeProduct.content" style="width:500px;height:300px;"></textarea>
+                  </div>
+                </div>
+
+                <div class="control-group">
+                  <label class="control-label"  for="create-url">Short URL</label>
+                  <div class="controls">
+                    <input type="text" id="create-url" placeholder="Short URL" name="shortUrl" class="input-xlarge" data-ng-model="activeProduct.shortUrl">
+                  </div>
+                </div>
+
+                <div class="control-group">
+                  <label class="control-label"  for="create-featured">Featured</label>
+                  <div class="controls">
+                    <input type="checkbox" id="create-featured" name="featured" class="input-xlarge" data-ng-model="activeProduct.featured">
+                  </div>
+                </div>
+
+                <div class="control-group">
+                  <label class="control-label"  for="create-feature-list">Feature List</label>
+                  <div class="controls">
+                    <textarea id="create-feature-list" placeholder="Feature List" name="featureList" class="input-xlarge" data-ng-model="activeProduct.featureList" style="width:500px;height:200px;"></textarea>
+                  </div>
+                </div>
+
+                <div class="control-group">
+                  <label class="control-label"  for="create-featured-order">Featured Order</label>
+                  <div class="controls">
+                    <select id="create-featured-order" name="featuredOrder" class="input-xlarge" data-ng-model="activeProduct.featuredOrder">
+                      <option value="1">1</option>
+                      <option value="2">2</option>
+                      <option value="3">3</option>
+                      <option value="4">4</option>
+                      <option value="5">5</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div class="control-group">
+                  <div class="controls">
+                    <button class="btn btn-primary" data-ng-click="create(activeProduct)">{{editing|booleanText:'Update':'Save'}}</button>
+                    <button class="btn" data-ng-click="toggleNew(false)">Cancel</button>
+                    <button class="btn btn-danger" data-ng-click="remove(activeProduct)" style="float:right;">Delete</button>
+                  </div>
+                </div>
+              </fieldset>
+            </form>
+</div>
+
+<div class="container">
+  <ul class="software-overview-list">
+    <li data-ng-repeat="product in products">
+      <a data-ng-click="editProduct(product)">{{product.name}}</a>
+    </li>
+  </ul>
+</div>

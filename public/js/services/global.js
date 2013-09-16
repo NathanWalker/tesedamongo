@@ -1,4 +1,4 @@
-window.angular.module('ngff.services.global', [])
+window.angular.module('App.services', [])
   .factory('Global', function(){
   	var current_user = window.user;
 

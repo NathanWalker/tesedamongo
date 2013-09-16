@@ -1,4 +1,4 @@
-window.angular.module('ngff.controllers.header', [])
+window.angular.module('App.controllers')
 	.controller('HeaderController', ['$scope', '$routeParams',
 		function (s, $routeParams) {
 

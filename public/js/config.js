@@ -1,5 +1,7 @@
-window.app.config(['$routeProvider', function($routeProvider) {
-	$routeProvider
+window.app.config(['$routeProvider', '$sceProvider', function($routeProvider, $sceProvider) {
+	$sceProvider.enabled(false);
+
+      $routeProvider
 	.when('/',
 	{
 		templateUrl: 'views/site/home.html',
@@ -7,7 +9,18 @@ window.app.config(['$routeProvider', function($routeProvider) {
 	})
       .when('/products',
       {
-        templateUrl:'views/site/products.html'
+        templateUrl:'views/site/products.html',
+        controller:'ProductsCtrl'
+      })
+      .when('/products/edit',
+      {
+        templateUrl:'views/products/edit.html',
+        controller:'ProductsEditCtrl'
+      })
+      .when('/products/:product',
+      {
+        templateUrl:'views/products/show.html',
+        controller:'ProductsCtrl'
       })
       .when('/tutorials',
       {

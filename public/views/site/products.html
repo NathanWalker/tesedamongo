@@ -4,156 +4,51 @@
       <p class="ac">
         <strong>Systems</strong> and <strong>Options</strong>
       </p>
+      <p style="max-width:700px; text-align:center; margin:0 auto;">
+        Meet the highest performing diagnostic systems specifically designed for electrical device analysis of failed digital and mixed signal semiconductor devices. <a data-ng-click="scrollTo('hardware-overview')" style="font-size:14px;cursor:pointer;">Read more &hellip;</a>
+      </p>
     </div>
   </div>
 
-  <!-- Example pricing -->
+
   <div class="row pricing">
-
-    <div class="span4">
+    <div class="span4" data-ng-repeat="product in products">
       <div class="well">
-        <h2>Field Triage</h2>
-        <p>Allows for screening in the field, saving time and FA lab processes.<br/>
-          <span style="font-style:italic;">Lightweight and portable.</span></p>
-        <ul>
-          <li>
-            &#10004; 550 Diagnostic Hardware
-            <p>512 pins – 100MHz – 64MB per-pin pattern depth with flexible per-pin timing</p>
-          </li>
-          <li>&#10004; Teseda WorkBench Field Triage Software
-            <p>Operates interactively on the 550 Diagnostic System to provide failure information in terms of the design features where the failure occurred.</p>
-          </li>
-          <li>&#10004; Curve Tracer Tool
-            <p>Displays curve, ranges, clamp settings. Overlay result with "golden" data.</p>
-          </li>
-          <li>&#10004; Paramtric Measurement Tool
-            <p>Provides the engineer with a comprehensive suite of DC measurement capabilities.</p>
-          </li>
-          <li>&#10004; Diagnostic Board
-            <p></p>
-          </li>
-          <li>&#10004; Curve Trace Fixturing
-            <p></p>
-          </li>
-          <li>&#10004; Training
-            <p>Included in purchase with online training material.</p>
-          </li>
-          <li>
-            <p>Laptop Specifications</p>
-          </li>
-          <li>
-            <p>Utility Cart Recommendation</p>
-          </li>
-        </ul>
+        <h2><a data-ng-href="/#!/products/{{product._id}}">{{product.name}}</a></h2>
+        <p data-ng-bind-html="product.description"></p>
+        <div data-ng-bind-html="product.featureList"></div>
         <p class="ac">
-          <a class="" href="/#!/products/550ft">Learn more &raquo;</a>
+          <a data-ng-href="/#!/products/{{product._id}}">Learn more &raquo;</a>
         </p>
-        <!-- <p class="ac">
-          <a class="btn btn-success btn-large" href="#">Buy Now &raquo;</a>
-        </p> -->
       </div>
     </div>
-    <div class="span4">
-      <div class="well">
-        <h2>Defect Scanner</h2>
-        <p>Provides all the tools necessary for defect isolation and diagnostics.<br/>
-          <span style="font-style:italic;">The essentials.</span>
-        </p>
-        <!-- <p><span>POPULAR</span></p> -->
-        <ul>
-          <li>
-            &#10004; 550 Diagnostic Hardware
-            <p>512 pins – 100MHz – 64MB per-pin pattern depth with flexible per-pin timing</p>
-          </li>
-          <li>&#10004; Teseda WorkBench Software
-            <p>Operates interactively on the 550 Diagnostic System to provide failure information in terms of the design features where the failure occurred.</p>
-          </li>
-          <li>&#10004; Paramtric Measurement Tool
-            <p>Provides the engineer with a comprehensive suite of DC measurement capabilities.</p>
-          </li>
-          <li>&#10004; Diagnostic Board
-            <p></p>
-          </li>
-          <li>&#10004; DUT Interface Fixturing
-            <p></p>
-          </li>
-          <li>&#10004; Training
-            <p>Included in purchase with online training material.</p>
-          </li>
-          <li>
-            <p>Laptop Specifications</p>
-          </li>
-          <li>
-            <p>Utility Cart Recommendation</p>
-          </li>
-        </ul>
-        <p class="ac">
-          <a class="" href="/#!/products/550ds">Learn more &raquo;</a>
-        </p>
-        <!-- <p class="ac">
-          <a class="btn btn-success btn-large" href="#">Buy Now &raquo;</a>
-        </p> -->
-      </div>
-    </div>
-    <div class="span4">
-      <div class="well">
-        <h2>DI Lab</h2>
-        <p>Comprehensive system.<br/>
-          <span style="font-style:italic;">Contains the Defect Isolator and Broken Chain Alayzer Tools.</span>
-        </p>
-        <ul>
-          <li>
-            &#10004; 550 Diagnostic Hardware
-            <p>512 pins – 100MHz – 64MB per-pin pattern depth with flexible per-pin timing</p>
-          </li>
-          <li>&#10004; Teseda WorkBench Software
-            <p>Operates interactively on the 550 Diagnostic System to provide failure information in terms of the design features where the failure occurred.
-            </p>
-          </li>
-          <li>&#10004; Defect Isolator (DI) Tool
-            <p>Maps scan test failures to the physical location on the die, reducing time to root-cause analysis, from weeks or months, to hours.</p>
-          </li>
-          <li>&#10004; Broken Chain Analyzer (BCA) Tool
-            <p>Automatically pinpoints defective flip-flop locations in broken scan chains.</p>
-          </li>
-          <li>&#10004; Curve Tracer Tool
-            <p>Displays curve, ranges, clamp settings. Overlay result with "golden" data.</p>
-          </li>
-          <li>&#10004; Paramtric Measurement Tool
-            <p>Provides the engineer with a comprehensive suite of DC measurement capabilities.</p>
-          </li>
-          <li>&#10004; Diagnostic Board
-            <p></p>
-          </li>
-          <li>&#10004; DUT Interface Fixturing
-            <p></p>
-          </li>
-          <li>&#10004; Training
-            <p>Included in purchase with online training material.</p>
-          </li>
-          <li>
-            <p>Laptop Specifications</p>
-          </li>
-          <li>
-            <p>Utility Cart Recommendation</p>
-          </li>
-        </ul>
-        <p class="ac">
-          <a class="" href="/#!/products/550di">Learn more &raquo;</a>
-        </p>
-        <!-- <p class="ac">
-          <a class="btn btn-success btn-large" href="#">Buy Now &raquo;</a>
-        </p> -->
-      </div>
-    </div>
-  </div>
 
   <hr />
 
   <div class="row">
     <div class="span12">
-      <!-- <h1 class="lead">
-        <b>All products come with a 90-day</b> money-back guarantee.
-      </h1> -->
+      <h1 id="hardware-overview" class="lead" style="text-align:center;font-weight:bold;">
+        Hardware Overview
+      </h1>
+      <p class="ac" style="max-width:700px; text-align:center; margin:0 auto; font-size:14px;">
+        Teseda Diagnostic Systems utilize the <strong>Teseda Workbench™ (TWB)</strong> software with the Teseda <strong>550 Diagnostic Hardware</strong> allowing engineers to work in a familiar device analysis context instead of in a sea of ones and zeros. Teseda Diagnostic Systems are designed for a variety of applications – from screening of potential field returns by remote customer quality engineers, to device stimulus and data capture for defect scanning, to defect isolation down to gate-level root-cause analysis.
+        <img src="/img/products/Teseda-V550-Engineering-Test-System.jpg" style="margin:0 auto; margin:5px 0;"/><br/>
+        The <strong>550 Diagnostic Hardware</strong> is powerful enough to handle the most advanced device stimulus requirements, yet is easy to use, portable, air-cooled, and can quickly interface to other lab tools such as micro-probers, emission microscopes,  and dynamic laser stimulus tools.
+      </p>
+      <h1 id="hardware-overview" class="lead" style="text-align:center;font-weight:bold; margin:20px 0 10px;">
+        Software Overview
+      </h1>
+      <p class="ac" style="font-size:14px;">
+        Teseda has developed a comprehensive set of software tools:
+      </p>
+      <ul class="software-overview-list">
+        <li><a href="/#!/products/defect-isolator">Defect Isolator</a></li>
+        <li><a href="/#!/products/workbench">Teseda WorkBench (TWB)&trade;</a></li>
+        <li><a href="/#!/products/workbench-scan">Teseda's Scan WorkBench (TWB)&trade;</a></li>
+        <li><a href="/#!/products/broken-chain-analyzer">Broken Chain Analyzer (BCA)&trade;</a></li>
+        <li><a href="/#!/products/curve-trace-tool">Curve Trace Tool</a></li>
+      </ul>
     </div>
   </div>
+
+  <hr />

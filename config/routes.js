@@ -10,7 +10,10 @@ module.exports = function (app, passport, auth) {
   app.post('/users', users.create)
   app.post('/users/session', passport.authenticate('local', {failureRedirect: '/#!/support?f=1#form-area', failureFlash: 'Invalid email or password.'}), users.session)
   app.get('/users/me', users.me)
+  app.get('/users', users.all)
   app.get('/users/:userId', users.show)
+  app.put('/users/:userId', auth.requiresLogin, users.update)
+  app.del('/users/:userId', auth.requiresLogin, users.destroy)
 
   app.param('userId', users.user)
 
@@ -33,6 +36,16 @@ module.exports = function (app, passport, auth) {
   app.del('/fantasyteams/:fantasyTeamId', auth.requiresLogin, fantasyteams.destroy)
 
   app.param('fantasyTeamId', fantasyteams.fantasyteam)
+
+    // product routes
+  var products = require('../app/controllers/products')
+  app.get('/products', products.all)
+  app.post('/products', auth.requiresLogin, products.create)
+  app.get('/products/:productId', products.show)
+  app.put('/products/:productId', auth.requiresLogin, products.update)
+  app.del('/products/:productId', auth.requiresLogin, products.destroy)
+
+  app.param('productId', products.product)
 
   // player routes
   var players = require('../app/controllers/players')

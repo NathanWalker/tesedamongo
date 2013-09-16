@@ -13,7 +13,7 @@
       <li><a class="filter" data-filter=".ds">Device Stimulus</a></li>
       <li><a class="filter" data-filter=".di">Defect Isolation</a></li>
       <li><a class="filter" data-filter=".sd">Silicon Debug</a></li>
-      <li><a class="filter" data-filter=".ye">Yield Enhancement</a></li>
+      <li data-ng-if="global.isSignedIn()"><a class="filter" data-filter=".tu">Tutorials</a></li>
     </ul>
 
     <!-- portfolio items -->
@@ -56,13 +56,13 @@
       <!-- end portfolio item-->
 
       <!-- portfolio item-->
-      <div class="span4 project zoom" data-tags="ye">
+      <div data-ng-if="global.isSignedIn()" class="span4 project zoom" data-tags="tu">
 
         <a class="thumbnail" href="/">
           <!-- image -->
           <img src="assets/4.gif" alt="" />
           <!-- name -->
-          <b class="project-name">Title</b>
+          <b class="project-name">Exclusive Tutorial</b>
         </a>
       </div>
       <!-- end portfolio item-->
