@@ -1,0 +1,64 @@
+<div class="hero-unit">
+    <div class="ac">
+      <p><strong>Site Pages</strong></p>
+      <div style="text-align:right;" data-ng-if="global.isAdmin()">
+        <div  class="btn btn-primary" data-ng-click="openNewForm()" data-icon="&#xe038;">New</div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="container" data-ng-if="showNewForm">
+    <hr/>
+    <h3>{{editing|booleanText:'Edit':'New'}}</h3>
+    <form class="form-horizontal" >
+        <p style="font-style:italic; color:red;" data-ng-show="failed">Page failed to update.</p>
+        <fieldset>
+
+          <div class="control-group">
+                  <label class="control-label"  for="create-title">Title</label>
+                  <div class="controls">
+                    <input type="text" id="create-title" placeholder="Title" name="title" class="input-xlarge" data-ng-model="activePage.title">
+                  </div>
+                </div>
+
+                <div class="control-group">
+                  <label class="control-label"  for="create-sub">Sub Heading</label>
+                  <div class="controls">
+                    <textarea id="create-sub" placeholder="Sub Heading" name="subheading" class="input-xlarge" data-ng-model="activePage.subheading" style="width:500px;height:100px;"></textarea>
+                  </div>
+                </div>
+
+                <div class="control-group">
+                  <label class="control-label"  for="create-content">Content</label>
+                  <div class="controls">
+                    <textarea id="create-content" placeholder="Content" name="content" class="input-xlarge" data-ng-model="activePage.content" style="width:500px;height:200px;"></textarea>
+                  </div>
+                </div>
+
+                <div class="control-group">
+                  <label class="control-label"  for="create-route">Page shortname</label>
+                  <div class="controls">
+                    <input type="text" id="create-route" placeholder="Page shortname" name="route" class="input-xlarge" data-ng-model="activePage.route">
+                  </div>
+                </div>
+
+          <div class="control-group">
+            <div class="controls">
+              <button class="btn btn-primary" data-ng-click="create(activePage)">{{editing|booleanText:'Update':'Save'}}</button>
+              <button class="btn" data-ng-click="toggleNew(false)">Cancel</button>
+              <button class="btn btn-danger" data-ng-click="remove(activePage)" style="float:right;">Delete</button>
+            </div>
+          </div>
+        </fieldset>
+      </form>
+      <hr/>
+    </div>
+
+<div class="container">
+  <ul class="software-overview-list">
+    <li data-ng-repeat="page in pages">
+      <a data-ng-click="editPage(page)">{{page.route}}</a>
+    </li>
+  </ul>
+</div>

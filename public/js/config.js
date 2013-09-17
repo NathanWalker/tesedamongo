@@ -24,7 +24,13 @@ window.app.config(['$routeProvider', '$sceProvider', function($routeProvider, $s
       })
       .when('/tutorials',
       {
-        templateUrl:'views/site/tutorials.html'
+        templateUrl:'views/site/tutorials.html',
+        controller:'VideosCtrl'
+      })
+      .when('/tutorials/:video',
+      {
+        templateUrl:'views/videos/show.html',
+        controller:'VideosCtrl'
       })
       .when('/about',
       {
@@ -52,52 +58,34 @@ window.app.config(['$routeProvider', '$sceProvider', function($routeProvider, $s
       })
       .when('/news',
       {
-        templateUrl:'views/site/news.html'
+        templateUrl:'views/site/news.html',
+        controllers:'PostsCtrl'
       })
-	.when('/nflteams',
-  {
-    templateUrl: "views/nfl/list.html"
-  })
-  .when('/nflteams/:nflTeamId',
-  {
-    templateUrl: "views/nfl/view.html"
-  })
-  .when('/leagues',
-  {
-    templateUrl: 'views/leagues/list.html'
-  })
-  .when('/leagues/create',
-  {
-    templateUrl: 'views/leagues/create.html'
-  })
-  .when('/leagues/:leagueId/edit',
-  {
-    templateUrl: 'views/leagues/edit.html'
-  })
-  .when('/leagues/:leagueId',
-  {
-    templateUrl: 'views/leagues/view.html'
-  })
-  .when('/fantasyteams',
-  {
-    templateUrl: 'views/fantasyteams/list.html'
-  })
-  .when('/fantasyteams/create',
-  {
-    templateUrl: 'views/fantasyteams/create.html'
-  })
-  .when('/fantasyteams/:fantasyTeamId/edit',
-  {
-    templateUrl: 'views/fantasyteams/edit.html'
-  })
-  .when('/fantasyteams/:fantasyTeamId',
-  {
-    templateUrl: 'views/fantasyteams/view.html'
-  })
-  .when('/players',
-  {
-  	templateUrl: 'views/players/list.html'
-  })
+       .when('/news/:post',
+      {
+        templateUrl:'views/news/show.html',
+        controller:'PostsCtrl'
+      })
+        .when('/images',
+      {
+        templateUrl:'views/site/images.html',
+        controller:'ImagesCtrl'
+      })
+      .when('/images/:image',
+      {
+        templateUrl:'views/site/images.html',
+        controller:'ImagesCtrl'
+      })
+       .when('/pages',
+      {
+        templateUrl:'views/site/pages.html',
+        controller:'PagesCtrl'
+      })
+      .when('/pages/:page',
+      {
+        templateUrl:'views/site/pages.html',
+        controller:'PagesCtrl'
+      })
 	.otherwise({redirectTo: '/'});
 }]);
 

@@ -1,0 +1,44 @@
+<div class="hero-unit">
+    <div class="ac">
+      <p><strong>Site Images</strong></p>
+      <div data-ng-if="global.isAdmin()" class="btn btn-primary" style="float:right;" data-ng-click="openNewForm()">New</div>
+    </div>
+  </div>
+
+  <div class="container image-editor" data-ng-if="showNewForm">
+    <hr/>
+  <h3>{{editing|booleanText:'Edit':'New'}}</h3>
+    <form class="form-horizontal">
+              <p style="font-style:italic; color:red;" data-ng-show="failed">Image failed to update.</p>
+              <div data-ng-if="activeImage.url" class="image">
+                <img data-ng-src="{{activeImage.url}}"/>
+              </div>
+              <fieldset>
+
+                <div class="control-group">
+                  <label class="control-label"  for="create-image">Image File</label>
+                  <div class="controls">
+                    <input type="file" id="create-image" name="file" class="input-xlarge">
+                  </div>
+                </div>
+
+                <div class="control-group">
+                  <div class="controls">
+                    <button class="btn btn-primary" data-ng-click="create(activeImage)">{{editing|booleanText:'Update':'Save'}}</button>
+                    <button class="btn" data-ng-click="toggleNew(false)">Cancel</button>
+                    <button class="btn btn-danger" data-ng-click="remove(activeImage)" style="float:right;">Delete</button>
+                  </div>
+                </div>
+              </fieldset>
+            </form>
+            <hr/>
+          </div>
+
+<div class="container">
+
+  <div class="image-editor">
+    <div data-ng-repeat="image in images" class="image">
+      <img data-ng-src="{{image.url}}"/>
+    </div>
+  </div>
+</div>

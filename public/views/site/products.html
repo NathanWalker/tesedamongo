@@ -1,12 +1,9 @@
 <div class="hero-unit">
     <div class="container">
       <!-- <h1 class="ac">Suite of Products</h1> -->
-      <p class="ac">
-        <strong>Systems</strong> and <strong>Options</strong>
-      </p>
-      <p style="max-width:700px; text-align:center; margin:0 auto;">
-        Meet the highest performing diagnostic systems specifically designed for electrical device analysis of failed digital and mixed signal semiconductor devices. <a data-ng-click="scrollTo('hardware-overview')" style="font-size:14px;cursor:pointer;">Read more &hellip;</a>
-      </p>
+      <p class="ac" data-ng-bind-html="page.title"></p>
+      <a data-ng-if="global.isAdmin()" class="btn" href="/#!/products/edit" style="float:right;position:relative;top:-45px;" data-icon="d">Edit</a>
+      <p style="max-width:700px; text-align:center; margin:0 auto;" data-ng-if="page.subheading" data-ng-bind-html="page.subheading"></p>
     </div>
   </div>
 
@@ -14,11 +11,11 @@
   <div class="row pricing">
     <div class="span4" data-ng-repeat="product in products">
       <div class="well">
-        <h2><a data-ng-href="/#!/products/{{product._id}}">{{product.name}}</a></h2>
+        <h2><a data-ng-href="/#!{{product.shortUrl}}">{{product.name}}</a></h2>
         <p data-ng-bind-html="product.description"></p>
         <div data-ng-bind-html="product.featureList"></div>
         <p class="ac">
-          <a data-ng-href="/#!/products/{{product._id}}">Learn more &raquo;</a>
+          <a data-ng-href="/#!{{product.shortUrl}}">Learn more &raquo;</a>
         </p>
       </div>
     </div>

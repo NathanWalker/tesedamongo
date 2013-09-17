@@ -5,6 +5,8 @@
 </div>
 
 <div class="container" data-ng-if="showNewForm">
+  <hr/>
+  <h3>{{editing|booleanText:'Edit':'New'}}</h3>
   <form class="form-horizontal">
               <p style="font-style:italic; color:red;" data-ng-show="failed">Product save failed, please verify your input.</p>
               <fieldset>
@@ -72,9 +74,11 @@
                 </div>
               </fieldset>
             </form>
+            <hr/>
 </div>
 
 <div class="container">
+  <h3 style="text-align:center;">Products</h3>
   <ul class="software-overview-list">
     <li data-ng-repeat="product in products">
       <a data-ng-click="editProduct(product)">{{product.name}}</a>

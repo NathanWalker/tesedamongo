@@ -89,5 +89,46 @@ window.angular.module("App.directives", []).directive('scrollTopLink', [
       link: link
     };
   }
-]);
+]).directive('tagManager', ['$rootScope', function($rootScope) {
+    return {
+        restrict: 'A',
+        controller:'TagsCtrl',
+        scope: {},
+        template:
+            '<div>' +
+            '<ul class="tags">' +
+                '<li ng-repeat="(idx, tag) in tags" data-lvl-draggable="true" data-tag-id="{{tag._id}}"><a data-ng-click="selectTag(tag)">{{tag.name}}</a></li>' +
+            '</ul>' +
+            '<div data-ng-if="$root.global.isModerator()" style="margin-top:10px;"><form class="form-horizontal"><input type="text" placeholder="Add a category..." ng-model="activeTag.name"/>' +
+            '<input type="submit" class="btn" data-ng-click="create(activeTag)" value="Add"/></form>' +
+            '<div data-lvl-drop-target="true" data-on-drop="dropped(dragEl, dropEl)" data-icon="&#x29;"></div>' +
+            '</div>' +
+            '</div>',
+        link: function ( scope, el ) {
+            var input = angular.element( el.children()[1] );
+
+            scope.selectTag = function(tag) {
+              $rootScope.$broadcast('tag:selected', tag);
+            };
+
+            scope.dropped = function(dragEl, dropEl) { // function referenced by the drop target
+              var drop = angular.element(dropEl);
+              var drag = angular.element(dragEl);
+
+              $rootScope.$broadcast('tag:remove', drag.attr('data-tag-id'));
+            };
+
+            // Capture all keypresses
+            input.bind( 'keypress', function ( event ) {
+                // But we only care when Enter was pressed
+                if ( event.keyCode == 13 ) {
+                    // There's probably a better way to handle this...
+                    $rootScope.safeApply(function(){
+                      scope.create(s.activeTag);
+                    });
+                }
+            });
+        }
+    };
+}]);
 

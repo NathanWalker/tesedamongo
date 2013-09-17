@@ -36,7 +36,7 @@
 
     <tab heading="Users" data-ng-if="global.currentUser().admin">
         <div class="tab-pane" data-ng-controller="UsersCtrl">
-          <div class="btn btn-primary" style="float:right;" data-ng-click="openNewForm()">New</div>
+          <div class="btn btn-primary" style="float:right;" data-ng-click="openNewForm()" data-ng-hide="showUserForm">New</div>
             <form class="form-horizontal" data-ng-if="showUserForm">
               <p style="font-style:italic; color:red;" data-ng-show="failed">User failed to update.</p>
               <fieldset>
@@ -98,6 +98,7 @@
             </form>
 
             <div>
+              <h5>All Users</h5>
               <ul class="user-list">
                 <li data-ng-repeat="user in users"><a data-ng-click="editUser(user)">{{user.name}}</a></li>
               </ul>

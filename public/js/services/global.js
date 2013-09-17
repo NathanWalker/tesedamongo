@@ -8,6 +8,12 @@ window.angular.module('App.services', [])
   		},
   		isSignedIn: function() {
   			return !!current_user;
-  		}
+  		},
+            isAdmin: function() {
+                  return current_user ? current_user.admin : false;
+            },
+            isModerator: function() {
+                  return current_user ? (current_user.admin || current_user.moderator) : false;
+            }
   	};
   });

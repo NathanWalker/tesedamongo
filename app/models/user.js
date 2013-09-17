@@ -17,6 +17,7 @@ var UserSchema = new Schema({
   company:String,
   clientId:String,
   admin:Boolean,
+  moderator:Boolean,
   username: String,
   provider: String,
   hashed_password: String,

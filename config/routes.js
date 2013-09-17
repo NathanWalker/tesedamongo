@@ -17,27 +17,7 @@ module.exports = function (app, passport, auth) {
 
   app.param('userId', users.user)
 
-  // league routes
-  var leagues = require('../app/controllers/leagues')
-  app.get('/leagues', leagues.all)
-  app.post('/leagues', auth.requiresLogin, leagues.create)
-  app.get('/leagues/:leagueId', leagues.show)
-  app.put('/leagues/:leagueId', auth.requiresLogin, leagues.update)
-  app.del('/leagues/:leagueId', auth.requiresLogin, leagues.destroy)
-
-  app.param('leagueId', leagues.league)
-
-  // fantasy team routes
-  var fantasyteams = require('../app/controllers/fantasyteams')
-  app.get('/fantasyteams', fantasyteams.all)
-  app.post('/fantasyteams', auth.requiresLogin, fantasyteams.create)
-  app.get('/fantasyteams/:fantasyTeamId', fantasyteams.show)
-  app.put('/fantasyteams/:fantasyTeamId', auth.requiresLogin, fantasyteams.update)
-  app.del('/fantasyteams/:fantasyTeamId', auth.requiresLogin, fantasyteams.destroy)
-
-  app.param('fantasyTeamId', fantasyteams.fantasyteam)
-
-    // product routes
+  // product routes
   var products = require('../app/controllers/products')
   app.get('/products', products.all)
   app.post('/products', auth.requiresLogin, products.create)
@@ -47,12 +27,55 @@ module.exports = function (app, passport, auth) {
 
   app.param('productId', products.product)
 
-  // player routes
-  var players = require('../app/controllers/players')
-  app.get('/players', players.all)
-  app.get('/players/:playerId', players.show)
+  // videos routes
+  var videos = require('../app/controllers/videos')
+  app.get('/videos', videos.all)
+  app.post('/videos', auth.requiresLogin, videos.create)
+  app.get('/videos/:videoId', videos.show)
+  app.put('/videos/:videoId', auth.requiresLogin, videos.update)
+  app.del('/videos/:videoId', auth.requiresLogin, videos.destroy)
 
-  app.param('playerId', players.player)
+  app.param('videoId', videos.video)
+
+  // posts routes
+  var posts = require('../app/controllers/posts')
+  app.get('/posts', posts.all)
+  app.post('/posts', auth.requiresLogin, posts.create)
+  app.get('/posts/:postId', posts.show)
+  app.put('/posts/:postId', auth.requiresLogin, posts.update)
+  app.del('/posts/:postId', auth.requiresLogin, posts.destroy)
+
+  app.param('postId', posts.post)
+
+  // tags routes
+  var tags = require('../app/controllers/tags')
+  app.get('/tags', tags.all)
+  app.post('/tags', auth.requiresLogin, tags.create)
+  app.get('/tags/:tagId', tags.show)
+  app.put('/tags/:tagId', auth.requiresLogin, tags.update)
+  app.del('/tags/:tagId', auth.requiresLogin, tags.destroy)
+
+  app.param('tagId', tags.tag)
+
+  // videos routes
+  var images = require('../app/controllers/images')
+  app.get('/images', images.all)
+  app.post('/images', auth.requiresLogin, images.create)
+  app.get('/images/:imageId', images.show)
+  app.put('/images/:imageId', auth.requiresLogin, images.update)
+  app.del('/images/:imageId', auth.requiresLogin, images.destroy)
+
+  app.param('imageId', images.image)
+
+  // pages routes
+  var pages = require('../app/controllers/pages')
+  app.get('/pages', pages.all)
+  app.post('/pages', auth.requiresLogin, pages.create)
+  app.get('/pages/:pageId', pages.show)
+  app.put('/pages/:pageId', auth.requiresLogin, pages.update)
+  app.del('/pages/:pageId', auth.requiresLogin, pages.destroy)
+
+  app.param('pageId', pages.page)
 
   // home route
   var index = require('../app/controllers/index')

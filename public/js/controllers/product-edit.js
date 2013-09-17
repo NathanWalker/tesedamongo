@@ -1,4 +1,4 @@
-window.angular.module('App.controllers').controller("ProductsEditCtrl", ["$scope", "$rootScope", "$filter", "$timeout", "$location", "$window", "$routeParams", "Global", "ProductsService", function(s, $rootScope, $filter, $timeout, $location, $window, $routeParams, Global, ProductsService) {
+window.angular.module('App.controllers').controller("ProductsEditCtrl", ["$scope", "$rootScope", "$filter", "$timeout", "$location", "$window", "$routeParams", "Global", "ProductsService", "orderByFilter", function(s, $rootScope, $filter, $timeout, $location, $window, $routeParams, Global, ProductsService, orderByFilter) {
 
       if(!Global.isSignedIn()){
         $location.path("support");
@@ -35,7 +35,7 @@ window.angular.module('App.controllers').controller("ProductsEditCtrl", ["$scope
 
       var populateProducts = function(query) {
         ProductsService.query(query, function (products) {
-          s.products = products;
+          s.products = orderByFilter(products, '+featuredOrder');
         });
       };
 

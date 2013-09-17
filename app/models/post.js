@@ -6,13 +6,14 @@ var mongoose = require('mongoose')
 var PostSchema = new Schema({
   title: {type : String},
   content: {type : String},
-  date: {type : Date},
-  image: {type : String}
+  created: {type : Date, default : Date.now},
+  image: {type : Schema.ObjectId, ref: 'Image'},
+  tags: [{type: Schema.ObjectId, ref: 'Tag'}]
 });
 
  PostSchema.statics = {
    load: function (id, cb) {
-     this.findOne({ _id : id }).exec(cb);
+     this.findOne({ _id : id }).populate('image').populate('tags').exec(cb);
    }
  };
 

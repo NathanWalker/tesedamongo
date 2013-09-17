@@ -3,7 +3,29 @@
       <p class="ac">
         The latest <strong>news and articles</strong> from around the industry
       </p>
+      <div data-ng-if="global.isModerator()" class="btn btn-primary" style="float:right;" data-ng-click="openNewForm()">New</div>
   </div>
+
+  <div class="container" data-ng-if="showNewForm">
+    <hr/>
+    <h3>{{editing|booleanText:'Edit':'New'}}</h3>
+    <form class="form-horizontal" >
+        <p style="font-style:italic; color:red;" data-ng-show="failed">Page failed to update.</p>
+        <fieldset>
+
+
+
+          <div class="control-group">
+            <div class="controls">
+              <button class="btn btn-primary" data-ng-click="create(activePost)">{{editing|booleanText:'Update':'Save'}}</button>
+              <button class="btn" data-ng-click="toggleNew(false)">Cancel</button>
+              <button class="btn btn-danger" data-ng-click="remove(activePost)" style="float:right;">Delete</button>
+            </div>
+          </div>
+        </fieldset>
+      </form>
+      <hr/>
+    </div>
 
   <hr />
 
@@ -116,12 +138,8 @@
       <!-- Tags / categories -->
       <div class="widget">
         <h4>Categories</h4>
-        <ul class="tags">
-          <li><a href="#">Device Stimulus</a></li>
-          <li><a href="#">Defect Isolation</a></li>
-          <li><a href="#">Silicon Debug</a></li>
-          <li><a href="#">Yield Enhancement</a></li>
-        </ul>
+        <div data-tag-manager>
+        </div>
       </div>
 
       <!-- List widget with custom list icons -->
@@ -136,8 +154,7 @@
       </div> -->
 
       <!-- Example of tabs widget -->
-      <div class="widget stacked">
-        <!-- <h4>Tabs</h4> -->
+      <!-- <div class="widget stacked">
         <ul class="nav nav-tabs">
           <li class="active"><a href="#home" data-toggle="tab">Home</a></li>
           <li class=""><a href="#profile" data-toggle="tab">Profile</a></li>
@@ -150,13 +167,12 @@
             <p>Raw denim you probably haven't heard of them jean shorts Austin. Nesciunt tofu stumptown aliqua, retro synth master cleanse. Mustache cliche tempor.</p>
           </div>
         </div>
-      </div>
+      </div> -->
 
       <!-- Simple text widget -->
-      <div class="widget">
-        <!-- <h4>Text widget</h4> -->
+      <!-- <div class="widget">
         <p>Cupcake ipsum dolor sit amet wafer gummi bears pudding applicake. Jujubes brownie powder. Sweet roll powder gingerbread gummies. </p>
-      </div>
+      </div> -->
 
     </div><!-- end sidebar -->
 

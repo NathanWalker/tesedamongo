@@ -1,4 +1,4 @@
-window.app = angular.module('tesedaApp', ['ngCookies', 'ngResource', 'ngSanitize', 'ui.bootstrap', 'ngRoute', 'App.controllers', 'App.directives', 'App.filters', 'App.services']).run(['$rootScope', '$location', '$anchorScroll', 'Global', function($rootScope, $location, $anchorScroll, Global){
+window.app = angular.module('tesedaApp', ['ngCookies', 'ngResource', 'ngSanitize', 'ui.bootstrap', 'ngRoute', 'App.controllers', 'App.directives', 'App.filters', 'App.services', 'lvl.directives.dragdrop']).run(['$rootScope', '$location', '$anchorScroll', '$timeout', 'Global', function($rootScope, $location, $anchorScroll, $timeout, Global){
 
     $rootScope.global = Global;
     $rootScope.navCollapsed = true;
@@ -9,7 +9,10 @@ window.app = angular.module('tesedaApp', ['ngCookies', 'ngResource', 'ngSanitize
 
     $rootScope.scrollTo = function(id) {
       $location.hash(id);
-      $anchorScroll();
+      $timeout(function(){
+        $anchorScroll();
+      }, 300);
+
    };
 
     $rootScope.currentYear = new Date().getFullYear();

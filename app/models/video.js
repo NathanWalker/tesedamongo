@@ -7,13 +7,15 @@ var VideoSchema = new Schema({
   title: {type : String},
   url: {type : String},
   type: {type : String},
-  poster: {type : String},
-  exclusive: {type : Boolean}
+  poster: {type : Schema.ObjectId, ref: 'Image'},
+  order: {type : Number},
+  exclusive: {type : Boolean},
+  tags: [{type: Schema.ObjectId, ref: 'Tag'}]
 });
 
  VideoSchema.statics = {
    load: function (id, cb) {
-     this.findOne({ _id : id }).exec(cb);
+     this.findOne({ _id : id }).populate('poster').populate('tags').exec(cb);
    }
  };
 

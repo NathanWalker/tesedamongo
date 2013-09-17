@@ -1,7 +1,8 @@
 <div class="hero-unit">
     <div class="ac">
       <!-- <h1>Video Tutorials</h1> -->
-      <p><strong>Videos</strong><span data-ng-if="global.isSignedIn()">&nbsp;and <strong>Tutorials</strong>&nbsp;&nbsp;Learn from the experts</span><span data-ng-if="!global.isSignedIn()">&nbsp;&nbsp;Product Overviews</span></p>
+      <p data-ng-bind-html="page.title"></p>
+      <div data-ng-if="global.isModerator()" class="btn btn-primary" style="float:right;" data-ng-click="openNewForm()">New</div>
     </div>
   </div>
 
