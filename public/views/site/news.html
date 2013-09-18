@@ -3,23 +3,55 @@
       <p class="ac">
         The latest <strong>news and articles</strong> from around the industry
       </p>
-      <div data-ng-if="global.isModerator()" class="btn btn-primary" style="float:right;" data-ng-click="openNewForm()">New</div>
+      <div data-ng-if="global.isModerator() && !showNewForm" class="btn btn-primary" style="float:right;" data-ng-click="openNewForm()">New</div>
   </div>
 
-  <div class="container" data-ng-if="showNewForm">
+  <div class="container" data-ng-if="showNewForm && global.isModerator()">
     <hr/>
     <h3>{{editing|booleanText:'Edit':'New'}}</h3>
     <form class="form-horizontal" >
         <p style="font-style:italic; color:red;" data-ng-show="failed">Page failed to update.</p>
         <fieldset>
-
-
-
           <div class="control-group">
+                  <label class="control-label"  for="create-title">Title</label>
+                  <div class="controls">
+                    <input type="text" id="create-title" placeholder="Title" name="title" class="input-xlarge" data-ng-model="activePost.title">
+                  </div>
+                </div>
+
+                <div class="control-group">
+                  <label class="control-label"  for="create-content">Content</label>
+                  <div class="controls">
+                    <textarea id="create-content" placeholder="Content" name="content" class="input-xlarge" data-ng-model="activePost.content" style="width:500px;height:300px;"></textarea>
+                  </div>
+                </div>
+
+                <div class="control-group">
+                  <div
+                      data-lvl-file-upload
+                     auto-upload='true'
+                     choose-file-button-text='Choose image'
+                     upload-file-button-text='Upload image'
+                     upload-url='/files'
+                     max-files='1'
+                     max-file-size-mb='5'
+                     get-additional-data='getData(files)'
+                     on-done='done(files, data)'
+                     on-progress='progress(percentDone)'
+                     on-error='error(files, type, msg)'/>
+                </div>
+
+
+          <div class="control-group" data-ng-hide="fileUploading">
             <div class="controls">
               <button class="btn btn-primary" data-ng-click="create(activePost)">{{editing|booleanText:'Update':'Save'}}</button>
               <button class="btn" data-ng-click="toggleNew(false)">Cancel</button>
               <button class="btn btn-danger" data-ng-click="remove(activePost)" style="float:right;">Delete</button>
+            </div>
+          </div>
+          <div class="control-group" data-ng-show="fileUploading">
+            <div class="controls">
+              <span style="font-style:italic;">File uploading...</span>
             </div>
           </div>
         </fieldset>

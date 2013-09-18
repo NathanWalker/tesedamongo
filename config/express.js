@@ -25,6 +25,21 @@ module.exports = function (app, config, passport) {
     app.use(express.logger('dev'))
   }
 
+  var allowCrossDomain = function(req, res, next) {
+      res.header('Access-Control-Allow-Origin', '*');
+      res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS');
+      res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization, Content-Length, X-Requested-With');
+
+      // intercept OPTIONS method
+      if ('OPTIONS' == req.method) {
+        res.send(200);
+      }
+      else {
+        next();
+      }
+  };
+  app.use(allowCrossDomain);
+
   // set views path, template engine and default layout
   app.set('views', config.root + '/app/views')
   app.set('view engine', 'jade')

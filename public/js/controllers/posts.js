@@ -2,6 +2,7 @@ window.angular.module('App.controllers').controller("PostsCtrl", ["$scope", "$ro
 
       s.showNewForm = false;
       s.editing = false;
+      s.fileUploading = false;
 
       var resetActivePost = function() {
         s.activePost = {
@@ -9,6 +10,7 @@ window.angular.module('App.controllers').controller("PostsCtrl", ["$scope", "$ro
           content: '',
           image:''
         };
+        s.fileUploading = false;
       };
 
       s.openNewForm = function() {
@@ -99,6 +101,37 @@ window.angular.module('App.controllers').controller("PostsCtrl", ["$scope", "$ro
         // to do, handle tag selection
 
       });
+
+      s.progress = function(percentDone) {
+        s.fileUploading = true;
+            console.log("progress: " + percentDone + "%");
+      };
+
+      s.done = function(files, data) {
+            console.log("upload complete");
+            console.log("data: " + JSON.stringify(data));
+            writeFiles(files);
+      };
+
+      s.getData = function(files) {
+            //this data will be sent to the server with the files
+            return {msg: "from the client", date: new Date()};
+      };
+
+      s.error = function(files, type, msg) {
+            console.log("Upload error: " + msg);
+            console.log("Error type:" + type);
+            writeFiles(files);
+      }
+
+      function writeFiles(files)
+      {
+            console.log('Files')
+            for (var i = 0; i < files.length; i++) {
+                  console.log('\t' + files[i].name);
+            }
+            s.fileUploading = false;
+      }
 
       if ($routeParams.post) {
         s.findOne();

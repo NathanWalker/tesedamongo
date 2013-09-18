@@ -1,4 +1,7 @@
-var async = require('async')
+var async = require('async');
+var fs= require('fs');
+var path = require('path');
+var express = require('express');
 
 module.exports = function (app, passport, auth) {
 
@@ -76,6 +79,47 @@ module.exports = function (app, passport, auth) {
   app.del('/pages/:pageId', auth.requiresLogin, pages.destroy)
 
   app.param('pageId', pages.page)
+
+  // files
+  app.post('/files', function(req, res){
+    if (req.body) {
+      console.log(JSON.stringify(req.body));
+    }
+
+    var cnt = 0;
+    var fileKeys = Object.keys(req.files);
+    var key = fileKeys[cnt];
+    var file = req.files[key];
+
+    var dataSuccess = {
+      filenames: []
+    };
+
+
+    var writeTheFile = function(file, key) {
+      console.log('Found a file named ' + key + ', it is ' + file.size + ' bytes');
+      console.log(file.path);
+      fs.readFile(file.path, function (err, data) {
+        var basePath = path.join(__dirname, '../public/uploads')
+        var fileName = Date.now().toString() + "-" + Math.floor((Math.random()*10000)+1) + "-" + key;
+        var newPath = path.join(basePath, fileName);
+        console.log('writing file to: ' + newPath);
+
+        fs.writeFile(newPath, data, function (err) {
+          cnt++;
+          dataSuccess.filenames.push(fileName);
+          if (cnt == fileKeys.length){
+            res.send(dataSuccess);
+          } else {
+            key = fileKeys[cnt];
+            writeTheFile(req.files[key], key);
+          }
+        });
+      });
+    };
+
+    writeTheFile(file, key);
+  });
 
   // home route
   var index = require('../app/controllers/index')

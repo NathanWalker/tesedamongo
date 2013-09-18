@@ -59,7 +59,7 @@ window.app.config(['$routeProvider', '$sceProvider', function($routeProvider, $s
       .when('/news',
       {
         templateUrl:'views/site/news.html',
-        controllers:'PostsCtrl'
+        controller:'PostsCtrl'
       })
        .when('/news/:post',
       {
