@@ -1,0 +1,27 @@
+{
+  "name": "infowrap-ui-bootstrap",
+  "main": "dist/ui-bootstrap-0.6.0-SNAPSHOT.js",
+  "ignore": [
+    "**/.*",
+    "docs",
+    "misc",
+    "node_modules",
+    "src",
+    "template",
+    "bower_components",
+    "test",
+    "tests",
+    "CONTRIBUTING.md",
+    "*.log"
+  ],
+  "homepage": "https://github.com/infowrap/bootstrap",
+  "_release": "infowrap0.1.4",
+  "_resolution": {
+    "type": "tag",
+    "tag": "infowrap0.1.4",
+    "commit": "7e1b58a38b255a4f0f1261ebc42b833de5d25c6d"
+  },
+  "_source": "git://github.com/infowrap/bootstrap.git",
+  "_target": "infowrap0.1.4",
+  "_originalSource": "infowrap-ui-bootstrap"
+}

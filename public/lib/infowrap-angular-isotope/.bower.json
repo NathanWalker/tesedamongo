@@ -1,0 +1,28 @@
+{
+  "name": "infowrap-angular-isotope",
+  "version": "0.1.5",
+  "main": "dist/infowrap-angular-isotope",
+  "ignore": [
+    "**/.*",
+    "app",
+    "lib",
+    "node_modules",
+    "scripts",
+    "bower_components",
+    "test",
+    "tests",
+    "app-server.js",
+    "Gruntfile.js",
+    "karma.conf.js"
+  ],
+  "homepage": "https://github.com/infowrap/angular-isotope",
+  "_release": "0.1.5",
+  "_resolution": {
+    "type": "version",
+    "tag": "0.1.5",
+    "commit": "67abaf1354f96583e00bc5bf0c285f1929a13d67"
+  },
+  "_source": "git://github.com/infowrap/angular-isotope.git",
+  "_target": "~0.1.5",
+  "_originalSource": "infowrap-angular-isotope"
+}

@@ -1,0 +1,30 @@
+{
+  "name": "infowrap-isotope",
+  "version": "0.1.0",
+  "main": "jquery.isotope.js",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests",
+    "_*",
+    "css",
+    "js",
+    "*.mdown",
+    "index.html",
+    "jquery.isotope.min.js",
+    "*.sh",
+    "*.log"
+  ],
+  "homepage": "https://github.com/infowrap/isotope",
+  "_release": "0.1.0",
+  "_resolution": {
+    "type": "version",
+    "tag": "0.1.0",
+    "commit": "c7d162c52ad769558baa61dda91fc466ad3b39dc"
+  },
+  "_source": "git://github.com/infowrap/isotope.git",
+  "_target": "~0.1.0",
+  "_originalSource": "infowrap-isotope"
+}
