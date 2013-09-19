@@ -69,7 +69,7 @@
 
         <!-- entry media -->
         <a data-ng-href="/#!/news/{{post._id}}" class="entry-media">
-          <img data-ng-src="/uploads/{{post.image}}" alt="" />
+          <img data-ng-src="{{global.imagePath()}}{{post.image}}" alt="" />
         </a>
 
         <!-- entry body -->

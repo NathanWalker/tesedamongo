@@ -134,7 +134,7 @@ window.angular.module("App.directives", []).directive('scrollTopLink', [
     scope:{
       image:"=previewImage"
     },
-    template:"<img class='preview-image' data-ng-src='/uploads/{{image.url}}'/><div class='remove-image' data-ng-click='removeImage()'></div>",
+    template:"<img class='preview-image' data-ng-src='{{$root.global.imagePath()}}{{image.url}}'/><div class='remove-image' data-ng-click='removeImage()'></div>",
     link: function(scope, el) {
       scope.removeImage = function() {
         scope.image.$remove();

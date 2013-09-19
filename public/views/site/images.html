@@ -11,7 +11,7 @@
     <form class="form-horizontal">
               <p style="font-style:italic; color:red;" data-ng-show="failed">Image failed to update.</p>
               <div data-ng-if="activeImage.url" style="text-align:center; margin:10px;">
-                <img data-ng-src="/uploads/{{activeImage.url}}"  style="max-width:300px; max-height:300px;"/>
+                <img data-ng-src="{{global.imagePath()}}{{activeImage.url}}"  style="max-width:300px; max-height:300px;"/>
               </div>
               <fieldset>
 

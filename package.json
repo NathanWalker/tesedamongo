@@ -33,7 +33,8 @@
     "forever": "latest",
     "mean-logger": "latest",
     "bower": "latest",
-    "rimraf": "~2.2.2"
+    "rimraf": "~2.2.2",
+    "aws-sdk": "~1.6.0"
   },
   "devDependencies": {
     "supertest": "latest",

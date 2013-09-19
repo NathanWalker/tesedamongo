@@ -74,7 +74,7 @@
 
         <!-- entry media -->
         <a data-ng-href="/#!/news/{{post._id}}" class="entry-media" data-ng-if="post.image">
-          <img data-ng-src="/uploads/{{$parent.post.image}}" alt=""
+          <img data-ng-src="{{$root.global.imagePath()}}{{$parent.post.image}}" alt=""
             data-post-id="{{$parent.post._id}}"
             data-lvl-drop-target="true"
             data-on-drop="tagConnect(dragEl, dropEl)"/>

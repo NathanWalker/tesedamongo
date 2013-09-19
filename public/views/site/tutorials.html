@@ -121,7 +121,7 @@
 
         <a class="thumbnail" data-nw-fancybox-media data-ng-href="http://www.{{video.type|lowercase}}.com/{{video.type=='YouTube'|booleanText:'watch?v=':''}}{{video.url}}" rel="media-gallery">
           <!-- image -->
-          <img data-ng-src="/uploads/{{$parent.video.poster}}" alt=""
+          <img data-ng-src="{{$root.global.imagePath()}}{{$parent.video.poster}}" alt=""
             data-video-id="{{$parent.video._id}}"
             data-lvl-drop-target="true"
             data-on-drop="tagConnect(dragEl, dropEl)" />
