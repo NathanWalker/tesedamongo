@@ -20,7 +20,7 @@ window.angular.module('App.services', [])
               return is_production;
             },
             imagePath:function(){
-              return is_production ? 'http://s3.amazonaws.com/tesedamongo/' : '/uploads/';
+              return is_production ? 'https://s3-us-west-2.amazonaws.com/tesedamongo/' : '/uploads/';
             }
   	};
   });

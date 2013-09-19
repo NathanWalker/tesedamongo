@@ -3,11 +3,12 @@ var fs= require('fs');
 var path = require('path');
 var express = require('express');
 var AWS = require('aws-sdk');
-var accessKeyId =  process.env.AWS_ACCESS_KEY || "xxxxxx";
-var secretAccessKey = process.env.AWS_SECRET_KEY || "+xxxxxx+B+xxxxxxx";
+var accessKeyId =  process.env.AWS_ACCESS_KEY_ID || "xxxxxx";
+var secretAccessKey = process.env.AWS_SECRET_ACCESS_KEY || "+xxxxxx+B+xxxxxxx";
 AWS.config.update({
     accessKeyId: accessKeyId,
-    secretAccessKey: secretAccessKey
+    secretAccessKey: secretAccessKey,
+    region:'us-west-2'
 });
 
 var s3 = new AWS.S3();
@@ -110,12 +111,13 @@ module.exports = function (app, passport, auth) {
       console.log('Found a file named ' + key + ', it is ' + file.size + ' bytes');
       console.log(file.path);
       fs.readFile(file.path, function (err, data) {
-        var basePath = path.join(__dirname, '../public/uploads')
+
         var fileName = Date.now().toString() + "-" + Math.floor((Math.random()*10000)+1) + "-" + key;
-        var newPath = path.join(basePath, fileName);
-        console.log('writing file to: ' + newPath);
 
         if(nodeEnv == 'development'){
+          var basePath = path.join(__dirname, '../public/uploads')
+          var newPath = path.join(basePath, fileName);
+          console.log('writing file to: ' + newPath);
           fs.writeFile(newPath, data, function (err) {
             cnt++;
             dataSuccess.filenames.push(fileName);
@@ -132,14 +134,14 @@ module.exports = function (app, passport, auth) {
           var params = {
               Bucket: 'tesedamongo',
               Key: fileName,
-              Body: "Hello"
+              Body: data
           };
 
           s3.putObject(params, function (perr, pres) {
               if (perr) {
                   console.log("Error uploading data: ", perr);
               } else {
-                  console.log("Successfully uploaded data to myBucket/myKey");
+                  console.log("Successfully uploaded data to tesedamongo/" + fileName);
                   cnt++;
                   dataSuccess.filenames.push(fileName);
                   if (cnt == fileKeys.length){
