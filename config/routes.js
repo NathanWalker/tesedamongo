@@ -110,30 +110,35 @@ module.exports = function (app, passport, auth) {
     var writeTheFile = function(file, key) {
       console.log('Found a file named ' + key + ', it is ' + file.size + ' bytes');
       console.log(file.path);
-      fs.readFile(file.path, function (err, data) {
-        var basePath = path.join(__dirname, '../public/uploads')
-        var fileName = Date.now().toString() + "-" + Math.floor((Math.random()*10000)+1) + "-" + key;
-        var newPath = path.join(basePath, fileName);
-        console.log('writing file to: ' + newPath);
+
 
         if(nodeEnv == 'development'){
-          fs.writeFile(newPath, data, function (err) {
-            cnt++;
-            dataSuccess.filenames.push(fileName);
-            if (cnt == fileKeys.length){
-              res.send(dataSuccess);
-            } else {
-              key = fileKeys[cnt];
-              writeTheFile(req.files[key], key);
-            }
-          });
+          fs.readFile(file.path, function (err, data) {
+            var basePath = path.join(__dirname, '../public/uploads')
+            var fileName = Date.now().toString() + "-" + Math.floor((Math.random()*10000)+1) + "-" + key;
+            var newPath = path.join(basePath, fileName);
+            console.log('writing file to: ' + newPath);
+
+            fs.writeFile(newPath, data, function (err) {
+              cnt++;
+              dataSuccess.filenames.push(fileName);
+              if (cnt == fileKeys.length){
+                res.send(dataSuccess);
+              } else {
+                key = fileKeys[cnt];
+                writeTheFile(req.files[key], key);
+              }
+            });
+
+           });
         } else {
 
+          console.log('writing file to amazon s3 bucket: tesedamongo');
           // amazon s3
           var params = {
               Bucket: 'tesedamongo',
               Key: fileName,
-              Body: "Hello"
+              Body: file
           };
 
           s3.putObject(params, function (perr, pres) {
@@ -153,7 +158,7 @@ module.exports = function (app, passport, auth) {
           });
 
         }
-      });
+
     };
 
     writeTheFile(file, key);
