@@ -2,6 +2,16 @@ var async = require('async');
 var fs= require('fs');
 var path = require('path');
 var express = require('express');
+var AWS = require('aws-sdk');
+var accessKeyId =  process.env.AWS_ACCESS_KEY || "xxxxxx";
+var secretAccessKey = process.env.AWS_SECRET_KEY || "+xxxxxx+B+xxxxxxx";
+AWS.config.update({
+    accessKeyId: accessKeyId,
+    secretAccessKey: secretAccessKey
+});
+
+var s3 = new AWS.S3();
+var nodeEnv = process.env.NODE_ENV || 'development';
 
 module.exports = function (app, passport, auth) {
 
@@ -105,16 +115,43 @@ module.exports = function (app, passport, auth) {
         var newPath = path.join(basePath, fileName);
         console.log('writing file to: ' + newPath);
 
-        fs.writeFile(newPath, data, function (err) {
-          cnt++;
-          dataSuccess.filenames.push(fileName);
-          if (cnt == fileKeys.length){
-            res.send(dataSuccess);
-          } else {
-            key = fileKeys[cnt];
-            writeTheFile(req.files[key], key);
-          }
-        });
+        if(nodeEnv == 'development'){
+          fs.writeFile(newPath, data, function (err) {
+            cnt++;
+            dataSuccess.filenames.push(fileName);
+            if (cnt == fileKeys.length){
+              res.send(dataSuccess);
+            } else {
+              key = fileKeys[cnt];
+              writeTheFile(req.files[key], key);
+            }
+          });
+        } else {
+
+          // amazon s3
+          var params = {
+              Bucket: 'tesedamongo',
+              Key: fileName,
+              Body: "Hello"
+          };
+
+          s3.putObject(params, function (perr, pres) {
+              if (perr) {
+                  console.log("Error uploading data: ", perr);
+              } else {
+                  console.log("Successfully uploaded data to myBucket/myKey");
+                  cnt++;
+                  dataSuccess.filenames.push(fileName);
+                  if (cnt == fileKeys.length){
+                    res.send(dataSuccess);
+                  } else {
+                    key = fileKeys[cnt];
+                    writeTheFile(req.files[key], key);
+                  }
+              }
+          });
+
+        }
       });
     };
 
