@@ -30,7 +30,7 @@ module.exports = {
     }
   },
   production: {
-    db: process.env.MONGOLAB_URI || process.env.MONGOHQ_URL,
+    db: process.env.MONGOLAB_URI || process.env.MONGOHQ_URL || 'mongodb://localhost/teseda-dev',
     root: rootPath,
     notifier: notifier,
     app: {

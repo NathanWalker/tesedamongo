@@ -62,7 +62,7 @@ module.exports = function (app, config, passport) {
     app.use(express.session({
       secret: 'tesedaApp',
       store: new mongoStore({
-        url: process.env.MONGOLAB_URI || process.env.MONGOHQ_URL || 'mongodb://localhost/teseda-dev',
+        url: config.db,
         collection : 'sessions'
       })
     }))
@@ -75,7 +75,7 @@ module.exports = function (app, config, passport) {
     app.use(passport.session())
 
     app.use(function(req,res,next) {
-      res.nodeEnv = app.settings.env || 'development'
+      res.nodeEnv = process.env.NODE_ENV || 'development'
       next()
     })
 
