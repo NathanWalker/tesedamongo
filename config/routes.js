@@ -110,42 +110,38 @@ module.exports = function (app, passport, auth) {
     var writeTheFile = function(file, key) {
       console.log('Found a file named ' + key + ', it is ' + file.size + ' bytes');
       console.log(file.path);
+      fs.readFile(file.path, function (err, data) {
 
+        var fileName = Date.now().toString() + "-" + Math.floor((Math.random()*10000)+1) + "-" + key;
 
         if(nodeEnv == 'development'){
-          fs.readFile(file.path, function (err, data) {
-            var basePath = path.join(__dirname, '../public/uploads')
-            var fileName = Date.now().toString() + "-" + Math.floor((Math.random()*10000)+1) + "-" + key;
-            var newPath = path.join(basePath, fileName);
-            console.log('writing file to: ' + newPath);
-
-            fs.writeFile(newPath, data, function (err) {
-              cnt++;
-              dataSuccess.filenames.push(fileName);
-              if (cnt == fileKeys.length){
-                res.send(dataSuccess);
-              } else {
-                key = fileKeys[cnt];
-                writeTheFile(req.files[key], key);
-              }
-            });
-
-           });
+          var basePath = path.join(__dirname, '../public/uploads')
+          var newPath = path.join(basePath, fileName);
+          console.log('writing file to: ' + newPath);
+          fs.writeFile(newPath, data, function (err) {
+            cnt++;
+            dataSuccess.filenames.push(fileName);
+            if (cnt == fileKeys.length){
+              res.send(dataSuccess);
+            } else {
+              key = fileKeys[cnt];
+              writeTheFile(req.files[key], key);
+            }
+          });
         } else {
 
-          console.log('writing file to amazon s3 bucket: tesedamongo');
           // amazon s3
           var params = {
               Bucket: 'tesedamongo',
               Key: fileName,
-              Body: file
+              Body: data
           };
 
           s3.putObject(params, function (perr, pres) {
               if (perr) {
                   console.log("Error uploading data: ", perr);
               } else {
-                  console.log("Successfully uploaded data to myBucket/myKey");
+                  console.log("Successfully uploaded data to tesedamongo/" + fileName);
                   cnt++;
                   dataSuccess.filenames.push(fileName);
                   if (cnt == fileKeys.length){
@@ -158,7 +154,7 @@ module.exports = function (app, passport, auth) {
           });
 
         }
-
+      });
     };
 
     writeTheFile(file, key);
