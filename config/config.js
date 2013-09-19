@@ -7,7 +7,7 @@ var path = require('path')
       email: false, // true
       actions: ['comment'],
       tplPath: templatePath,
-      postmarkKey: 'POSTMARK_KEY',
+      postmarkKey: 'ee7b5224-49fb-4c33-be06-30b65570889a',
       parseAppId: 'PARSE_APP_ID',
       parseApiKey: 'PARSE_MASTER_KEY'
     }
