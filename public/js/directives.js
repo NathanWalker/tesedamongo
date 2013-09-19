@@ -21,16 +21,18 @@ window.angular.module("App.directives", []).directive('scrollTopLink', [
   "$timeout", function($timeout) {
     var link;
     link = function(scope, element, attrs) {
-      return element.fancybox({
-        openEffect: 'none',
-        closeEffect: 'none',
-        prevEffect: 'none',
-        nextEffect: 'none',
-        arrows: false,
-        helpers: {
-          media: {}
-        }
-      });
+      $timeout(function() {
+        element.fancybox({
+          openEffect: 'none',
+          closeEffect: 'none',
+          prevEffect: 'none',
+          nextEffect: 'none',
+          arrows: false,
+          helpers: {
+            media: {}
+          }
+        });
+      }, 300);
     };
     return {
       restrict: 'A',
@@ -53,25 +55,25 @@ window.angular.module("App.directives", []).directive('scrollTopLink', [
       init = function() {
         $container = $("#portfolio-items");
         if ($container.length) {
-          $(".project").each(function() {
-            var $this, classes, i, tags, _results;
-            $this = $(this);
-            tags = $this.data("tags");
-            if (tags) {
-              classes = tags.split(",");
-              i = classes.length - 1;
-              _results = [];
-              while (i >= 0) {
-                $this.addClass(classes[i]);
-                _results.push(i--);
-              }
-              return _results;
-            }
-          });
-          $container.isotope({
-            itemSelector: ".project",
-            layoutMode: "fitRows"
-          });
+          // $(".project").each(function() {
+          //   var $this, classes, i, tags, _results;
+          //   $this = $(this);
+          //   tags = $this.data("tags");
+          //   if (tags) {
+          //     classes = tags.split(",");
+          //     i = classes.length - 1;
+          //     _results = [];
+          //     while (i >= 0) {
+          //       $this.addClass(classes[i]);
+          //       _results.push(i--);
+          //     }
+          //     return _results;
+          //   }
+          // });
+          // $container.isotope({
+          //   itemSelector: ".project",
+          //   layoutMode: "fitRows"
+          // });
           return $("#portfolio-filter li a").bind('click', function() {
             var selector;
             selector = $(this).attr("data-filter");
@@ -82,7 +84,7 @@ window.angular.module("App.directives", []).directive('scrollTopLink', [
       };
       return $timeout(function() {
         return init();
-      }, 400);
+      }, 1000);
     };
     return {
       restrict: "A",
@@ -93,15 +95,17 @@ window.angular.module("App.directives", []).directive('scrollTopLink', [
     return {
         restrict: 'A',
         controller:'TagsCtrl',
-        scope: {},
+        scope: {
+          type:'@'
+        },
         template:
             '<div>' +
             '<ul class="tags">' +
                 '<li ng-repeat="(idx, tag) in tags" data-lvl-draggable="true" data-tag-id="{{tag._id}}"><a data-ng-click="selectTag(tag)">{{tag.name}}</a></li>' +
             '</ul>' +
             '<div data-ng-if="$root.global.isModerator()" style="margin-top:10px;"><form class="form-horizontal"><input type="text" placeholder="Add a category..." ng-model="activeTag.name"/>' +
-            '<input type="submit" class="btn" data-ng-click="create(activeTag)" value="Add"/></form>' +
-            '<div data-lvl-drop-target="true" data-on-drop="dropped(dragEl, dropEl)" data-icon="&#x29;"></div>' +
+            '<input type="submit" class="btn" data-ng-click="submitTagForm(activeTag)" value="Add"/></form>' +
+            '<div data-lvl-drop-target="true" data-ng-hide="$parent.tags.length==0" data-on-drop="dropped(dragEl, dropEl)" data-icon="&#x29;"></div>' +
             '</div>' +
             '</div>',
         link: function ( scope, el ) {
@@ -118,17 +122,25 @@ window.angular.module("App.directives", []).directive('scrollTopLink', [
               $rootScope.$broadcast('tag:remove', drag.attr('data-tag-id'));
             };
 
-            // Capture all keypresses
-            input.bind( 'keypress', function ( event ) {
-                // But we only care when Enter was pressed
-                if ( event.keyCode == 13 ) {
-                    // There's probably a better way to handle this...
-                    $rootScope.safeApply(function(){
-                      scope.create(s.activeTag);
-                    });
-                }
-            });
+            scope.submitTagForm = function(activeTag) {
+              activeTag.type = scope.type;
+              scope.create(activeTag);
+            };
         }
     };
+}]).directive('previewImage', ['ImagesService', '$rootScope', function(ImagesService, $rootScope) {
+  return {
+    restrict:"A",
+    scope:{
+      image:"=previewImage"
+    },
+    template:"<img class='preview-image' data-ng-src='/uploads/{{image.url}}'/><div class='remove-image' data-ng-click='removeImage()'></div>",
+    link: function(scope, el) {
+      scope.removeImage = function() {
+        scope.image.$remove();
+        $rootScope.$broadcast('image:removed');
+      };
+    }
+  };
 }]);
 

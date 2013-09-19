@@ -5,8 +5,26 @@ var mongoose = require('mongoose')
 
 exports.create = function (req, res) {
   var post = new Post(req.body)
-  post.save()
-  res.jsonp(post)
+  var query = req.query ? req.query : {};
+
+  var createPost = function(){
+    post.save()
+    res.jsonp(post)
+  };
+
+  if(query.tagId){
+    var Tag = mongoose.model('Tag')
+    Tag.load(query.tagId, function (err, tag) {
+      if (!err && tag) {
+        post.tags.push(tag);
+        createPost();
+      } else {
+        createPost();
+      }
+    });
+  } else {
+    createPost()
+  }
 }
 
 exports.show = function(req, res){
@@ -24,9 +42,10 @@ exports.post = function(req, res, next, id){
 }
 
 exports.all = function(req, res){
- Post.find().exec(function(err, posts) {
+  var query = req.query ? req.query : {};
+ Post.find(query).populate('tags').exec(function(err, posts) {
    if (err) {
-      res.render('error', {status: 500});
+      res.jsonp(0);
    } else {
       res.jsonp(posts);
    }
@@ -36,9 +55,29 @@ exports.all = function(req, res){
 exports.update = function(req, res){
   var post = req.post
   post = _.extend(post, req.body)
-  post.save(function(err) {
-    res.jsonp(post)
-  })
+  var query = req.query ? req.query : {};
+
+  var updatePost = function(){
+    post.save(function(err) {
+      res.jsonp(post)
+    })
+  };
+
+  if(query.tagId){
+    var Tag = mongoose.model('Tag')
+    Tag.load(query.tagId, function (err, tag) {
+      if (!err && tag) {
+        post.tags.push(tag);
+        updatePost();
+      } else {
+        updatePost();
+      }
+    });
+  } else {
+    updatePost()
+  }
+
+
 }
 
 exports.destroy = function(req, res){

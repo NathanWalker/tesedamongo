@@ -7,7 +7,7 @@ var PostSchema = new Schema({
   title: {type : String},
   content: {type : String},
   created: {type : Date, default : Date.now},
-  image: {type : String},
+  image: {type: 'String'},
   tags: [{type: Schema.ObjectId, ref: 'Tag'}]
 });
 

@@ -5,9 +5,9 @@ var mongoose = require('mongoose')
 
 var VideoSchema = new Schema({
   title: {type : String},
+  type: {type : String, default : 'youtube'},
   url: {type : String},
-  type: {type : String},
-  poster: {type : Schema.ObjectId, ref: 'Image'},
+  poster: {type : String},
   order: {type : Number},
   exclusive: {type : Boolean},
   tags: [{type: Schema.ObjectId, ref: 'Tag'}]
@@ -15,7 +15,7 @@ var VideoSchema = new Schema({
 
  VideoSchema.statics = {
    load: function (id, cb) {
-     this.findOne({ _id : id }).populate('poster').populate('tags').exec(cb);
+     this.findOne({ _id : id }).populate('tags').exec(cb);
    }
  };
 

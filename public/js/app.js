@@ -1,4 +1,9 @@
-window.app = angular.module('tesedaApp', ['ngCookies', 'ngResource', 'ngSanitize', 'ui.bootstrap', 'ngRoute', 'App.controllers', 'App.directives', 'App.filters', 'App.services', 'lvl.directives.dragdrop', 'lvl.directives.fileupload']).run(['$rootScope', '$location', '$anchorScroll', '$timeout', 'Global', function($rootScope, $location, $anchorScroll, $timeout, Global){
+window.app = angular.module('tesedaApp', ['ngCookies', 'ngResource', 'ngSanitize', 'ui.bootstrap', 'ngRoute', 'App.controllers', 'App.directives', 'App.filters', 'App.services', 'lvl.directives.dragdrop', 'lvl.directives.fileupload', 'iso'])
+.value('iso.config', {
+    refreshDelay: 300,
+    refreshEvent: 'isotope:refresh'
+})
+.run(['$rootScope', '$location', '$anchorScroll', '$timeout', 'Global', function($rootScope, $location, $anchorScroll, $timeout, Global){
 
     $rootScope.global = Global;
     $rootScope.navCollapsed = true;

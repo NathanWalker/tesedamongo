@@ -1329,9 +1329,9 @@ input.animated:focus {
 #explore h3 {margin:0 0 10px 0;}
 
 @media (max-width: 767px) {
-	#explore img {
+	/*#explore img {
 		width:100%;
-	}
+	}*/
 }
 
 ul.the-icons {

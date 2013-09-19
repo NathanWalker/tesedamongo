@@ -24,7 +24,8 @@ exports.tag = function(req, res, next, id){
 }
 
 exports.all = function(req, res){
- Tag.find().exec(function(err, tags) {
+  var query = req.query ? req.query : {};
+ Tag.find(query).exec(function(err, tags) {
    if (err) {
       res.render('error', {status: 500});
    } else {

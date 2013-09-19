@@ -1,12 +1,12 @@
 <div class="hero-unit">
   <div class="container">
-    <div class="btn btn-primary" data-ng-click="openNewForm()" style="float:right;">New</div>
+    <div class="btn new-btn" data-ng-click="openNewForm()" data-icon="d">New</div>
   </div>
 </div>
 
 <div class="container" data-ng-if="showNewForm">
   <hr/>
-  <h3>{{editing|booleanText:'Edit':'New'}}</h3>
+  <h3 style="text-align:center;margin: 0 0 10px;"><span>{{editing|booleanText:'Edit':'New'}}</span><span data-ng-if="editing" style="display:inline-block;margin-left:10px;">"{{activeProduct.name}}"</span></h3>
   <form class="form-horizontal">
               <p style="font-style:italic; color:red;" data-ng-show="failed">Product save failed, please verify your input.</p>
               <fieldset>
@@ -38,17 +38,12 @@
                   </div>
                 </div>
 
+                <hr/>
+                <h4>This section is only for Products that show up on main products page</h4>
                 <div class="control-group">
                   <label class="control-label"  for="create-featured">Featured</label>
                   <div class="controls">
                     <input type="checkbox" id="create-featured" name="featured" class="input-xlarge" data-ng-model="activeProduct.featured">
-                  </div>
-                </div>
-
-                <div class="control-group">
-                  <label class="control-label"  for="create-feature-list">Feature List</label>
-                  <div class="controls">
-                    <textarea id="create-feature-list" placeholder="Feature List" name="featureList" class="input-xlarge" data-ng-model="activeProduct.featureList" style="width:500px;height:200px;"></textarea>
                   </div>
                 </div>
 
@@ -62,6 +57,13 @@
                       <option value="4">4</option>
                       <option value="5">5</option>
                     </select>
+                  </div>
+                </div>
+
+                <div class="control-group">
+                  <label class="control-label"  for="create-feature-list">Feature List</label>
+                  <div class="controls">
+                    <textarea id="create-feature-list" placeholder="Feature List" name="featureList" class="input-xlarge" data-ng-model="activeProduct.featureList" style="width:500px;height:200px;"></textarea>
                   </div>
                 </div>
 

@@ -2,12 +2,14 @@
     <div class="container">
       <!-- <h1 class="ac">Suite of Products</h1> -->
       <p class="ac" data-ng-bind-html="page.title"></p>
-      <a data-ng-if="global.isAdmin()" class="btn" href="/#!/products/edit" style="float:right;position:relative;top:-45px;" data-icon="d">Edit</a>
+      <!-- <a data-ng-if="global.isAdmin()" class="btn new-btn" href="/#!/pages/{{page._id}}" data-icon="d">Edit</a> -->
       <p style="max-width:700px; text-align:center; margin:0 auto;" data-ng-if="page.subheading" data-ng-bind-html="page.subheading"></p>
     </div>
   </div>
 
-
+  <div data-ng-if="global.isAdmin()" class="clr" style="margin: 0 0 15px;text-align:center;">
+    <a class="btn" href="/#!/products/edit" data-icon="d">Edit Products</a>
+  </div>
   <div class="row pricing">
     <div class="span4" data-ng-repeat="product in products">
       <div class="well">
@@ -23,28 +25,7 @@
   <hr />
 
   <div class="row">
-    <div class="span12">
-      <h1 id="hardware-overview" class="lead" style="text-align:center;font-weight:bold;">
-        Hardware Overview
-      </h1>
-      <p class="ac" style="max-width:700px; text-align:center; margin:0 auto; font-size:14px;">
-        Teseda Diagnostic Systems utilize the <strong>Teseda Workbench™ (TWB)</strong> software with the Teseda <strong>550 Diagnostic Hardware</strong> allowing engineers to work in a familiar device analysis context instead of in a sea of ones and zeros. Teseda Diagnostic Systems are designed for a variety of applications – from screening of potential field returns by remote customer quality engineers, to device stimulus and data capture for defect scanning, to defect isolation down to gate-level root-cause analysis.
-        <img src="/img/products/Teseda-V550-Engineering-Test-System.jpg" style="margin:0 auto; margin:5px 0;"/><br/>
-        The <strong>550 Diagnostic Hardware</strong> is powerful enough to handle the most advanced device stimulus requirements, yet is easy to use, portable, air-cooled, and can quickly interface to other lab tools such as micro-probers, emission microscopes,  and dynamic laser stimulus tools.
-      </p>
-      <h1 id="hardware-overview" class="lead" style="text-align:center;font-weight:bold; margin:20px 0 10px;">
-        Software Overview
-      </h1>
-      <p class="ac" style="font-size:14px;">
-        Teseda has developed a comprehensive set of software tools:
-      </p>
-      <ul class="software-overview-list">
-        <li><a href="/#!/products/defect-isolator">Defect Isolator</a></li>
-        <li><a href="/#!/products/workbench">Teseda WorkBench (TWB)&trade;</a></li>
-        <li><a href="/#!/products/workbench-scan">Teseda's Scan WorkBench (TWB)&trade;</a></li>
-        <li><a href="/#!/products/broken-chain-analyzer">Broken Chain Analyzer (BCA)&trade;</a></li>
-        <li><a href="/#!/products/curve-trace-tool">Curve Trace Tool</a></li>
-      </ul>
+    <div class="span12" data-ng-bind-html="page.content">
     </div>
   </div>
 

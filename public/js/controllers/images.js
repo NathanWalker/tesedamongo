@@ -2,11 +2,13 @@ window.angular.module('App.controllers').controller("ImagesCtrl", ["$scope", "$r
 
       s.showNewForm = false;
       s.editing = false;
+      s.fileUploading = false;
 
       var resetActiveImage = function() {
         s.activeImage = {
           url: ''
         };
+        s.fileUploading = false;
       };
 
       s.openNewForm = function() {
@@ -34,8 +36,7 @@ window.angular.module('App.controllers').controller("ImagesCtrl", ["$scope", "$r
         } else {
 
           var image = new ImagesService({
-            name: activeImage.name,
-            type: activeImage.type
+            url: activeImage.url
           });
 
           image.$save(function (response) {
@@ -50,7 +51,7 @@ window.angular.module('App.controllers').controller("ImagesCtrl", ["$scope", "$r
 
       };
 
-      s.editTag = function(image) {
+      s.editImage = function(image) {
         s.editing = true;
         s.activeImage = image;
         s.toggleNew(true);
@@ -91,6 +92,45 @@ window.angular.module('App.controllers').controller("ImagesCtrl", ["$scope", "$r
           }
         }
       };
+
+
+      s.progress = function(percentDone) {
+        s.fileUploading = true;
+            console.log("progress: " + percentDone + "%");
+      };
+
+      s.done = function(files, data) {
+            console.log("upload complete");
+            console.log("data: " + JSON.stringify(data));
+            writeFiles(files, data);
+      };
+
+      s.getData = function(files) {
+            //this data will be sent to the server with the files
+            return {msg: "from the client", date: new Date()};
+      };
+
+      s.error = function(files, type, msg) {
+            console.log("Upload error: " + msg);
+            console.log("Error type:" + type);
+            writeFiles(files);
+      }
+
+      function writeFiles(files, data)
+      {
+
+            console.log('Files')
+            for (var i = 0; i < files.length; i++) {
+                  console.log('\t' + files[i].name);
+            }
+            if(data) {
+              var imageName = data.filenames[0];
+              s.create({
+                url: imageName
+              });
+            }
+
+      }
 
       if ($routeParams.image) {
         s.findOne();

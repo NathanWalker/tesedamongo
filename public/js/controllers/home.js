@@ -1,4 +1,4 @@
-window.angular.module('App.controllers').controller("HomeCtrl", ["$scope", "$rootScope", "$filter", "$timeout", function(s, $rootScope, $filter, $timeout) {
+window.angular.module('App.controllers').controller("HomeCtrl", ["$scope", "$rootScope", "$filter", "$timeout", "PagesService", function(s, $rootScope, $filter, $timeout, PagesService) {
     s.carouselInterval = 6000;
     s.slides = [
       {
@@ -15,7 +15,7 @@ window.angular.module('App.controllers').controller("HomeCtrl", ["$scope", "$roo
         view: 'views/carousel/4.html'
       }
     ];
-    return s.slides2 = [
+    s.slides2 = [
       {
         active: true,
         view: 'assets/carousel_1.jpg'
@@ -27,5 +27,9 @@ window.angular.module('App.controllers').controller("HomeCtrl", ["$scope", "$roo
         view: 'assets/carousel_3.gif'
       }
     ];
+
+    PagesService.query({route:'home'}, function (pages) {
+      s.page = _.first(pages);
+    });
   }
 ]);

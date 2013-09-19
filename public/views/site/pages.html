@@ -1,16 +1,16 @@
 <div class="hero-unit">
     <div class="ac">
-      <p><strong>Site Pages</strong></p>
+      <p><strong>Pages</strong></p>
       <div style="text-align:right;" data-ng-if="global.isAdmin()">
-        <div  class="btn btn-primary" data-ng-click="openNewForm()" data-icon="&#xe038;">New</div>
+        <div data-ng-if="!showNewForm" class="btn new-btn" data-icon="d" data-ng-click="openNewForm()">New</div>
       </div>
-
+      <div class="clr"></div>
     </div>
   </div>
 
   <div class="container" data-ng-if="showNewForm">
     <hr/>
-    <h3>{{editing|booleanText:'Edit':'New'}}</h3>
+    <h3 style="text-align:center;margin: 0 0 10px;"><span>{{editing|booleanText:'Edit':'New'}}</span><span data-ng-if="editing" style="display:inline-block;margin-left:10px;">"{{activePage.route}}"</span></h3>
     <form class="form-horizontal" >
         <p style="font-style:italic; color:red;" data-ng-show="failed">Page failed to update.</p>
         <fieldset>
@@ -57,7 +57,7 @@
 
 <div class="container">
   <ul class="software-overview-list">
-    <li data-ng-repeat="page in pages">
+    <li data-ng-repeat="page in pages|orderBy:'+route'">
       <a data-ng-click="editPage(page)">{{page.route}}</a>
     </li>
   </ul>

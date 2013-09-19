@@ -1,5 +1,12 @@
 window.angular.module('App.controllers').controller("PagesCtrl", ["$scope", "$rootScope", "$filter", "$timeout", "$location", "$window", "$routeParams", "Global", "PagesService", function(s, $rootScope, $filter, $timeout, $location, $window, $routeParams, Global, PagesService) {
 
+
+      if(!Global.isAdmin()){
+        // unauthorized, redirect to home
+        $location.url('/');
+        return;
+      }
+
       s.showNewForm = false;
       s.editing = false;
 
@@ -28,7 +35,18 @@ window.angular.module('App.controllers').controller("PagesCtrl", ["$scope", "$ro
       var populatePages = function(query) {
         PagesService.query(query, function (pages) {
           s.pages = pages;
+
+          if ($routeParams.page) {
+            var foundPage = _.find(s.pages, function(p){
+              return p._id == $routeParams.page;
+            });
+            if(foundPage){
+              s.editPage(foundPage);
+            }
+          }
         });
+
+
       };
 
       s.create = function (activePage) {
@@ -97,12 +115,7 @@ window.angular.module('App.controllers').controller("PagesCtrl", ["$scope", "$ro
         }
       };
 
-      if ($routeParams.page) {
-        s.findOne();
-      } else {
-        populatePages();
-        resetActivePage();
-      }
-
+      populatePages();
+      resetActivePage();
   }
 ]);

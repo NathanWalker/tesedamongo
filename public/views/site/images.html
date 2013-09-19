@@ -1,7 +1,7 @@
 <div class="hero-unit">
     <div class="ac">
       <p><strong>Site Images</strong></p>
-      <div data-ng-if="global.isAdmin()" class="btn btn-primary" style="float:right;" data-ng-click="openNewForm()">New</div>
+      <div data-ng-if="global.isAdmin()" class="btn new-btn" data-ng-click="openNewForm()">New</div>
     </div>
   </div>
 
@@ -10,23 +10,32 @@
   <h3>{{editing|booleanText:'Edit':'New'}}</h3>
     <form class="form-horizontal">
               <p style="font-style:italic; color:red;" data-ng-show="failed">Image failed to update.</p>
-              <div data-ng-if="activeImage.url" class="image">
-                <img data-ng-src="{{activeImage.url}}"/>
+              <div data-ng-if="activeImage.url" style="text-align:center; margin:10px;">
+                <img data-ng-src="/uploads/{{activeImage.url}}"  style="max-width:300px; max-height:300px;"/>
               </div>
               <fieldset>
 
-                <div class="control-group">
-                  <label class="control-label"  for="create-image">Image File</label>
-                  <div class="controls">
-                    <input type="file" id="create-image" name="file" class="input-xlarge">
-                  </div>
+                <div class="control-group" data-ng-if="!activeImage.url">
+                  <div
+                      data-lvl-file-upload
+                     auto-upload='true'
+                     choose-file-button-text='Upload image'
+                     upload-file-button-text='Upload image'
+                     upload-url='/files'
+                     max-files='1'
+                     max-file-size-mb='5'
+                     get-additional-data='getData(files)'
+                     on-done='done(files, data)'
+                     on-progress='progress(percentDone)'
+                     on-error='error(files, type, msg)'></div>
                 </div>
+
 
                 <div class="control-group">
                   <div class="controls">
-                    <button class="btn btn-primary" data-ng-click="create(activeImage)">{{editing|booleanText:'Update':'Save'}}</button>
+                    <!-- <button class="btn btn-primary" data-ng-click="create(activeImage)">{{editing|booleanText:'Update':'Save'}}</button> -->
                     <button class="btn" data-ng-click="toggleNew(false)">Cancel</button>
-                    <button class="btn btn-danger" data-ng-click="remove(activeImage)" style="float:right;">Delete</button>
+                    <button class="btn btn-danger" data-ng-click="remove(activeImage)" style="float:right;" data-ng-if="activeImage.url">Delete</button>
                   </div>
                 </div>
               </fieldset>
@@ -37,8 +46,8 @@
 <div class="container">
 
   <div class="image-editor">
-    <div data-ng-repeat="image in images" class="image">
-      <img data-ng-src="{{image.url}}"/>
+    <div data-ng-repeat="image in images" class="image" data-ng-click="editImage(image)">
+      <img data-ng-src="/uploads/{{image.url}}"/>
     </div>
   </div>
 </div>

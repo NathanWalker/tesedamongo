@@ -85,29 +85,16 @@ angular
 							data = scope.getAdditionalData();
 						}
 
-						if (angular.version.major <= 1 && angular.version.minor < 2 ) {
-							//older versions of angular's q-service don't have a notify callback
-							//pass the onProgress callback into the service
-							fileUploader
-								.post(scope.files, data, function(complete) { scope.onProgress({percentDone: complete}); })
-								.to(scope.uploadUrl)
-								.then(function(ret) {
-									scope.onDone({files: ret.files, data: ret.data});
-								}, function(error) {
-									scope.onError({files: scope.files, type: 'UPLOAD_ERROR', msg: error});
-								})
-						} else {
-							fileUploader
-								.post(scope.files, data)
-								.to(scope.uploadUrl)
-								.then(function(ret) {
-									scope.onDone({files: ret.files, data: ret.data});
-								}, function(error) {
-									scope.onError({files: scope.files, type: 'UPLOAD_ERROR', msg: error});
-								},  function(progress) {
-									scope.onProgress({percentDone: progress});
-								});
-						}
+						fileUploader
+							.post(scope.files, data)
+							.to(scope.uploadUrl)
+							.then(function(ret) {
+								scope.onDone({files: ret.files, data: ret.data});
+							}, function(error) {
+								scope.onError({files: scope.files, type: 'UPLOAD_ERROR', msg: error});
+							},  function(progress) {
+								scope.onProgress({percentDone: progress});
+							});
 
 						resetFileInput();
 					};
@@ -121,32 +108,18 @@ angular
 						var parent = fileInput.parent();
 
 						fileInput.remove();
-						var input = document.createElement("input");
-						var attr = document.createAttribute("type");
-						attr.nodeValue = "file";
-						input.setAttributeNode(attr);
+						fileInput = angular.element("<input type='file'/>");
 
 						var inputId = uuid.new();
-						attr = document.createAttribute("id");
-						attr.nodeValue = inputId;
-						input.setAttributeNode(attr);
-
-						attr = document.createAttribute("style");
-						attr.nodeValue = "opacity: 0;display:inline;width:0; position:absolute; z-index:0;";
-						input.setAttributeNode(attr);
-
-
-
-						if (scope.maxFiles > 1) {
-							attr = document.createAttribute("multiple");
-							attr.nodeValue = "multiple";
-							input.setAttributeNode(attr);
-						}
-
-						fileLabel.after(input);
+						fileInput.attr('id', inputId);
+						fileInput.attr('style', 'opacity:0;position:absolute; z-index:0;');
 						fileLabel.attr("for", inputId);
 
-						fileInput = angular.element(input);
+						if (scope.maxFiles > 1) {
+							fileInput.attr('multiple', 'multiple');
+						}
+
+						angular.element(fileInput).insertBefore(fileLabel);
 					}
 				}
 			}

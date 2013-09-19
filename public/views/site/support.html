@@ -1,22 +1,17 @@
 <div class="hero-unit">
     <div class="ac">
-      <span>Client <strong>support</strong></span>
+      <p data-ng-bind-html="page.title"></p>
     </div>
   </div>
 
 
 <div class="well row">
   <div class="span3" style="margin-right:18px;">
-    <h4>Customer Service</h4>
-    <p>Mon-Fri: 8 a.m. - 7 p.m. PST<br/><br/>
-      <a href="tel:503-223-3315" data-icon="u">&nbsp;&nbsp;503-223-3315</a>
-    </p>
+    <div data-ng-bind-html="page.subheading"></div>
       <br/>
       <br/>
-      <span data-ng-if="!global.isSignedIn()">
-        <h4>Register your client profile</h4>
-        Gain access to exclusive training and software tutorial videos.<br/><br/>
-        In addition, you will have access to our customer care ticket tracking system. If you encounter an issue, our engineers are here to help. Once you have registered using your Client ID, you will be able to create a support ticket and track it's progress.
+      <span data-ng-if="!global.isSignedIn()" data-ng-bind-html="page.content">
+
       </span>
     </p>
   </div>
@@ -34,15 +29,15 @@
       </div>
     </tab>
 
-    <tab heading="Users" data-ng-if="global.currentUser().admin">
+    <tab heading="Edit Users" data-ng-if="global.currentUser().admin">
         <div class="tab-pane" data-ng-controller="UsersCtrl">
-          <div class="btn btn-primary" style="float:right;" data-ng-click="openNewForm()" data-ng-hide="showUserForm">New</div>
+          <!-- <div class="btn btn-primary" style="float:right;" data-ng-click="openNewForm()" data-ng-hide="showUserForm">New</div> -->
             <form class="form-horizontal" data-ng-if="showUserForm">
               <p style="font-style:italic; color:red;" data-ng-show="failed">User failed to update.</p>
               <fieldset>
 
                 <div class="control-group">
-                  <label class="control-label"  for="create-nameEdit">Name</label>
+                  <label class="control-label"  for="create-nameEdit">Name<span class="req-input">*</span></label>
                   <div class="controls">
                     <input type="text" id="create-nameEdit" placeholder="Name" name="name" class="input-xlarge" data-ng-model="activeUser.name">
                   </div>
@@ -56,7 +51,7 @@
                 </div>
 
                 <div class="control-group">
-                  <label class="control-label"  for="create-client-idEdit">Client ID</label>
+                  <label class="control-label"  for="create-client-idEdit">Client ID<span class="req-input">*</span></label>
                   <div class="controls">
                     <input type="text" id="create-client-idEdit" placeholder="Client ID" name="clientId" class="input-xlarge" data-ng-model="activeUser.clientId">
                   </div>
@@ -64,7 +59,7 @@
 
                 <hr/>
                 <div class="control-group">
-                  <label class="control-label"  for="create-usernameEdit">Login</label>
+                  <label class="control-label"  for="create-usernameEdit">Login<span class="req-input">*</span></label>
                   <div class="controls">
                     <input type="text" id="create-usernameEdit" placeholder="Your email" name="username" class="input-xlarge" data-ng-model="activeUser.username">
                   </div>
@@ -72,7 +67,7 @@
 
                 <div class="control-group">
                   <!-- Password-->
-                  <label class="control-label" for="create-passwordEdit">Password</label>
+                  <label class="control-label" for="create-passwordEdit">Password<span class="req-input">*</span></label>
                   <div class="controls">
                     <input type="password" id="create-passwordEdit" name="password" placeholder="Password" class="input-xlarge" data-ng-model="activeUser.password">
                   </div>
@@ -80,7 +75,7 @@
 
                 <div class="control-group">
                   <!-- Password-->
-                  <label class="control-label" for="create-confirmEdit">Confirm</label>
+                  <label class="control-label" for="create-confirmEdit">Confirm<span class="req-input">*</span></label>
                   <div class="controls">
                     <input type="password" id="create-confirmEdit" placeholder="Confirm password" class="input-xlarge" data-ng-model="userConfirm.confirmPassword">
                   </div>
@@ -100,7 +95,17 @@
             <div>
               <h5>All Users</h5>
               <ul class="user-list">
-                <li data-ng-repeat="user in users"><a data-ng-click="editUser(user)">{{user.name}}</a></li>
+                <li data-ng-repeat="user in users|orderBy:'+name'"><a data-ng-click="editUser(user)">{{user.name}}</a></li>
+              </ul>
+            </div>
+          </div>
+    </tab>
+    <tab heading="Edit Pages" data-ng-if="global.isAdmin()">
+      <div class="tab-pane" data-ng-controller="PagesCtrl">
+            <div>
+              <ul class="user-list">
+                <li data-ng-repeat="page in pages|orderBy:'+route'"><a data-ng-href="/#!/pages/{{page._id}}">{{page.route}}</a></li>
+                <li class="divider"><a data-ng-href="/#!/products/edit">product listings, etc</a></li>
               </ul>
             </div>
           </div>
@@ -146,7 +151,7 @@
               <p style="font-style:italic; color:red;" data-ng-show="failed">Registration failed, please verify your input.</p>
               <fieldset>
                 <div class="control-group">
-                  <label class="control-label"  for="create-name">Name</label>
+                  <label class="control-label"  for="create-name">Name<span class="req-input">*</span></label>
                   <div class="controls">
                     <input type="text" id="create-name" placeholder="Name" name="name" class="input-xlarge">
                   </div>
@@ -160,7 +165,7 @@
                 </div>
 
                 <div class="control-group">
-                  <label class="control-label"  for="create-client-id">Client ID</label>
+                  <label class="control-label"  for="create-client-id">Client ID<span class="req-input">*</span></label>
                   <div class="controls">
                     <input type="text" id="create-client-id" placeholder="Client ID" name="clientId" class="input-xlarge">
                   </div>
@@ -168,7 +173,7 @@
 
                 <hr/>
                 <div class="control-group">
-                  <label class="control-label"  for="create-username">Login</label>
+                  <label class="control-label"  for="create-username">Login<span class="req-input">*</span></label>
                   <div class="controls">
                     <input type="text" id="create-username" placeholder="Your email" name="username" class="input-xlarge">
                   </div>
@@ -176,7 +181,7 @@
 
                 <div class="control-group">
                   <!-- Password-->
-                  <label class="control-label" for="create-password">Password</label>
+                  <label class="control-label" for="create-password">Password<span class="req-input">*</span></label>
                   <div class="controls">
                     <input type="password" id="create-password" name="password" placeholder="Password" class="input-xlarge">
                   </div>
@@ -184,7 +189,7 @@
 
                 <div class="control-group">
                   <!-- Password-->
-                  <label class="control-label" for="create-confirm">Confirm</label>
+                  <label class="control-label" for="create-confirm">Confirm<span class="req-input">*</span></label>
                   <div class="controls">
                     <input type="password" id="create-confirm" placeholder="Confirm password" class="input-xlarge">
                   </div>

@@ -2,6 +2,8 @@ var mongoose = require('mongoose')
   , async = require('async')
   , Image = mongoose.model('Image')
   , _ = require('underscore')
+  , rimraf = require('rimraf')
+  , path = require('path');
 
 exports.create = function (req, res) {
   var image = new Image(req.body)
@@ -43,11 +45,21 @@ exports.update = function(req, res){
 
 exports.destroy = function(req, res){
   var image = req.image
-  image.remove(function(err){
-    if (err) {
-      res.render('error', {status: 500});
-    } else {
-      res.jsonp(1);
-    }
+  // remove from filesystem first
+  var basePath = path.join(__dirname, '../../public/uploads')
+  var fileName = image.url
+  var filePath = path.join(basePath, fileName);
+  console.log('deleting file: ' + filePath);
+  rimraf(filePath, function(err) {
+    if (err) { throw err; }
+    // done
+    image.remove(function(err){
+      if (err) {
+        res.render('error', {status: 500});
+      } else {
+        res.jsonp(1);
+      }
+    })
   })
+
 }

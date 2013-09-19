@@ -2,6 +2,11 @@ window.app.config(['$routeProvider', '$sceProvider', function($routeProvider, $s
 	$sceProvider.enabled(false);
 
       $routeProvider
+      .when('',
+      {
+        templateUrl: 'views/site/home.html',
+                controller:'HomeCtrl'
+      })
 	.when('/',
 	{
 		templateUrl: 'views/site/home.html',
@@ -34,11 +39,13 @@ window.app.config(['$routeProvider', '$sceProvider', function($routeProvider, $s
       })
       .when('/about',
       {
-        templateUrl:'views/site/about.html'
+        templateUrl:'views/site/about.html',
+        controller:'AboutCtrl'
       })
       .when('/contact',
       {
-        templateUrl:'views/site/contact.html'
+        templateUrl:'views/site/contact.html',
+        controller:'ContactCtrl'
       })
       .when('/privacy',
       {
@@ -46,15 +53,18 @@ window.app.config(['$routeProvider', '$sceProvider', function($routeProvider, $s
       })
       .when('/partners',
       {
-        templateUrl:'views/site/partners.html'
+        templateUrl:'views/site/partners.html',
+        controller:'PartnersCtrl'
       })
       .when('/specs',
       {
-        templateUrl:'views/site/specs.html'
+        templateUrl:'views/site/specs.html',
+        controller:'SpecCtrl'
       })
       .when('/support',
       {
-        templateUrl:'views/site/support.html'
+        templateUrl:'views/site/support.html',
+        controller:'SupportCtrl'
       })
       .when('/news',
       {

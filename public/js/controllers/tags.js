@@ -24,8 +24,11 @@ window.angular.module('App.controllers').controller("TagsCtrl", ["$scope", "$roo
       s.tags = [];
 
       var populateTags = function(query) {
+        query = query || {};
         TagsService.query(query, function (tags) {
           s.tags = tags;
+
+          $rootScope.$broadcast('tag:loaded', tags);
         });
       };
 
@@ -105,7 +108,7 @@ window.angular.module('App.controllers').controller("TagsCtrl", ["$scope", "$roo
       if ($routeParams.tag) {
         s.findOne();
       } else {
-        populateTags();
+        populateTags({type:s.type});
         resetActiveTag();
       }
 

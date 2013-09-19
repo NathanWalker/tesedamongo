@@ -1,16 +1,17 @@
-window.angular.module('App.controllers').controller("PostsCtrl", ["$scope", "$rootScope", "$filter", "$timeout", "$location", "$window", "$routeParams", "Global", "PostsService", function(s, $rootScope, $filter, $timeout, $location, $window, $routeParams, Global, PostsService) {
+window.angular.module('App.controllers').controller("PostsCtrl", ["$scope", "$rootScope", "$filter", "$timeout", "$location", "$window", "$routeParams", "Global", "PostsService", "ImagesService", "PagesService", "orderByFilter", function(s, $rootScope, $filter, $timeout, $location, $window, $routeParams, Global, PostsService, ImagesService, PagesService, orderByFilter) {
 
       s.showNewForm = false;
       s.editing = false;
       s.fileUploading = false;
+      s.uploadedImage = undefined;
 
       var resetActivePost = function() {
         s.activePost = {
           title: '',
-          content: '',
-          image:''
+          content: ''
         };
         s.fileUploading = false;
+        s.uploadedImage = undefined;
       };
 
       s.openNewForm = function() {
@@ -26,9 +27,25 @@ window.angular.module('App.controllers').controller("PostsCtrl", ["$scope", "$ro
 
       s.posts = [];
 
+      var orderPosts = function(posts) {
+        s.posts = orderByFilter(posts, '-created');
+      };
+
       var populatePosts = function(query) {
+        query = query || {};
         PostsService.query(query, function (posts) {
-          s.posts = posts;
+          orderPosts(posts);
+
+          // user may edit from post detail view (show.html) which redirects here and sets activePost
+          if ($routeParams.edit) {
+            var editId = $routeParams.edit;
+            editPostFound = _.find(s.posts, function(p) {
+              return p._id == editId;
+            });
+            if(editPostFound) {
+              s.editPost(editPostFound);
+            }
+          }
         });
       };
 
@@ -39,14 +56,17 @@ window.angular.module('App.controllers').controller("PostsCtrl", ["$scope", "$ro
 
           var post = new PostsService({
             title: activePost.title,
-            content: activePost.content,
-            date: activePost.date,
-            image: activePost.image
+            content: activePost.content
           });
+
+          if(s.uploadedImage) {
+            post.image = s.uploadedImage.url;
+          }
 
           post.$save(function (response) {
             if(response && response._id){
               s.posts.push(response);
+              orderPosts(s.posts);
             }
 
             s.toggleNew(false);
@@ -60,18 +80,50 @@ window.angular.module('App.controllers').controller("PostsCtrl", ["$scope", "$ro
         s.editing = true;
         s.activePost = post;
         s.toggleNew(true);
+        s.fileUploading = false;
+        s.uploadedImage = undefined;
       };
 
-      s.update = function (activePost) {
-        activePost.$update(function () {
+      s.tagFilterName = function(tag) {
+        return '.' + tag.name.replace(/[ ]/ig, '-').replace(/[.]/ig, '-');
+      };
+
+      s.tagConnect = function(dragEl, dropEl) { // function referenced by the drop target
+        var drop = angular.element(dropEl);
+        var drag = angular.element(dragEl);
+
+        var postId = drop.attr('data-post-id');
+        var tagId = drag.attr('data-tag-id');
+
+        var foundPost = _.find(s.posts, function(p){
+          return p._id == postId;
+        });
+        if(foundPost){
+          s.update(foundPost, {tagId:tagId});
+        }
+      };
+
+      s.changeRouteToEdit = function(){
+        if(s.post) {
+          $location.url('news?edit=' + s.post._id);
+        }
+      };
+
+      s.update = function (activePost, params) {
+        if(s.uploadedImage) {
+          activePost.image = s.uploadedImage.url;
+        }
+        params = params || {};
+        activePost.$update(params, function () {
           s.toggleNew(false);
           resetActivePost();
         });
       };
 
       s.find = function (query) {
+        query = query || {};
         PostsService.query(query, function (posts) {
-          s.posts = posts;
+          orderPosts(posts);
         });
       };
 
@@ -102,6 +154,10 @@ window.angular.module('App.controllers').controller("PostsCtrl", ["$scope", "$ro
 
       });
 
+      s.$on('image:removed', function(e) {
+        s.uploadedImage = undefined;
+      });
+
       s.progress = function(percentDone) {
         s.fileUploading = true;
             console.log("progress: " + percentDone + "%");
@@ -110,7 +166,7 @@ window.angular.module('App.controllers').controller("PostsCtrl", ["$scope", "$ro
       s.done = function(files, data) {
             console.log("upload complete");
             console.log("data: " + JSON.stringify(data));
-            writeFiles(files);
+            writeFiles(files, data);
       };
 
       s.getData = function(files) {
@@ -124,13 +180,26 @@ window.angular.module('App.controllers').controller("PostsCtrl", ["$scope", "$ro
             writeFiles(files);
       }
 
-      function writeFiles(files)
+      function writeFiles(files, data)
       {
+
             console.log('Files')
             for (var i = 0; i < files.length; i++) {
                   console.log('\t' + files[i].name);
             }
-            s.fileUploading = false;
+            if(data) {
+              var imageName = data.filenames[0];
+              image = new ImagesService({
+                url: imageName
+              });
+              image.$save(function (response) {
+                if(response && response._id){
+                   s.uploadedImage = response;
+                   s.fileUploading = false;
+                }
+              });
+            }
+
       }
 
       if ($routeParams.post) {
@@ -138,6 +207,10 @@ window.angular.module('App.controllers').controller("PostsCtrl", ["$scope", "$ro
       } else {
         populatePosts();
         resetActivePost();
+
+        PagesService.query({route:'news'}, function (pages) {
+          s.page = _.first(pages);
+        });
       }
 
   }
