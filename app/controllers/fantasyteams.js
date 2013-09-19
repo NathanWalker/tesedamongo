@@ -29,7 +29,7 @@ exports.all = function(req, res){
  FantasyTeam.find().populate('owner').populate('league').exec(function(err, fantasyteams) {
    if (err) {
       res.render('error', {status: 500});
-   } else {      
+   } else {
       res.jsonp(fantasyteams);
    }
  });

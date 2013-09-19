@@ -1,5 +1,12 @@
-window.app.config(['$routeProvider', function($routeProvider) {
-	$routeProvider
+window.app.config(['$routeProvider', '$sceProvider', function($routeProvider, $sceProvider) {
+	$sceProvider.enabled(false);
+
+      $routeProvider
+      .when('',
+      {
+        templateUrl: 'views/site/home.html',
+                controller:'HomeCtrl'
+      })
 	.when('/',
 	{
 		templateUrl: 'views/site/home.html',
@@ -7,19 +14,38 @@ window.app.config(['$routeProvider', function($routeProvider) {
 	})
       .when('/products',
       {
-        templateUrl:'views/site/products.html'
+        templateUrl:'views/site/products.html',
+        controller:'ProductsCtrl'
+      })
+      .when('/products/edit',
+      {
+        templateUrl:'views/products/edit.html',
+        controller:'ProductsEditCtrl'
+      })
+      .when('/products/:product',
+      {
+        templateUrl:'views/products/show.html',
+        controller:'ProductsCtrl'
       })
       .when('/tutorials',
       {
-        templateUrl:'views/site/tutorials.html'
+        templateUrl:'views/site/tutorials.html',
+        controller:'VideosCtrl'
+      })
+      .when('/tutorials/:video',
+      {
+        templateUrl:'views/videos/show.html',
+        controller:'VideosCtrl'
       })
       .when('/about',
       {
-        templateUrl:'views/site/about.html'
+        templateUrl:'views/site/about.html',
+        controller:'AboutCtrl'
       })
       .when('/contact',
       {
-        templateUrl:'views/site/contact.html'
+        templateUrl:'views/site/contact.html',
+        controller:'ContactCtrl'
       })
       .when('/privacy',
       {
@@ -27,64 +53,49 @@ window.app.config(['$routeProvider', function($routeProvider) {
       })
       .when('/partners',
       {
-        templateUrl:'views/site/partners.html'
+        templateUrl:'views/site/partners.html',
+        controller:'PartnersCtrl'
       })
       .when('/specs',
       {
-        templateUrl:'views/site/specs.html'
+        templateUrl:'views/site/specs.html',
+        controller:'SpecCtrl'
       })
       .when('/support',
       {
-        templateUrl:'views/site/support.html'
+        templateUrl:'views/site/support.html',
+        controller:'SupportCtrl'
       })
       .when('/news',
       {
-        templateUrl:'views/site/news.html'
+        templateUrl:'views/site/news.html',
+        controller:'PostsCtrl'
       })
-	.when('/nflteams',
-  {
-    templateUrl: "views/nfl/list.html"
-  })
-  .when('/nflteams/:nflTeamId',
-  {
-    templateUrl: "views/nfl/view.html"
-  })
-  .when('/leagues',
-  {
-    templateUrl: 'views/leagues/list.html'
-  })
-  .when('/leagues/create',
-  {
-    templateUrl: 'views/leagues/create.html'
-  })
-  .when('/leagues/:leagueId/edit',
-  {
-    templateUrl: 'views/leagues/edit.html'
-  })
-  .when('/leagues/:leagueId',
-  {
-    templateUrl: 'views/leagues/view.html'
-  })
-  .when('/fantasyteams',
-  {
-    templateUrl: 'views/fantasyteams/list.html'
-  })
-  .when('/fantasyteams/create',
-  {
-    templateUrl: 'views/fantasyteams/create.html'
-  })
-  .when('/fantasyteams/:fantasyTeamId/edit',
-  {
-    templateUrl: 'views/fantasyteams/edit.html'
-  })
-  .when('/fantasyteams/:fantasyTeamId',
-  {
-    templateUrl: 'views/fantasyteams/view.html'
-  })
-  .when('/players',
-  {
-  	templateUrl: 'views/players/list.html'
-  })
+       .when('/news/:post',
+      {
+        templateUrl:'views/news/show.html',
+        controller:'PostsCtrl'
+      })
+        .when('/images',
+      {
+        templateUrl:'views/site/images.html',
+        controller:'ImagesCtrl'
+      })
+      .when('/images/:image',
+      {
+        templateUrl:'views/site/images.html',
+        controller:'ImagesCtrl'
+      })
+       .when('/pages',
+      {
+        templateUrl:'views/site/pages.html',
+        controller:'PagesCtrl'
+      })
+      .when('/pages/:page',
+      {
+        templateUrl:'views/site/pages.html',
+        controller:'PagesCtrl'
+      })
 	.otherwise({redirectTo: '/'});
 }]);
 

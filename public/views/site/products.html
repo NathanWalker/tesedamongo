@@ -1,159 +1,32 @@
 <div class="hero-unit">
     <div class="container">
       <!-- <h1 class="ac">Suite of Products</h1> -->
-      <p class="ac">
-        <strong>Systems</strong> and <strong>Options</strong>
-      </p>
+      <p class="ac" data-ng-bind-html="page.title"></p>
+      <!-- <a data-ng-if="global.isAdmin()" class="btn new-btn" href="/#!/pages/{{page._id}}" data-icon="d">Edit</a> -->
+      <p style="max-width:700px; text-align:center; margin:0 auto;" data-ng-if="page.subheading" data-ng-bind-html="page.subheading"></p>
     </div>
   </div>
 
-  <!-- Example pricing -->
+  <div data-ng-if="global.isAdmin()" class="clr" style="margin: 0 0 15px;text-align:center;">
+    <a class="btn" href="/#!/products/edit" data-icon="d">Edit Products</a>
+  </div>
   <div class="row pricing">
-
-    <div class="span4">
+    <div class="span4" data-ng-repeat="product in products">
       <div class="well">
-        <h2>Field Triage</h2>
-        <p>Allows for screening in the field, saving time and FA lab processes.<br/>
-          <span style="font-style:italic;">Lightweight and portable.</span></p>
-        <ul>
-          <li>
-            &#10004; 550 Diagnostic Hardware
-            <p>512 pins – 100MHz – 64MB per-pin pattern depth with flexible per-pin timing</p>
-          </li>
-          <li>&#10004; Teseda WorkBench Field Triage Software
-            <p>Operates interactively on the 550 Diagnostic System to provide failure information in terms of the design features where the failure occurred.</p>
-          </li>
-          <li>&#10004; Curve Tracer Tool
-            <p>Displays curve, ranges, clamp settings. Overlay result with "golden" data.</p>
-          </li>
-          <li>&#10004; Paramtric Measurement Tool
-            <p>Provides the engineer with a comprehensive suite of DC measurement capabilities.</p>
-          </li>
-          <li>&#10004; Diagnostic Board
-            <p></p>
-          </li>
-          <li>&#10004; Curve Trace Fixturing
-            <p></p>
-          </li>
-          <li>&#10004; Training
-            <p>Included in purchase with online training material.</p>
-          </li>
-          <li>
-            <p>Laptop Specifications</p>
-          </li>
-          <li>
-            <p>Utility Cart Recommendation</p>
-          </li>
-        </ul>
+        <h2><a data-ng-href="/#!{{product.shortUrl}}">{{product.name}}</a></h2>
+        <p data-ng-bind-html="product.description"></p>
+        <div data-ng-bind-html="product.featureList"></div>
         <p class="ac">
-          <a class="" href="/#!/products/550ft">Learn more &raquo;</a>
+          <a data-ng-href="/#!{{product.shortUrl}}">Learn more &raquo;</a>
         </p>
-        <!-- <p class="ac">
-          <a class="btn btn-success btn-large" href="#">Buy Now &raquo;</a>
-        </p> -->
       </div>
     </div>
-    <div class="span4">
-      <div class="well">
-        <h2>Defect Scanner</h2>
-        <p>Provides all the tools necessary for defect isolation and diagnostics.<br/>
-          <span style="font-style:italic;">The essentials.</span>
-        </p>
-        <!-- <p><span>POPULAR</span></p> -->
-        <ul>
-          <li>
-            &#10004; 550 Diagnostic Hardware
-            <p>512 pins – 100MHz – 64MB per-pin pattern depth with flexible per-pin timing</p>
-          </li>
-          <li>&#10004; Teseda WorkBench Software
-            <p>Operates interactively on the 550 Diagnostic System to provide failure information in terms of the design features where the failure occurred.</p>
-          </li>
-          <li>&#10004; Paramtric Measurement Tool
-            <p>Provides the engineer with a comprehensive suite of DC measurement capabilities.</p>
-          </li>
-          <li>&#10004; Diagnostic Board
-            <p></p>
-          </li>
-          <li>&#10004; DUT Interface Fixturing
-            <p></p>
-          </li>
-          <li>&#10004; Training
-            <p>Included in purchase with online training material.</p>
-          </li>
-          <li>
-            <p>Laptop Specifications</p>
-          </li>
-          <li>
-            <p>Utility Cart Recommendation</p>
-          </li>
-        </ul>
-        <p class="ac">
-          <a class="" href="/#!/products/550ds">Learn more &raquo;</a>
-        </p>
-        <!-- <p class="ac">
-          <a class="btn btn-success btn-large" href="#">Buy Now &raquo;</a>
-        </p> -->
-      </div>
-    </div>
-    <div class="span4">
-      <div class="well">
-        <h2>DI Lab</h2>
-        <p>Comprehensive system.<br/>
-          <span style="font-style:italic;">Contains the Defect Isolator and Broken Chain Alayzer Tools.</span>
-        </p>
-        <ul>
-          <li>
-            &#10004; 550 Diagnostic Hardware
-            <p>512 pins – 100MHz – 64MB per-pin pattern depth with flexible per-pin timing</p>
-          </li>
-          <li>&#10004; Teseda WorkBench Software
-            <p>Operates interactively on the 550 Diagnostic System to provide failure information in terms of the design features where the failure occurred.
-            </p>
-          </li>
-          <li>&#10004; Defect Isolator (DI) Tool
-            <p>Maps scan test failures to the physical location on the die, reducing time to root-cause analysis, from weeks or months, to hours.</p>
-          </li>
-          <li>&#10004; Broken Chain Analyzer (BCA) Tool
-            <p>Automatically pinpoints defective flip-flop locations in broken scan chains.</p>
-          </li>
-          <li>&#10004; Curve Tracer Tool
-            <p>Displays curve, ranges, clamp settings. Overlay result with "golden" data.</p>
-          </li>
-          <li>&#10004; Paramtric Measurement Tool
-            <p>Provides the engineer with a comprehensive suite of DC measurement capabilities.</p>
-          </li>
-          <li>&#10004; Diagnostic Board
-            <p></p>
-          </li>
-          <li>&#10004; DUT Interface Fixturing
-            <p></p>
-          </li>
-          <li>&#10004; Training
-            <p>Included in purchase with online training material.</p>
-          </li>
-          <li>
-            <p>Laptop Specifications</p>
-          </li>
-          <li>
-            <p>Utility Cart Recommendation</p>
-          </li>
-        </ul>
-        <p class="ac">
-          <a class="" href="/#!/products/550di">Learn more &raquo;</a>
-        </p>
-        <!-- <p class="ac">
-          <a class="btn btn-success btn-large" href="#">Buy Now &raquo;</a>
-        </p> -->
-      </div>
-    </div>
-  </div>
 
   <hr />
 
   <div class="row">
-    <div class="span12">
-      <!-- <h1 class="lead">
-        <b>All products come with a 90-day</b> money-back guarantee.
-      </h1> -->
+    <div class="span12" data-ng-bind-html="page.content">
     </div>
   </div>
+
+  <hr />

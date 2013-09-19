@@ -129,6 +129,105 @@
 	}
 }
 
+#portfolio .widget {
+  margin-top: 20px;
+}
+
+.req-input {
+  color: red;
+  font-size: 11px;
+  margin: 0 0 0 4px;
+  vertical-align: super;
+}
+
+.software-overview-list {
+  list-style:none;padding:0; margin:0;
+}
+.software-overview-list li {
+  display:block;
+  text-align:center;
+  font-size:14px;
+  margin:0 0 10px;
+}
+
+.image-editor .image {
+  float:left;
+  width:200px;
+  height:200px;
+  text-align: center;
+  margin:10px;
+}
+.image-editor .image img {
+  margin:0 auto;
+  max-width:200px;
+  max-height:200px;
+  box-shadow: 0px 0px 4px rgba(0,0,0,.4);
+}
+
+.new-btn {
+  float:right;
+  position: relative;
+  top: -45px;
+}
+
+.btn[data-icon]:before {
+  margin-right: 8px;
+}
+
+.form-note {
+  margin: 0 0 0 10px;
+  padding: 4px 0 0;
+  display: inline-block;
+  font-size: 12px;
+  font-style: italic;
+  color: #999;
+}
+
+.lvl-over {
+    /* applied to a drop target when a draggable object is over it */
+    border: 2px dashed #999 !important;
+  }
+
+  .lvl-target {
+    /*
+    applied to all drop targets when a drag operation begins
+    removed when the drag operation ends
+    used to indicate drop targets on a page
+    */
+    background-color: #ddd;
+    opacity: .5;
+  }
+
+  [draggable] {
+    /* not applied by the directive, but useful to indicate a draggable element */
+    -moz-user-select: none;
+    -khtml-user-select: none;
+    -webkit-user-select: none;
+    user-select: none;
+    cursor: move;
+  }
+
+  .preview-image {
+    max-width: 200px;
+    max-height: 200px;
+    margin: 10px 10px 10px 135px;
+  }
+
+.user-list {
+  list-style: none;
+}
+
+.user-list li {
+  margin: 5px 0;
+}
+
+.user-list li.divider {
+  border-top: 1px solid #999;
+  padding-top: 10px;
+  margin-top: 15px;
+}
+
+
 .carousel-indicators {
 	display:none;
 }

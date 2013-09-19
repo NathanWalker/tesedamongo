@@ -1,119 +1,145 @@
 <div class="hero-unit">
     <div class="ac">
       <!-- <h1>Video Tutorials</h1> -->
-      <p><strong>Videos</strong><span data-ng-if="global.isSignedIn()">&nbsp;and <strong>Tutorials</strong>&nbsp;&nbsp;Learn from the experts</span><span data-ng-if="!global.isSignedIn()">&nbsp;&nbsp;Product Overviews</span></p>
+      <p data-ng-bind-html="page.title"></p>
+      <div data-ng-if="global.isModerator() && !showNewForm" class="btn new-btn" data-icon="d" data-ng-click="openNewForm()">New</div>
     </div>
   </div>
 
+  <div class="container" data-ng-if="showNewForm && global.isModerator()">
+    <hr/>
+    <h3 style="text-align:center;margin: 0 0 10px;">{{editing|booleanText:'Edit':'New'}}</h3>
+    <form class="form-horizontal" >
+        <p style="font-style:italic; color:red;" data-ng-show="failed">Page failed to update.</p>
+        <fieldset>
+          <div class="control-group">
+            <label class="control-label"  for="create-title">Title</label>
+            <div class="controls">
+              <input type="text" id="create-title" placeholder="Title" name="title" class="input-xlarge" data-ng-model="activeVideo.title">
+            </div>
+          </div>
+
+          <div class="control-group">
+            <label class="control-label"  for="create-type">Type</label>
+            <div class="controls">
+              <select id="create-type" name="type" class="input-xlarge" data-ng-model="activeVideo.type">
+                <option value="YouTube">YouTube</option>
+                <option value="Vimeo">Vimeo</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="control-group">
+            <label class="control-label"  for="create-videoId">Video ID</label>
+            <div class="controls">
+              <input type="text" id="create-videoId" placeholder="Video ID" name="url" class="input-xlarge" data-ng-model="activeVideo.url">
+            </div>
+          </div>
+
+          <div class="control-group">
+            <label class="control-label"  for="create-order">Order</label>
+            <div class="controls">
+              <select id="create-order" name="order" class="input-xlarge" data-ng-model="activeVideo.order">
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+                <option value="7">7</option>
+                <option value="8">8</option>
+                <option value="9">9</option>
+                <option value="10">10</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="control-group">
+            <label class="control-label"  for="create-exclusive">Exclusive</label>
+            <div class="controls">
+              <input type="checkbox" id="create-exclusive" name="exclusive" class="input-xlarge" data-ng-model="activeVideo.exclusive">
+              <span class="form-note">(Only available to logged in clients)</span>
+            </div>
+          </div>
+
+          <div class="control-group" data-ng-if="!uploadedImage">
+            <div
+                data-lvl-file-upload
+               auto-upload='true'
+               choose-file-button-text='Choose poster'
+               upload-file-button-text='Upload poster'
+               upload-url='/files'
+               max-files='1'
+               max-file-size-mb='5'
+               get-additional-data='getData(files)'
+               on-done='done(files, data)'
+               on-progress='progress(percentDone)'
+               on-error='error(files, type, msg)'/>
+          </div>
+          <div class="control-group" data-ng-if="uploadedImage">
+            <div data-preview-image="uploadedImage"></div>
+          </div>
+
+
+          <div class="control-group" data-ng-hide="fileUploading">
+            <div class="controls">
+              <button class="btn btn-primary" data-ng-click="create(activeVideo)">{{editing|booleanText:'Update':'Save'}}</button>
+              <button class="btn" data-ng-click="toggleNew(false)">Cancel</button>
+              <button class="btn btn-danger" data-ng-click="remove(activeVideo)" style="float:right;" data-ng-if="editing">Delete</button>
+            </div>
+          </div>
+          <div class="control-group" data-ng-show="fileUploading">
+            <div class="controls">
+              <span style="font-style:italic;">File uploading...</span>
+            </div>
+          </div>
+        </fieldset>
+      </form>
+      <hr/>
+    </div>
+
+
   <div id="portfolio" data-teseda-isotope>
+<!--data-teseda-isotope -->
 
     <!-- portfolio filter -->
     <ul id="portfolio-filter" class="nav nav-tabs">
       <li class="active"><a class="filter" data-filter="*">All</a></li>
-      <li><a class="filter" data-filter=".ds">Device Stimulus</a></li>
-      <li><a class="filter" data-filter=".di">Defect Isolation</a></li>
-      <li><a class="filter" data-filter=".sd">Silicon Debug</a></li>
-      <li><a class="filter" data-filter=".ye">Yield Enhancement</a></li>
+      <li data-ng-repeat="tag in videoTags">
+        <a class="filter" data-filter="{{tagFilterName(tag)}}">{{tag.name}}</a>
+      </li>
     </ul>
 
     <!-- portfolio items -->
-    <div class="row" id="portfolio-items">
+    <div class="row" id="portfolio-items"  data-isotope-container>
 
       <!-- portfolio item-->
-      <div class="span4 project zoom" data-tags="ds">
+      <div class="span4 project zoom {{video.tags|arrayToTagClass}}"
+        data-ng-repeat="video in videos"
+        data-isotope-item>
+        <!-- data-tags="ds" -->
 
-        <a class="thumbnail" href="/">
+        <a class="thumbnail" data-nw-fancybox-media data-ng-href="http://www.{{video.type|lowercase}}.com/{{video.type=='YouTube'|booleanText:'watch?v=':''}}{{video.url}}" rel="media-gallery">
           <!-- image -->
-          <img src="assets/1.gif" alt="" />
+          <img data-ng-src="/uploads/{{$parent.video.poster}}" alt=""
+            data-video-id="{{$parent.video._id}}"
+            data-lvl-drop-target="true"
+            data-on-drop="tagConnect(dragEl, dropEl)" />
           <!-- name -->
-          <b class="project-name">Title</b>
+          <b class="project-name">{{video.title}}</b>
         </a>
-      </div>
-      <!-- end portfolio item-->
 
-      <!-- portfolio item-->
-      <div class="span4 project zoom" data-tags="di">
-
-        <a class="thumbnail" href="/">
-          <!-- image -->
-          <img src="assets/2.gif" alt="" />
-          <!-- name -->
-          <b class="project-name">Title</b>
-        </a>
-      </div>
-      <!-- end portfolio item-->
-
-      <!-- portfolio item-->
-      <div class="span4 project zoom" data-tags="sd">
-
-        <a class="thumbnail" href="/">
-          <!-- image -->
-          <img src="assets/3.gif" alt="" />
-          <!-- name -->
-          <b class="project-name">Title</b>
-        </a>
-      </div>
-      <!-- end portfolio item-->
-
-      <!-- portfolio item-->
-      <div class="span4 project zoom" data-tags="ye">
-
-        <a class="thumbnail" href="/">
-          <!-- image -->
-          <img src="assets/4.gif" alt="" />
-          <!-- name -->
-          <b class="project-name">Title</b>
-        </a>
-      </div>
-      <!-- end portfolio item-->
-
-      <!-- portfolio item-->
-      <div class="span4 project zoom" data-tags="sd">
-
-        <a class="thumbnail" href="/">
-          <!-- image -->
-          <img src="assets/5.gif" alt="" />
-          <!-- name -->
-          <b class="project-name">Title</b>
-        </a>
-      </div>
-      <!-- end portfolio item-->
-
-      <!-- portfolio item-->
-      <div class="span4 project zoom" data-tags="di">
-
-        <a class="thumbnail" href="/">
-          <!-- image -->
-          <img src="assets/6.gif" alt="" />
-          <!-- name -->
-          <b class="project-name">Title</b>
-        </a>
-      </div>
-      <!-- end portfolio item-->
-
-      <!-- portfolio item-->
-      <div class="span4 project zoom" data-tags="ds">
-
-        <a class="thumbnail" href="/">
-          <!-- image -->
-          <img src="assets/7.gif" alt="" />
-          <!-- name -->
-          <b class="project-name">Title</b>
-        </a>
-      </div>
-      <!-- end portfolio item-->
-
-      <!-- portfolio item-->
-      <div class="span4 project zoom" data-tags="sd">
-
-        <a class="thumbnail" href="/">
-          <!-- image -->
-          <img src="assets/8.gif" alt="" />
-          <!-- name -->
-          <b class="project-name">Title</b>
-        </a>
+        <div data-ng-if="global.isModerator()" class="btn" data-icon="d" data-ng-click="editVideo(video)" style="margin-bottom:15px;">Edit</div>
       </div>
       <!-- end portfolio item-->
     </div>
+
+    <div class="clr"></div>
+
+      <div class="widget" data-ng-if="global.isModerator()">
+        <h4>Categories</h4>
+        <div data-tag-manager data-type="tutorials">
+        </div>
+      </div>
 
   </div>

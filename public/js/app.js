@@ -1,4 +1,9 @@
-window.app = angular.module('tesedaApp', ['ngCookies', 'ngResource', 'ui.bootstrap', 'ngRoute', 'ngff.controllers', 'App.directives', 'App.filters', 'ngff.services']).run(['$rootScope', '$location', 'Global', function($rootScope, $location, Global){
+window.app = angular.module('tesedaApp', ['ngCookies', 'ngResource', 'ngSanitize', 'ui.bootstrap', 'ngRoute', 'App.controllers', 'App.directives', 'App.filters', 'App.services', 'lvl.directives.dragdrop', 'lvl.directives.fileupload', 'iso'])
+.value('iso.config', {
+    refreshDelay: 300,
+    refreshEvent: 'isotope:refresh'
+})
+.run(['$rootScope', '$location', '$anchorScroll', '$timeout', 'Global', function($rootScope, $location, $anchorScroll, $timeout, Global){
 
     $rootScope.global = Global;
     $rootScope.navCollapsed = true;
@@ -6,6 +11,14 @@ window.app = angular.module('tesedaApp', ['ngCookies', 'ngResource', 'ui.bootstr
     $rootScope.isCurrentLocation = function(routeArray) {
       return _.contains(routeArray, $location.url());
     };
+
+    $rootScope.scrollTo = function(id) {
+      $location.hash(id);
+      $timeout(function(){
+        $anchorScroll();
+      }, 300);
+
+   };
 
     $rootScope.currentYear = new Date().getFullYear();
 
@@ -28,7 +41,3 @@ window.app = angular.module('tesedaApp', ['ngCookies', 'ngResource', 'ui.bootstr
 
 
 }]);
-
-// bundling dependencies
-window.angular.module('ngff.controllers', ['App.controllers','ngff.controllers.header','ngff.controllers.index','ngff.controllers.leagues','ngff.controllers.nfl','ngff.controllers.players']);
-window.angular.module('ngff.services', ['ngff.services.fantasyTeams','ngff.services.global','ngff.services.leagues','ngff.services.nfl','ngff.services.players']);

@@ -13,11 +13,13 @@ var mongoose = require('mongoose')
  */
 
 var UserSchema = new Schema({
-  name: String,
-  company:String,
-  clientId:String,
-  username: String,
-  provider: String,
+  name: {type : String},
+  company:{type : String},
+  clientId:{type : String},
+  admin:{type : Boolean, default:false},
+  moderator:{type : Boolean, default:false},
+  username: {type : String},
+  provider: {type : String},
   hashed_password: String,
   salt: String
 })

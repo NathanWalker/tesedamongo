@@ -21,7 +21,8 @@ html(lang='en', xmlns='http://www.w3.org/1999/xhtml', xmlns:fb='https://www.face
                 li
                   a(href='/#!/products') Products
                 li
-                  a(href='/#!/tutorials') Tutorials/Videos
+                  a(href='/#!/tutorials') Videos
+                    span(data-ng-if='global.isSignedIn()') /Tutorials
                 li
                   a(href='/#!/specs') Specs
                 li
