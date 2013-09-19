@@ -62,7 +62,7 @@ module.exports = function (app, config, passport) {
     app.use(express.session({
       secret: 'tesedaApp',
       store: new mongoStore({
-        url: config.db,
+        url: process.env.MONGOLAB_URI || process.env.MONGOHQ_URL || 'mongodb://localhost/teseda-dev',
         collection : 'sessions'
       })
     }))
