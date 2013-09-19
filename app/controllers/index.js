@@ -5,6 +5,6 @@ var mongoose = require('mongoose')
 exports.render = function(req, res){
   res.render('index', {
     user: req.user ? JSON.stringify(req.user) : "null",
-    nodeEnv: JSON.stringify(res.nodeEnv)
+    nodeEnv: JSON.stringify(process.env.NODE_ENV || 'development')
   })
 }
