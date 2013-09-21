@@ -113,6 +113,27 @@
 		-webkit-background-size:215px 150px !important;
 		-moz-background-size:215px 150px !important;
 	}
+
+      #default_carousel .image-bg.third {
+        background-size:215px 140px !important;
+          -webkit-background-size:215px 140px !important;
+          -moz-background-size:215px 140px !important;
+      }
+
+      #default_carousel .image-bg.fourth {
+        background-size:205px 140px !important;
+          -webkit-background-size:205px 140px !important;
+          -moz-background-size:205px 140px !important;
+      }
+
+      #default_carousel {
+        height:250px;
+      }
+
+      #default_carousel .image-bg {
+        min-height: 200px !important;
+        height: 200px !important;
+      }
 }
 
 @media (max-width:420px) {
@@ -257,6 +278,20 @@
 	background-size:360px 251px;
 		-webkit-background-size:360px 251px;
 		-moz-background-size:360px 251px;
+}
+
+#default_carousel .image-bg.third {
+  background:url('/img/products/DC-Device-Characterization.jpg') no-repeat center center;
+  background-size:360px 251px;
+    -webkit-background-size:360px 251px;
+    -moz-background-size:360px 251px;
+}
+
+#default_carousel .image-bg.fourth {
+  background:url('/img/products/Desktop-Silicon-Debug-And-Failure-Analysis.jpg') no-repeat center center;
+  background-size:360px 251px;
+    -webkit-background-size:360px 251px;
+    -moz-background-size:360px 251px;
 }
 
 
