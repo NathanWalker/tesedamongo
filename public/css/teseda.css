@@ -204,6 +204,10 @@
   color: #999;
 }
 
+.page-sortable-list.resorting {
+  opacity:.4;
+}
+
 .drag-area {
   float: left;
   font-size: 16px;

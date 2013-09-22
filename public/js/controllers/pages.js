@@ -1,4 +1,4 @@
-window.angular.module('App.controllers').controller("PagesCtrl", ["$scope", "$rootScope", "$filter", "$timeout", "$location", "$window", "$routeParams", "Global", "PagesCache", function(s, $rootScope, $filter, $timeout, $location, $window, $routeParams, Global, PagesCache) {
+window.angular.module('App.controllers').controller("PagesCtrl", ["$scope", "$rootScope", "$filter", "$timeout", "$location", "$window", "$routeParams", "Global", "PagesCache", "orderByFilter", function(s, $rootScope, $filter, $timeout, $location, $window, $routeParams, Global, PagesCache, orderByFilter) {
 
 
       if(!Global.isAdmin()){
@@ -80,6 +80,43 @@ window.angular.module('App.controllers').controller("PagesCtrl", ["$scope", "$ro
         s.toggleNew(true);
       };
 
+      var resortPages = function(){
+        var cnt = 0;
+
+        var updatePageOrder = function(){
+          var pageToUpdate = s.pages[cnt];
+          pageToUpdate.order = cnt+1;
+          //console.log('updating page: ' + pageToUpdate.navName + ', ' + pageToUpdate.order);
+          PagesCache.updatePage(pageToUpdate).then(function(){
+            cnt++;
+            if(cnt == s.pages.length){
+              s.updatingSort = false;
+              initPages();
+            } else {
+              updatePageOrder();
+            }
+          });
+        };
+
+        // kick it off
+        updatePageOrder();
+      };
+
+      s.updatingSort = false;
+      s.sortableOptions = {
+        update: function(e, ui) {
+          s.updatingSort = true;
+          $timeout(function(){
+            // get new index of the page after dom and scope has updated
+            resortPages();
+          }, 100);
+        },
+        axis: 'y',
+        cursor:'move',
+        delay:150,
+        items:'> li.sortable-item'
+      };
+
       s.update = function (activePage) {
         PagesCache.updatePage(activePage).then(function(){
           s.toggleNew(false);
@@ -103,7 +140,14 @@ window.angular.module('App.controllers').controller("PagesCtrl", ["$scope", "$ro
         }
       };
 
-      s.pages = PagesCache.pages();
+      var initPages = function(){
+         PagesCache.pages().then(function(pages){
+            s.pages = orderByFilter(pages, '+order');
+          });
+      };
+
+      initPages();
+      resetActivePage();
 
       if ($routeParams.page) {
         PagesCache.getPage({_id:$routeParams.page}).then(function(page){
@@ -112,7 +156,5 @@ window.angular.module('App.controllers').controller("PagesCtrl", ["$scope", "$ro
           }
         });
       }
-
-      resetActivePage();
   }
 ]);
