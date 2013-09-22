@@ -85,12 +85,19 @@
                 </div>
 
                 <hr/>
-                <h4>This section is only for pages that you want to show a banner slideshow.</h4>
-                <div class="control-group">
-                  <label class="control-label"  for="create-banner">Show Slideshow</label>
-                  <div class="controls">
-                    <input type="checkbox" id="create-banner" name="showBanner" class="input-xlarge" data-ng-model="activePage.showBanner">
+                <div>
+                  <div class="control-group" data-ng-if="global.isWebAdmin()">
+                    <label class="control-label"  for="create-banner">Show Slideshow</label>
+                    <div class="controls">
+                      <input type="checkbox" id="create-banner" name="showBanner" class="input-xlarge" data-ng-model="activePage.showBanner">
+                    </div>
                   </div>
+                  <!-- <div class="control-group" data-ng-if="activePage.route=='home'">
+                    <label class="control-label"  for="create-banner">Show Slideshow</label>
+                    <div class="controls">
+                      <input type="checkbox" id="create-banner" name="showBanner" class="input-xlarge" data-ng-model="activePage.showBanner">
+                    </div>
+                  </div> -->
                 </div>
 
           <div class="control-group">
@@ -106,7 +113,8 @@
     </div>
 
 <div class="container">
-  <ul class="software-overview-list page-sortable-list" data-ng-class="{resorting:updatingSort}" data-ui-sortable="sortableOptions" ng-model="pages">
+  <div style="margin:0 0 10px 12px;font-style:italic;text-align:center;"><strong>Click to edit page</strong> or <strong>Drag to re-order navigation</strong></div>
+  <ul class="software-overview-list page-sortable-list" data-ng-class="{resorting:updatingSort}" data-ui-sortable="sortableOptions" ng-model="pages" style="width:150px;margin:0 auto;">
     <li data-ng-repeat="page in pages" class="sortable-item" data-page-id="{{page._id}}">
       <a data-ng-click="editPage(page)">{{page.navName}}</a>
     </li>

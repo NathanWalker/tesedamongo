@@ -70,7 +70,7 @@
 
       <!-- Example of image blog item
       ================================================== -->
-      <article class="post" data-ng-class="{'image-post':post.image}" data-ng-repeat="post in posts">
+      <article class="post" data-ng-class="{'image-post':post.image}" data-ng-repeat="post in posts | filter:searchNews">
 
         <!-- entry media -->
         <a data-ng-href="/#!/news/{{post._id}}" class="entry-media" data-ng-if="post.image">
@@ -109,7 +109,7 @@
 
         <!-- entry body -->
         <div class="entry-body">
-          <h2>No news or articles have been posted yet.</h2>
+          <h2>{{tagSelectionOn|booleanText:'No news or articles found with the selected categories.':'No news or articles have been posted yet.'}}</h2>
           <p></p>
         </div>
 
@@ -140,7 +140,7 @@
 
       <!-- search plugin -->
       <div class="widget">
-        <input type="search" class="animated" placeholder="Search" />
+        <input type="search" class="animated" placeholder="Search" data-ng-model="searchNews.$" />
       </div>
 
       <!-- Tags / categories -->

@@ -315,7 +315,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#4d77abd6', e
 	padding:6px;
 	line-height:0.4em;
 
-	background:#888;
+	background:#efefef;
 
 	-ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=100)";
 	filter: alpha(opacity=100);
@@ -1217,6 +1217,11 @@ input.animated:focus {
 	.tags a.editing {
 		border-bottom-left-radius: 0;
 		border-top-left-radius: 0;
+	}
+	.tags a.active {
+		background:#1b76bb;
+		color:#fff;
+		text-shadow:none;
 	}
 	.tags a:hover {
 		background:#58504B;
