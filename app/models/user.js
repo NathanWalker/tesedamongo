@@ -18,6 +18,7 @@ var UserSchema = new Schema({
   clientId:{type : String},
   admin:{type : Boolean, default:false},
   moderator:{type : Boolean, default:false},
+  webAdmin:{type: Boolean, default:false},
   username: {type : String},
   provider: {type : String},
   hashed_password: String,

@@ -29,7 +29,7 @@
       </div>
     </tab>
 
-    <tab heading="Edit Users" data-ng-if="global.currentUser().admin">
+    <tab heading="Edit Users" data-ng-if="global.isAdmin()">
         <div class="tab-pane" data-ng-controller="UsersCtrl">
           <!-- <div class="btn btn-primary" style="float:right;" data-ng-click="openNewForm()" data-ng-hide="showUserForm">New</div> -->
             <form class="form-horizontal" data-ng-if="showUserForm">
@@ -104,7 +104,7 @@
       <div class="tab-pane" data-ng-controller="PagesCtrl">
             <div>
               <ul class="user-list">
-                <li data-ng-repeat="page in pages|orderBy:'+route'"><a data-ng-href="/#!/pages/{{page._id}}">{{page.route}}</a></li>
+                <li data-ng-repeat="page in pages|orderBy:'+order'"><a data-ng-href="/#!/pages/{{page._id}}">{{page.navName}}</a></li>
                 <li class="divider"><a data-ng-href="/#!/products/edit">product listings, etc</a></li>
               </ul>
             </div>

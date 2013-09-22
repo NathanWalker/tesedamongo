@@ -1,4 +1,4 @@
-window.angular.module('App.controllers').controller("ImagesCtrl", ["$scope", "$rootScope", "$filter", "$timeout", "$location", "$window", "$routeParams", "Global", "ImagesService", function(s, $rootScope, $filter, $timeout, $location, $window, $routeParams, Global, ImagesService) {
+window.angular.module('App.controllers').controller("ImagesCtrl", ["$scope", "$rootScope", "$filter", "$timeout", "$location", "$window", "$routeParams", "Global", "ImagesService", "PagesCache", function(s, $rootScope, $filter, $timeout, $location, $window, $routeParams, Global, ImagesService, PagesCache) {
 
       s.showNewForm = false;
       s.editing = false;
@@ -19,6 +19,7 @@ window.angular.module('App.controllers').controller("ImagesCtrl", ["$scope", "$r
 
       s.toggleNew = function(force) {
         s.showNewForm = _.isUndefined(force) ? !s.showNewForm : force;
+        PagesCache.resetScroll();
       };
 
 

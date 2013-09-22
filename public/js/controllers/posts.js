@@ -1,4 +1,4 @@
-window.angular.module('App.controllers').controller("PostsCtrl", ["$scope", "$rootScope", "$filter", "$timeout", "$location", "$window", "$routeParams", "Global", "PostsService", "ImagesService", "PagesService", "orderByFilter", function(s, $rootScope, $filter, $timeout, $location, $window, $routeParams, Global, PostsService, ImagesService, PagesService, orderByFilter) {
+window.angular.module('App.controllers').controller("PostsCtrl", ["$scope", "$rootScope", "$filter", "$timeout", "$location", "$window", "$routeParams", "Global", "PostsService", "ImagesService", "PagesCache", "orderByFilter", function(s, $rootScope, $filter, $timeout, $location, $window, $routeParams, Global, PostsService, ImagesService, PagesCache, orderByFilter) {
 
       s.showNewForm = false;
       s.editing = false;
@@ -22,6 +22,7 @@ window.angular.module('App.controllers').controller("PostsCtrl", ["$scope", "$ro
 
       s.toggleNew = function(force) {
         s.showNewForm = _.isUndefined(force) ? !s.showNewForm : force;
+        PagesCache.resetScroll();
       };
 
 
@@ -151,7 +152,7 @@ window.angular.module('App.controllers').controller("PostsCtrl", ["$scope", "$ro
 
       s.$on('tag:selected', function(e, tag){
         // to do, handle tag selection
-
+        console.log('tag selected: ' + tag.name);
       });
 
       s.$on('image:removed', function(e) {
@@ -208,8 +209,8 @@ window.angular.module('App.controllers').controller("PostsCtrl", ["$scope", "$ro
         populatePosts();
         resetActivePost();
 
-        PagesService.query({route:'news'}, function (pages) {
-          s.page = _.first(pages);
+        PagesCache.getPage({route:'news'}).then(function (page) {
+          s.page = page;
         });
       }
 

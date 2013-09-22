@@ -1201,6 +1201,7 @@ input.animated:focus {
 		margin-bottom:8px;
 	}
 	.tags a {
+		float:left;
 		margin-right:6px;
 		margin-top:6px;
 		padding:0 10px 0 12px;
@@ -1211,6 +1212,11 @@ input.animated:focus {
 		-webkit-border-radius:4px;
 		-moz-border-radius:4px;
 		border-radius:4px;
+		cursor:pointer;
+	}
+	.tags a.editing {
+		border-bottom-left-radius: 0;
+		border-top-left-radius: 0;
 	}
 	.tags a:hover {
 		background:#58504B;

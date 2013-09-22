@@ -204,6 +204,27 @@
   color: #999;
 }
 
+.drag-area {
+  float: left;
+  font-size: 16px;
+  background: #efefef;
+  padding: 0px 10px 0;
+  margin: 6px 0 0;
+  border-bottom-left-radius: 4px;
+  border-top-left-radius: 4px;
+}
+
+.drop-msg {
+  margin-left: 8px;
+  color: #999;
+  display: inline-block;
+  font-style: italic;
+}
+
+[data-lvl-drop-target="true"][data-icon]:before {
+  color:#999;
+}
+
 .lvl-over {
     /* applied to a drop target when a draggable object is over it */
     border: 2px dashed #999 !important;
@@ -219,7 +240,14 @@
     opacity: .5;
   }
 
-  [draggable] {
+  /*[draggable] {
+    -moz-user-select: none;
+    -khtml-user-select: none;
+    -webkit-user-select: none;
+    user-select: none;
+    cursor: move;
+  }*/
+  [draggable] > .drag-area {
     /* not applied by the directive, but useful to indicate a draggable element */
     -moz-user-select: none;
     -khtml-user-select: none;
@@ -335,12 +363,12 @@ margin: 0 auto;
   float:left;
   list-style: none;
   margin:0 15px;
-  opacity: 0.5;
+  /*opacity: 0.5;
   filter: alpha(opacity=50);
   -webkit-transition: opacity .2s linear;
-  filter: url("data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\'><filter id=\'grayscale\'><feColorMatrix type=\'matrix\' values=\'0.3333 0.3333 0.3333 0 0 0.3333 0.3333 0.3333 0 0 0.3333 0.3333 0.3333 0 0 0 0 0 1 0\'/></filter></svg>#grayscale"); /* Firefox 10+, Firefox on Android */
-  filter: gray; /* IE6-9 */
-  -webkit-filter: grayscale(100%);
+  filter: url("data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\'><filter id=\'grayscale\'><feColorMatrix type=\'matrix\' values=\'0.3333 0.3333 0.3333 0 0 0.3333 0.3333 0.3333 0 0 0.3333 0.3333 0.3333 0 0 0 0 0 1 0\'/></filter></svg>#grayscale");*/ /* Firefox 10+, Firefox on Android */
+  /*filter: gray;*/ /* IE6-9 */
+  /*-webkit-filter: grayscale(100%);*/
 }
 
 .partners li:hover {

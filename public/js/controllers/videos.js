@@ -1,4 +1,4 @@
-window.angular.module('App.controllers').controller("VideosCtrl", ["$scope", "$rootScope", "$filter", "$timeout", "$location", "$window", "$routeParams", "Global", "VideosService", "PagesService", "ImagesService", "TagsService", "orderByFilter", function(s, $rootScope, $filter, $timeout, $location, $window, $routeParams, Global, VideosService, PagesService, ImagesService, TagsService, orderByFilter) {
+window.angular.module('App.controllers').controller("VideosCtrl", ["$scope", "$rootScope", "$filter", "$timeout", "$location", "$window", "$routeParams", "Global", "VideosService", "ImagesService", "TagsService", "PagesCache", "orderByFilter", function(s, $rootScope, $filter, $timeout, $location, $window, $routeParams, Global, VideosService, ImagesService, TagsService, PagesCache, orderByFilter) {
 
       s.showNewForm = false;
       s.editing = false;
@@ -27,6 +27,7 @@ window.angular.module('App.controllers').controller("VideosCtrl", ["$scope", "$r
 
       s.toggleNew = function(force) {
         s.showNewForm = _.isUndefined(force) ? !s.showNewForm : force;
+        PagesCache.resetScroll();
       };
 
 
@@ -211,8 +212,8 @@ window.angular.module('App.controllers').controller("VideosCtrl", ["$scope", "$r
       if ($routeParams.video) {
         s.findOne();
       } else {
-        PagesService.query({route:'tutorials'}, function (pages) {
-          s.page = _.first(pages);
+        PagesCache.getPage({route:'tutorials'}).then(function (page) {
+          s.page = page;
         });
         populateVideos();
         resetActiveVideo();

@@ -70,6 +70,9 @@ exports.create = function (req, res) {
   if(user.clientId == 'TesedaModerator123'){
     user.moderator = true;
   }
+  if(user.clientId == 'TesedaWebAdmin123'){
+    user.webAdmin = true;
+  }
   user.save(function (err) {
     if (err) {
       var errors = err.errors.toString();

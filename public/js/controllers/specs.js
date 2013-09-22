@@ -1,7 +1,7 @@
-window.angular.module('App.controllers').controller("SpecCtrl", ["$scope", "$rootScope", "$filter", "$timeout", "PagesService", function(s, $rootScope, $filter, $timeout, PagesService) {
+window.angular.module('App.controllers').controller("SpecCtrl", ["$scope", "$rootScope", "$filter", "$timeout", "PagesCache", function(s, $rootScope, $filter, $timeout, PagesCache) {
 
-    PagesService.query({route:'specs'}, function (pages) {
-      s.page = _.first(pages);
+    PagesCache.getPage({route:'specs'}).then(function (page) {
+      s.page = page;
     });
   }
 ]);
