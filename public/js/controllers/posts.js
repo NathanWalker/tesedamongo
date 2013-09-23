@@ -28,6 +28,14 @@ window.angular.module('App.controllers').controller("PostsCtrl", ["$scope", "$ro
         PagesCache.resetScroll();
       };
 
+      s.limitedContent = function(post){
+        if(post.content.length > 500){
+          return post.content.substring(0, 500) + "&nbsp;<a href='/#!/news/" + post._id + "'>Read more ...</a>";
+        } else {
+          return post.content;
+        }
+      };
+
 
       s.posts = [];
 
@@ -106,6 +114,15 @@ window.angular.module('App.controllers').controller("PostsCtrl", ["$scope", "$ro
         if(foundPost){
           s.update(foundPost, {tagId:tagId});
         }
+      };
+
+      s.removeTagFromPost = function(tag, post){
+        if(Global.isAdmin()){
+          if($window.confirm("Are you sure you want to remove this category from this article?")){
+            s.update(post, {removeTagId:tag._id});
+          }
+        }
+
       };
 
       s.changeRouteToEdit = function(){

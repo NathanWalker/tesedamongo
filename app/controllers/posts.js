@@ -23,7 +23,7 @@ exports.create = function (req, res) {
       }
     });
   } else {
-    createPost()
+     createPost();
   }
 }
 
@@ -73,6 +73,19 @@ exports.update = function(req, res){
         updatePost();
       }
     });
+  } else if(query.removeTagId){
+    var tagIndex = -1;
+    for(var i = 0; i < post.tags.length; i++){
+      var postTag = post.tags[i];
+      if(postTag._id == query.removeTagId){
+        tagIndex = i;
+        break;
+      }
+    }
+    if(tagIndex > -1){
+      post.tags.splice(tagIndex, 1);
+    }
+    updatePost()
   } else {
     updatePost()
   }

@@ -105,7 +105,7 @@ window.angular.module("App.directives", []).directive('scrollTopLink', [
             '</ul>' +
             '<div data-ng-if="$root.global.isModerator()" style="margin-top:10px;"><form class="form-horizontal"><input type="text" placeholder="Add a category..." ng-model="activeTag.name"/>' +
             '<input type="submit" class="btn" data-ng-click="submitTagForm(activeTag)" value="Add"/></form>' +
-            '<div data-lvl-drop-target="true" data-ng-hide="$parent.tags.length==0" data-on-drop="dropped(dragEl, dropEl)" data-icon="&#x29;"><span class="drop-msg">Drop here to delete</span></div>' +
+            '<div data-lvl-drop-target="true" data-ng-hide="$parent.tags.length==0" data-on-drop="dropped(dragEl, dropEl)" data-icon="&#x29;"><span class="drop-msg">Drop here to delete a category</span></div>' +
             '</div>' +
             '</div>',
         link: function ( scope, el ) {

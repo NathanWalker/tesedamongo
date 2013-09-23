@@ -20,6 +20,12 @@ window.app = angular.module('tesedaApp', ['ngCookies', 'ngResource', 'ngSanitize
 
    };
 
+   $rootScope.resetScroll = function(){
+    $timeout(function(){
+      angular.element('body, html').scrollTop(0);
+    });
+  };
+
     $rootScope.currentYear = new Date().getFullYear();
 
     $rootScope.safeApply = function(fn) {

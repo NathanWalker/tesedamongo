@@ -5,7 +5,7 @@
   </div>
 
 
-<div class="well row">
+<div class="well row support-well">
   <div class="span3" style="margin-right:18px;">
     <div data-ng-bind-html="page.subheading"></div>
       <br/>
@@ -17,7 +17,7 @@
   </div>
 
   <tabset class="span9" data-ng-if="global.isSignedIn()">
-    <tab heading="Client Profile">
+    <tab heading="Client Profile" on-select="$root.resetScroll()">
       <div class="tab-pane">
         <p>
           <strong>{{global.currentUser().name}}</strong><br/>

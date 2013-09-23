@@ -18,6 +18,7 @@ html {
 }
 body {
 	font-family: "Open Sans","Helvetica Neue", Helvetica, Arial, sans-serif;
+	/*background: #e9e9e9 url(/img/tiny_grid.png) repeat 0 0;*/
 	/*background:url(../img/body-top.png) #fff repeat-x;
 	padding-top:3px;*/
 	padding:0;
@@ -226,14 +227,24 @@ footer input[type=submit].btn {
 	box-shadow:none;
 	/*box-shadow:inset 0 0 3px rgba(0,0,0,.2);*/
 
-	background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgdmlld0JveD0iMCAwIDEgMSIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJncmFkLXVjZ2ctZ2VuZXJhdGVkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjAlIiB5MT0iMCUiIHgyPSIwJSIgeTI9IjEwMCUiPgogICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iIzc3YWJkNiIgc3RvcC1vcGFjaXR5PSIwLjMiLz4KICAgIDxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iI2ZmZmZmZiIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgPC9saW5lYXJHcmFkaWVudD4KICA8cmVjdCB4PSIwIiB5PSIwIiB3aWR0aD0iMSIgaGVpZ2h0PSIxIiBmaWxsPSJ1cmwoI2dyYWQtdWNnZy1nZW5lcmF0ZWQpIiAvPgo8L3N2Zz4=);
+/*	background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgdmlld0JveD0iMCAwIDEgMSIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJncmFkLXVjZ2ctZ2VuZXJhdGVkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjAlIiB5MT0iMCUiIHgyPSIwJSIgeTI9IjEwMCUiPgogICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iIzc3YWJkNiIgc3RvcC1vcGFjaXR5PSIwLjMiLz4KICAgIDxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iI2ZmZmZmZiIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgPC9saW5lYXJHcmFkaWVudD4KICA8cmVjdCB4PSIwIiB5PSIwIiB3aWR0aD0iMSIgaGVpZ2h0PSIxIiBmaWxsPSJ1cmwoI2dyYWQtdWNnZy1nZW5lcmF0ZWQpIiAvPgo8L3N2Zz4=);
 background: -moz-linear-gradient(top,  rgba(119,171,214,0.3) 0%, rgba(255,255,255,1) 100%);
 background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(119,171,214,0.3)), color-stop(100%,rgba(255,255,255,1)));
 background: -webkit-linear-gradient(top,  rgba(119,171,214,0.3) 0%,rgba(255,255,255,1) 100%);
 background: -o-linear-gradient(top,  rgba(119,171,214,0.3) 0%,rgba(255,255,255,1) 100%);
 background: -ms-linear-gradient(top,  rgba(119,171,214,0.3) 0%,rgba(255,255,255,1) 100%);
 background: linear-gradient(to bottom,  rgba(119,171,214,0.3) 0%,rgba(255,255,255,1) 100%);
-filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#4d77abd6', endColorstr='#ffffff',GradientType=0 );
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#4d77abd6', endColorstr='#ffffff',GradientType=0 );*/
+
+background: #4baad3; /* Old browsers */
+background: -moz-linear-gradient(top,  #4baad3 0%, #ffffff 100%); /* FF3.6+ */
+background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#4baad3), color-stop(100%,#ffffff)); /* Chrome,Safari4+ */
+background: -webkit-linear-gradient(top,  #4baad3 0%,#ffffff 100%); /* Chrome10+,Safari5.1+ */
+background: -o-linear-gradient(top,  #4baad3 0%,#ffffff 100%); /* Opera 11.10+ */
+background: -ms-linear-gradient(top,  #4baad3 0%,#ffffff 100%); /* IE10+ */
+background: linear-gradient(to bottom,  #4baad3 0%,#ffffff 100%); /* W3C */
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#4baad3', endColorstr='#ffffff',GradientType=0 ); /* IE6-9 */
+
 
 }
 .navbar .brand {
@@ -494,14 +505,39 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#4d77abd6', e
 	color:#666;
 }
 .pricing .well {
-	background:#fff;
+	/*background:#fff;*/
 	border:1px solid #ccc;
 	box-shadow:0 0 10px rgba(0,0,0,0.1);
+	background: #e9e9e9 url(/img/tiny_grid.png) repeat 0 0;
+	padding:0;
+}
+.pricing .product-features {
+	padding:19px;
 }
 .pricing h2 {
-	font-size:30px;
-	margin:4px 0px 20px 0px;
-	color:#0085CC;
+	font-size: 30px;
+	margin: 0px 0px 8px 0px;
+	color: #fff;
+	text-align: center;
+	line-height: 42px;
+	padding:4px 0;
+}
+.pricing h2.item-0 {
+	background: #1E7145 !important;
+}
+.pricing h2.item-1 {
+	background: #E3A21A !important;
+}
+.pricing h2.item-2 {
+	background:#4baad3 !important;
+	/*background: #2D89EF !important;*/
+	/*background: #99B433 !important;*/
+}
+.pricing h2 a {
+	color:#fff;
+}
+.pricing h2 a:hover {
+	color:#fff;
 }
 .pricing .most-popular {
 	margin-top:-15px;
@@ -696,7 +732,7 @@ html:not(.osx) ::-webkit-scrollbar-thumb:vertical {
 }
 #portfolio-filter li.active a {
 	text-decoration:none;
-	background:#A30134;
+	background:#A30134 !important;
 	color:#fff;
 }
 
@@ -839,9 +875,6 @@ html:not(.osx) ::-webkit-scrollbar-thumb:vertical {
 	}
 	.post .entry-body a:hover h2 {
 		text-decoration:underline;
-	}
-	.post:hover .entry-body a {
-		color:#000;
 	}
 
 	/* Meta */
@@ -1222,6 +1255,9 @@ input.animated:focus {
 		background:#1b76bb;
 		color:#fff;
 		text-shadow:none;
+	}
+	.tags a.active:hover {
+		background:#1b76bb;
 	}
 	.tags a:hover {
 		background:#58504B;
