@@ -46,6 +46,9 @@ window.angular.module('App.controllers').controller("VideosCtrl", ["$scope", "$r
       var populateVideos = function(query) {
         VideosService.query(query, function (videos) {
           orderVideos(videos);
+          $timeout(function(){
+            $rootScope.$broadcast('isotope:refresh');
+          }, 800);
         });
       };
 
