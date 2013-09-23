@@ -1,4 +1,4 @@
-window.angular.module('App.controllers').controller("PagesCtrl", ["$scope", "$rootScope", "$filter", "$timeout", "$location", "$window", "$routeParams", "Global", "PagesService", function(s, $rootScope, $filter, $timeout, $location, $window, $routeParams, Global, PagesService) {
+window.angular.module('App.controllers').controller("PagesCtrl", ["$scope", "$rootScope", "$filter", "$timeout", "$location", "$window", "$routeParams", "Global", "PagesCache", "orderByFilter", function(s, $rootScope, $filter, $timeout, $location, $window, $routeParams, Global, PagesCache, orderByFilter) {
 
 
       if(!Global.isAdmin()){
@@ -27,27 +27,11 @@ window.angular.module('App.controllers').controller("PagesCtrl", ["$scope", "$ro
 
       s.toggleNew = function(force) {
         s.showNewForm = _.isUndefined(force) ? !s.showNewForm : force;
+        PagesCache.resetScroll();
       };
 
 
       s.pages = [];
-
-      var populatePages = function(query) {
-        PagesService.query(query, function (pages) {
-          s.pages = pages;
-
-          if ($routeParams.page) {
-            var foundPage = _.find(s.pages, function(p){
-              return p._id == $routeParams.page;
-            });
-            if(foundPage){
-              s.editPage(foundPage);
-            }
-          }
-        });
-
-
-      };
 
       s.create = function (activePage) {
         if(s.editing){
@@ -60,6 +44,23 @@ window.angular.module('App.controllers').controller("PagesCtrl", ["$scope", "$ro
             content: activePage.content,
             route: activePage.route
           });
+
+          if(activePage.navShow && activePage.navName){
+            page.navShow = true;
+            page.navName = activePage.navName;
+          }
+
+          if(activePage.order){
+            page.order = activePage.order;
+          }
+
+          if(activePage.showBanner){
+            page.showBanner = true;
+          }
+
+          if(activePage.overviewVideo){
+            page.overviewVideo = activePage.overviewVideo;
+          }
 
           page.$save(function (response) {
             if(response && response._id){
@@ -79,23 +80,47 @@ window.angular.module('App.controllers').controller("PagesCtrl", ["$scope", "$ro
         s.toggleNew(true);
       };
 
+      var resortPages = function(){
+        var cnt = 0;
+
+        var updatePageOrder = function(){
+          var pageToUpdate = s.pages[cnt];
+          pageToUpdate.order = cnt+1;
+          //console.log('updating page: ' + pageToUpdate.navName + ', ' + pageToUpdate.order);
+          PagesCache.updatePage(pageToUpdate).then(function(){
+            cnt++;
+            if(cnt == s.pages.length){
+              s.updatingSort = false;
+              initPages();
+            } else {
+              updatePageOrder();
+            }
+          });
+        };
+
+        // kick it off
+        updatePageOrder();
+      };
+
+      s.updatingSort = false;
+      s.sortableOptions = {
+        update: function(e, ui) {
+          s.updatingSort = true;
+          $timeout(function(){
+            // get new index of the page after dom and scope has updated
+            resortPages();
+          }, 100);
+        },
+        axis: 'y',
+        cursor:'move',
+        delay:150,
+        items:'> li.sortable-item'
+      };
+
       s.update = function (activePage) {
-        activePage.$update(function () {
-          // $location.path('fantasyteams/' + fantasyteam._id);
+        PagesCache.updatePage(activePage).then(function(){
           s.toggleNew(false);
           resetActivePage();
-        });
-      };
-
-      s.find = function (query) {
-        PagesService.query(query, function (pages) {
-          s.pages = pages;
-        });
-      };
-
-      s.findOne = function () {
-        PagesService.get({ videoId: $routeParams.page }, function (page) {
-          s.page = page;
         });
       };
 
@@ -115,7 +140,21 @@ window.angular.module('App.controllers').controller("PagesCtrl", ["$scope", "$ro
         }
       };
 
-      populatePages();
+      var initPages = function(){
+         PagesCache.pages().then(function(pages){
+            s.pages = orderByFilter(pages, '+order');
+          });
+      };
+
+      initPages();
       resetActivePage();
+
+      if ($routeParams.page) {
+        PagesCache.getPage({_id:$routeParams.page}).then(function(page){
+          if(page){
+            s.editPage(page);
+          }
+        });
+      }
   }
 ]);

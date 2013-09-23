@@ -1,4 +1,4 @@
-window.angular.module('App.controllers').controller("ProductsEditCtrl", ["$scope", "$rootScope", "$filter", "$timeout", "$location", "$window", "$routeParams", "Global", "ProductsService", "orderByFilter", function(s, $rootScope, $filter, $timeout, $location, $window, $routeParams, Global, ProductsService, orderByFilter) {
+window.angular.module('App.controllers').controller("ProductsEditCtrl", ["$scope", "$rootScope", "$filter", "$timeout", "$location", "$window", "$routeParams", "Global", "ProductsService", "PagesCache", "orderByFilter", function(s, $rootScope, $filter, $timeout, $location, $window, $routeParams, Global, ProductsService, PagesCache, orderByFilter) {
 
       if(!Global.isSignedIn()){
         $location.path("support");
@@ -28,6 +28,7 @@ window.angular.module('App.controllers').controller("ProductsEditCtrl", ["$scope
 
       s.toggleNew = function(force) {
         s.showNewForm = _.isUndefined(force) ? !s.showNewForm : force;
+        PagesCache.resetScroll();
       };
 
 

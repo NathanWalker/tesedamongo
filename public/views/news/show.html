@@ -55,42 +55,38 @@
       <hr/>
     </div>
 
-  <hr />
-
   <!-- #blog -->
   <div class="row" id="blog">
 
     <!-- posts -->
-    <div class="span8">
+    <div class="span12">
 
       <!-- Example of image blog item
       ================================================== -->
-      <article class="post" data-ng-class="{'image-post':post.image}">
+      <article class="post post-detail" data-ng-class="{'image-post':post.image}">
+
+        <h2 class="entry-title" data-ng-bind-html="post.title"></h2>
+        <div data-ng-if="global.isModerator()" class="btn edit-news" data-icon="d" data-ng-click="changeRouteToEdit()">Edit</div>
+
+        <!-- entry meta -->
+        <div class="entry-meta">
+          <span class="entry-date">{{post.created|date:'mediumDate'}}</span>
+          <!-- <span class="entry-comments"> 12 comments</span> -->
+        </div>
+        <div class="clr"></div>
 
         <!-- entry media -->
-        <a data-ng-href="/#!/news/{{post._id}}" class="entry-media">
+        <a data-ng-href="/#!/news/{{post._id}}" class="entry-media" data-ng-if="post.image">
           <img data-ng-src="{{global.imagePath()}}{{post.image}}" alt="" />
         </a>
 
         <!-- entry body -->
         <div class="entry-body">
-          <a data-ng-href="/#!/news/{{post._id}}">
-            <h2 class="entry-title" data-ng-bind-html="post.title">
-            </h2>
-          </a>
           <p data-ng-bind-html="post.content"></p>
-        </div>
-
-        <!-- entry meta -->
-        <div class="entry-meta">
-          <span class="entry-type"></span>
-          <span class="entry-date">{{post.created|date:'mediumDate'}}</span>
-          <!-- <span class="entry-comments"> 12 comments</span> -->
         </div>
 
         <!-- clearfix -->
         <div class="clr"></div>
-        <div data-ng-if="global.isModerator()" class="btn" data-icon="d" data-ng-click="changeRouteToEdit()">Edit</div>
 
       </article><!-- end item -->
 

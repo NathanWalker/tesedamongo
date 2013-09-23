@@ -7,7 +7,12 @@ var PageSchema = new Schema({
   title: {type : String},
   subheading: {type : String},
   content: {type : String},
-  route: {type: String}
+  route: {type: String},
+  navShow:{type: Boolean},
+  navName: {type: String},
+  order: {type: Number},
+  overviewVideo: {type: String},
+  showBanner: {type: Boolean, default:false}
 });
 
  PageSchema.statics = {

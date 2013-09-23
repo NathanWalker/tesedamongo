@@ -101,18 +101,22 @@ window.angular.module("App.directives", []).directive('scrollTopLink', [
         template:
             '<div>' +
             '<ul class="tags">' +
-                '<li ng-repeat="(idx, tag) in tags" data-lvl-draggable="true" data-tag-id="{{tag._id}}"><a data-ng-click="selectTag(tag)">{{tag.name}}</a></li>' +
+                '<li ng-repeat="(idx, tag) in tags" data-lvl-draggable="true" data-tag-id="{{tag._id}}"><div data-ng-if="$root.global.isModerator()" class="drag-area" data-icon="0" ></div><a data-ng-click="selectTag(tag)" data-ng-class="{editing:$root.global.isModerator(),active:tag.active}">{{tag.name}}</a></li>' +
             '</ul>' +
             '<div data-ng-if="$root.global.isModerator()" style="margin-top:10px;"><form class="form-horizontal"><input type="text" placeholder="Add a category..." ng-model="activeTag.name"/>' +
             '<input type="submit" class="btn" data-ng-click="submitTagForm(activeTag)" value="Add"/></form>' +
-            '<div data-lvl-drop-target="true" data-ng-hide="$parent.tags.length==0" data-on-drop="dropped(dragEl, dropEl)" data-icon="&#x29;"></div>' +
+            '<div data-lvl-drop-target="true" data-ng-hide="$parent.tags.length==0" data-on-drop="dropped(dragEl, dropEl)" data-icon="&#x29;"><span class="drop-msg">Drop here to delete a category</span></div>' +
             '</div>' +
             '</div>',
         link: function ( scope, el ) {
             var input = angular.element( el.children()[1] );
 
             scope.selectTag = function(tag) {
-              $rootScope.$broadcast('tag:selected', tag);
+              tag.active = !tag.active;
+              var allActive = _.filter(scope.tags, function(t) {
+                return t.active;
+              });
+              $rootScope.$broadcast('tag:selected', tag, allActive);
             };
 
             scope.dropped = function(dragEl, dropEl) { // function referenced by the drop target

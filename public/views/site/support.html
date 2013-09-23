@@ -5,7 +5,7 @@
   </div>
 
 
-<div class="well row">
+<div class="well row support-well">
   <div class="span3" style="margin-right:18px;">
     <div data-ng-bind-html="page.subheading"></div>
       <br/>
@@ -17,7 +17,7 @@
   </div>
 
   <tabset class="span9" data-ng-if="global.isSignedIn()">
-    <tab heading="Client Profile">
+    <tab heading="Client Profile" on-select="$root.resetScroll()">
       <div class="tab-pane">
         <p>
           <strong>{{global.currentUser().name}}</strong><br/>
@@ -29,7 +29,7 @@
       </div>
     </tab>
 
-    <tab heading="Edit Users" data-ng-if="global.currentUser().admin">
+    <tab heading="Edit Users" data-ng-if="global.isAdmin()">
         <div class="tab-pane" data-ng-controller="UsersCtrl">
           <!-- <div class="btn btn-primary" style="float:right;" data-ng-click="openNewForm()" data-ng-hide="showUserForm">New</div> -->
             <form class="form-horizontal" data-ng-if="showUserForm">
@@ -102,9 +102,11 @@
     </tab>
     <tab heading="Edit Pages" data-ng-if="global.isAdmin()">
       <div class="tab-pane" data-ng-controller="PagesCtrl">
+          <div style="margin:0 0 10px 12px;font-style:italic;"><strong>Click to edit page</strong> or <strong>Drag to re-order navigation</strong></div>
             <div>
-              <ul class="user-list">
-                <li data-ng-repeat="page in pages|orderBy:'+route'"><a data-ng-href="/#!/pages/{{page._id}}">{{page.route}}</a></li>
+              <ul class="user-list page-sortable-list" data-ng-class="{resorting:updatingSort}" data-ui-sortable="sortableOptions" ng-model="pages">
+                <li data-ng-repeat="page in pages" class="sortable-item" data-page-id="{{page._id}}"><a data-ng-href="/#!/pages/{{page._id}}">{{page.navName}}</a></li>
+                <li data-ng-if="updatingSort" style="font-style:italic;">One moment, re-sorting navigation...</li>
                 <li class="divider"><a data-ng-href="/#!/products/edit">product listings, etc</a></li>
               </ul>
             </div>

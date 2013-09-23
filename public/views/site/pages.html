@@ -2,7 +2,7 @@
     <div class="ac">
       <p><strong>Pages</strong></p>
       <div style="text-align:right;" data-ng-if="global.isAdmin()">
-        <div data-ng-if="!showNewForm" class="btn new-btn" data-icon="d" data-ng-click="openNewForm()">New</div>
+        <div data-ng-if="global.isWebAdmin() && !showNewForm" class="btn new-btn" data-icon="d" data-ng-click="openNewForm()">New</div>
       </div>
       <div class="clr"></div>
     </div>
@@ -10,7 +10,7 @@
 
   <div class="container" data-ng-if="showNewForm">
     <hr/>
-    <h3 style="text-align:center;margin: 0 0 10px;"><span>{{editing|booleanText:'Edit':'New'}}</span><span data-ng-if="editing" style="display:inline-block;margin-left:10px;">"{{activePage.route}}"</span></h3>
+    <h3 style="text-align:center;margin: 0 0 10px;"><span>{{editing|booleanText:'Edit':'New'}}</span><span data-ng-if="editing" style="display:inline-block;margin-left:10px;">"{{activePage.navName}}"</span></h3>
     <form class="form-horizontal" >
         <p style="font-style:italic; color:red;" data-ng-show="failed">Page failed to update.</p>
         <fieldset>
@@ -36,12 +36,69 @@
                   </div>
                 </div>
 
-                <div class="control-group">
-                  <label class="control-label"  for="create-route">Page shortname</label>
+                <div class="control-group" data-ng-if="global.isWebAdmin()">
+                  <label class="control-label"  for="create-route">Page Route</label>
                   <div class="controls">
                     <input type="text" id="create-route" placeholder="Page shortname" name="route" class="input-xlarge" data-ng-model="activePage.route">
                   </div>
                 </div>
+
+                <div class="control-group" data-ng-if="activePage.route == 'home'">
+                  <label class="control-label"  for="create-video">Overview Video</label>
+                  <div class="controls">
+                    <input type="text" id="create-video" placeholder="Video URL" name="overviewVideo" class="input-xlarge" data-ng-model="activePage.overviewVideo">
+                  </div>
+                </div>
+
+                <hr/>
+
+                <div class="control-group" data-ng-if="global.isWebAdmin()">
+                  <label class="control-label"  for="create-navShow">Show in Top Navigation</label>
+                  <div class="controls">
+                    <input type="checkbox" id="create-navShow" name="navShow" class="input-xlarge" data-ng-model="activePage.navShow">
+                  </div>
+                </div>
+
+                <div class="control-group" data-ng-if="activePage.navShow">
+                  <label class="control-label"  for="create-navname">Top Navigation Name</label>
+                  <div class="controls">
+                    <input type="text" id="create-navname" placeholder="Navigation Name" name="navName" class="input-xlarge" data-ng-model="activePage.navName">
+                  </div>
+                </div>
+
+                <div class="control-group" data-ng-if="global.isWebAdmin()">
+                  <label class="control-label"  for="create-nav-order">Navigation Order</label>
+                  <div class="controls">
+                    <select id="create-nav-order" name="order" class="input-xlarge" data-ng-model="activePage.order">
+                      <option value="1">1</option>
+                      <option value="2">2</option>
+                      <option value="3">3</option>
+                      <option value="4">4</option>
+                      <option value="5">5</option>
+                      <option value="6">6</option>
+                      <option value="7">7</option>
+                      <option value="8">8</option>
+                      <option value="9">9</option>
+                      <option value="10">10</option>
+                    </select>
+                  </div>
+                </div>
+
+                <hr/>
+                <!-- <div>
+                  <div class="control-group" data-ng-if="global.isWebAdmin()">
+                    <label class="control-label"  for="create-banner">Show Slideshow</label>
+                    <div class="controls">
+                      <input type="checkbox" id="create-banner" name="showBanner" class="input-xlarge" data-ng-model="activePage.showBanner">
+                    </div>
+                  </div>
+                  <div class="control-group" data-ng-if="activePage.route=='home'">
+                    <label class="control-label"  for="create-banner">Show Slideshow</label>
+                    <div class="controls">
+                      <input type="checkbox" id="create-banner" name="showBanner" class="input-xlarge" data-ng-model="activePage.showBanner">
+                    </div>
+                  </div>
+                </div> -->
 
           <div class="control-group">
             <div class="controls">
@@ -56,9 +113,11 @@
     </div>
 
 <div class="container">
-  <ul class="software-overview-list">
-    <li data-ng-repeat="page in pages|orderBy:'+route'">
-      <a data-ng-click="editPage(page)">{{page.route}}</a>
+  <div style="margin:0 0 10px 12px;font-style:italic;text-align:center;"><strong>Click to edit page</strong> or <strong>Drag to re-order navigation</strong></div>
+  <ul class="software-overview-list page-sortable-list" data-ng-class="{resorting:updatingSort}" data-ui-sortable="sortableOptions" ng-model="pages" style="width:150px;margin:0 auto;">
+    <li data-ng-repeat="page in pages" class="sortable-item" data-page-id="{{page._id}}">
+      <a data-ng-click="editPage(page)">{{page.navName}}</a>
     </li>
+    <li data-ng-if="updatingSort" style="font-style:italic;">One moment, re-sorting navigation...</li>
   </ul>
 </div>

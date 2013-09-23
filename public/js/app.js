@@ -1,4 +1,4 @@
-window.app = angular.module('tesedaApp', ['ngCookies', 'ngResource', 'ngSanitize', 'ui.bootstrap', 'ngRoute', 'App.controllers', 'App.directives', 'App.filters', 'App.services', 'lvl.directives.dragdrop', 'lvl.directives.fileupload', 'iso'])
+window.app = angular.module('tesedaApp', ['ngCookies', 'ngResource', 'ngSanitize', 'ui.bootstrap', 'ui.sortable', 'ngRoute', 'App.controllers', 'App.directives', 'App.filters', 'App.services', 'lvl.directives.dragdrop', 'lvl.directives.fileupload', 'iso'])
 .value('iso.config', {
     refreshDelay: 300,
     refreshEvent: 'isotope:refresh'
@@ -19,6 +19,12 @@ window.app = angular.module('tesedaApp', ['ngCookies', 'ngResource', 'ngSanitize
       }, 300);
 
    };
+
+   $rootScope.resetScroll = function(){
+    $timeout(function(){
+      angular.element('body, html').scrollTop(0);
+    });
+  };
 
     $rootScope.currentYear = new Date().getFullYear();
 

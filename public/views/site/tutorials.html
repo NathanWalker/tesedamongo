@@ -30,9 +30,9 @@
           </div>
 
           <div class="control-group">
-            <label class="control-label"  for="create-videoId">Video ID</label>
+            <label class="control-label"  for="create-videoId">Video URL</label>
             <div class="controls">
-              <input type="text" id="create-videoId" placeholder="Video ID" name="url" class="input-xlarge" data-ng-model="activeVideo.url">
+              <input type="text" id="create-videoId" placeholder="Video URL" name="url" class="input-xlarge" data-ng-model="activeVideo.url">
             </div>
           </div>
 
@@ -121,7 +121,7 @@
 
         <a class="thumbnail" data-nw-fancybox-media data-ng-href="http://www.{{video.type|lowercase}}.com/{{video.type=='YouTube'|booleanText:'watch?v=':''}}{{video.url}}" rel="media-gallery">
           <!-- image -->
-          <img data-ng-src="{{$root.global.imagePath()}}{{$parent.video.poster}}" alt=""
+          <img data-ng-src="{{$root.global.imagePath()}}{{$parent.videoPoster($parent.video)}}" alt=""
             data-video-id="{{$parent.video._id}}"
             data-lvl-drop-target="true"
             data-on-drop="tagConnect(dragEl, dropEl)" />

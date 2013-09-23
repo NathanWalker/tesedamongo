@@ -70,7 +70,9 @@
 
       <!-- Example of image blog item
       ================================================== -->
-      <article class="post" data-ng-class="{'image-post':post.image}" data-ng-repeat="post in posts">
+      <article class="post" data-ng-class="{'image-post':post.image}" data-ng-repeat="post in posts | filter:searchNews">
+
+        <div data-ng-if="global.isModerator()" class="btn edit-news" data-icon="d" data-ng-click="editPost(post)">Edit</div>
 
         <!-- entry media -->
         <a data-ng-href="/#!/news/{{post._id}}" class="entry-media" data-ng-if="post.image">
@@ -89,7 +91,7 @@
             data-on-drop="tagConnect(dragEl, dropEl)">
             </h2>
           </a>
-          <p data-ng-bind-html="post.content"></p>
+          <p data-ng-bind-html="limitedContent(post)"></p>
         </div>
 
         <!-- entry meta -->
@@ -101,28 +103,36 @@
 
         <!-- clearfix -->
         <div class="clr"></div>
-        <div data-ng-if="global.isModerator()" class="btn" data-icon="d" data-ng-click="editPost(post)">Edit</div>
 
+        <!-- tags -->
+        <div class="tags-list" data-ng-if="post.tags.length">
+          <ul class="tags">
+            <li ng-repeat="tag in post.tags">
+              <a data-ng-click="removeTagFromPost(tag, post)">{{tag.name}}</a>
+            </li>
+          </ul>
+        </div>
+
+        <hr />
       </article><!-- end item -->
 
       <article class="post" data-ng-if="posts.length == 0">
 
         <!-- entry body -->
         <div class="entry-body">
-          <h2>No news or articles have been posted yet.</h2>
+          <h2>{{tagSelectionOn|booleanText:'No news or articles found with the selected categories.':'No news or articles have been posted yet.'}}</h2>
           <p></p>
         </div>
 
         <!-- clearfix -->
         <div class="clr"></div>
 
+        <hr />
       </article><!-- end item -->
-
-      <hr />
 
       <!-- Pagination
       ================================================== -->
-      <div class="pagination" data-ng-if="posts.length > 30">
+      <!-- <div class="pagination" data-ng-if="posts.length > 30">
         <ul>
           <li><a href="#">&larr; Prev</a></li>
           <li class="active"><a href="#">1</a></li>
@@ -130,7 +140,7 @@
           <li><a href="#">3</a></li>
           <li><a href="#">Next &rarr;</a></li>
         </ul>
-      </div>
+      </div> -->
 
     </div><!-- end .span8 -->
 
@@ -140,7 +150,7 @@
 
       <!-- search plugin -->
       <div class="widget">
-        <input type="search" class="animated" placeholder="Search" />
+        <input type="search" class="animated" placeholder="Search" data-ng-model="searchNews.$" />
       </div>
 
       <!-- Tags / categories -->

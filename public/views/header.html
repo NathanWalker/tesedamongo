@@ -29,15 +29,7 @@
       <a class="brand arc" href="/" data-icon="b"></a>
       <div class="nav-collapse" collapse="navCollapsed">
         <ul class="nav">
-          <li data-ng-class="{active:isCurrentLocation(['/products'])}"><a href="/#!/products">Products</a></li>
-          <li data-ng-class="{active:isCurrentLocation(['/tutorials'])}"><a href="/#!/tutorials">Videos<span data-ng-if="global.isSignedIn()">/Tutorials</span></a></li>
-          <li data-ng-class="{active:isCurrentLocation(['/specs'])}"><a href="/#!/specs">Specs</a></li>
-          <li data-ng-class="{active:isCurrentLocation(['/support'])}"><a href="/#!/support">Support</a></li>
-          <li data-ng-class="{active:isCurrentLocation(['/news'])}"><a href="/#!/news">News</a></li>
-          <li data-ng-class="{active:isCurrentLocation(['/partners'])}"><a href="/#!/partners">Partners</a></li>
-          <li data-ng-class="{active:isCurrentLocation(['/about'])}"><a href="/#!/about">About</a></li>
-          <li data-ng-class="{active:isCurrentLocation(['/contact'])}"><a href="/#!/contact">Contact</a></li>
-
+          <li data-ng-repeat="page in pages" data-ng-class="{active:isPageActive(page.route)}"><a data-ng-href="/#!/{{page.route}}">{{page.navName}}</a></li>
         </ul>
 
       </div><!--/.nav-collapse -->

@@ -1,4 +1,4 @@
-window.angular.module('App.controllers').controller("VideosCtrl", ["$scope", "$rootScope", "$filter", "$timeout", "$location", "$window", "$routeParams", "Global", "VideosService", "PagesService", "ImagesService", "TagsService", "orderByFilter", function(s, $rootScope, $filter, $timeout, $location, $window, $routeParams, Global, VideosService, PagesService, ImagesService, TagsService, orderByFilter) {
+window.angular.module('App.controllers').controller("VideosCtrl", ["$scope", "$rootScope", "$filter", "$timeout", "$location", "$window", "$routeParams", "Global", "VideosService", "ImagesService", "TagsService", "PagesCache", "orderByFilter", function(s, $rootScope, $filter, $timeout, $location, $window, $routeParams, Global, VideosService, ImagesService, TagsService, PagesCache, orderByFilter) {
 
       s.showNewForm = false;
       s.editing = false;
@@ -27,6 +27,7 @@ window.angular.module('App.controllers').controller("VideosCtrl", ["$scope", "$r
 
       s.toggleNew = function(force) {
         s.showNewForm = _.isUndefined(force) ? !s.showNewForm : force;
+        PagesCache.resetScroll();
       };
 
 
@@ -48,6 +49,26 @@ window.angular.module('App.controllers').controller("VideosCtrl", ["$scope", "$r
         });
       };
 
+      var getIdFromVideoUrl = function(video) {
+        var videoId = '';
+        if(video.type == 'YouTube'){
+          videoId = _.last(video.url.split('v='));
+        } else if (video.type == 'Vimeo'){
+          videoId = _.last(video.url.split('com/'));
+        }
+        return videoId;
+      };
+
+      var getVideoUrlWithId = function(video){
+        var videoUrl = '';
+        if(video.type == 'YouTube'){
+          videoUrl = "http://www.youtube.com/watch?v=" + video.url;
+        } else if (video.type == 'Vimeo'){
+          videoUrl = "http://vimeo.com/" + video.url;
+        }
+        return videoUrl;
+      };
+
       s.create = function (activeVideo) {
         if(s.editing){
           s.update(activeVideo);
@@ -56,10 +77,16 @@ window.angular.module('App.controllers').controller("VideosCtrl", ["$scope", "$r
           var video = new VideosService({
             title: activeVideo.title,
             type: activeVideo.type,
-            url: activeVideo.url,
             order: Number(activeVideo.order),
             exclusive: activeVideo.exclusive || false
           });
+
+          if(activeVideo.url){
+            video.url = getIdFromVideoUrl(activeVideo);
+          } else {
+            $window.alert('Video URL is required!');
+            return;
+          }
 
           if(s.uploadedImage){
             video.poster = s.uploadedImage.url;
@@ -78,9 +105,14 @@ window.angular.module('App.controllers').controller("VideosCtrl", ["$scope", "$r
 
       };
 
+      s.videoPoster = function(video){
+        return video.poster || 'default-video-poster.gif';
+      };
+
       s.editVideo = function(video) {
         s.editing = true;
         s.activeVideo = video;
+        s.activeVideo.url = getVideoUrlWithId(video);
         s.toggleNew(true);
         s.fileUploading = false;
         s.uploadedImage = undefined;
@@ -211,8 +243,8 @@ window.angular.module('App.controllers').controller("VideosCtrl", ["$scope", "$r
       if ($routeParams.video) {
         s.findOne();
       } else {
-        PagesService.query({route:'tutorials'}, function (pages) {
-          s.page = _.first(pages);
+        PagesCache.getPage({route:'tutorials'}).then(function (page) {
+          s.page = page;
         });
         populateVideos();
         resetActiveVideo();

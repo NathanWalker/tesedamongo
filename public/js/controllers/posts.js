@@ -1,9 +1,11 @@
-window.angular.module('App.controllers').controller("PostsCtrl", ["$scope", "$rootScope", "$filter", "$timeout", "$location", "$window", "$routeParams", "Global", "PostsService", "ImagesService", "PagesService", "orderByFilter", function(s, $rootScope, $filter, $timeout, $location, $window, $routeParams, Global, PostsService, ImagesService, PagesService, orderByFilter) {
+window.angular.module('App.controllers').controller("PostsCtrl", ["$scope", "$rootScope", "$filter", "$timeout", "$location", "$window", "$routeParams", "Global", "PostsService", "ImagesService", "PagesCache", "orderByFilter", function(s, $rootScope, $filter, $timeout, $location, $window, $routeParams, Global, PostsService, ImagesService, PagesCache, orderByFilter) {
 
+      var allPosts = [];
       s.showNewForm = false;
       s.editing = false;
       s.fileUploading = false;
       s.uploadedImage = undefined;
+      s.tagSelectionOn = false;
 
       var resetActivePost = function() {
         s.activePost = {
@@ -12,6 +14,7 @@ window.angular.module('App.controllers').controller("PostsCtrl", ["$scope", "$ro
         };
         s.fileUploading = false;
         s.uploadedImage = undefined;
+        s.tagSelectionOn = false;
       };
 
       s.openNewForm = function() {
@@ -22,6 +25,15 @@ window.angular.module('App.controllers').controller("PostsCtrl", ["$scope", "$ro
 
       s.toggleNew = function(force) {
         s.showNewForm = _.isUndefined(force) ? !s.showNewForm : force;
+        PagesCache.resetScroll();
+      };
+
+      s.limitedContent = function(post){
+        if(post.content.length > 500){
+          return post.content.substring(0, 500) + "&nbsp;<a href='/#!/news/" + post._id + "'>Read more ...</a>";
+        } else {
+          return post.content;
+        }
       };
 
 
@@ -29,6 +41,7 @@ window.angular.module('App.controllers').controller("PostsCtrl", ["$scope", "$ro
 
       var orderPosts = function(posts) {
         s.posts = orderByFilter(posts, '-created');
+        allPosts = s.posts;
       };
 
       var populatePosts = function(query) {
@@ -103,6 +116,15 @@ window.angular.module('App.controllers').controller("PostsCtrl", ["$scope", "$ro
         }
       };
 
+      s.removeTagFromPost = function(tag, post){
+        if(Global.isAdmin()){
+          if($window.confirm("Are you sure you want to remove this category from this article?")){
+            s.update(post, {removeTagId:tag._id});
+          }
+        }
+
+      };
+
       s.changeRouteToEdit = function(){
         if(s.post) {
           $location.url('news?edit=' + s.post._id);
@@ -149,9 +171,20 @@ window.angular.module('App.controllers').controller("PostsCtrl", ["$scope", "$ro
         }
       };
 
-      s.$on('tag:selected', function(e, tag){
-        // to do, handle tag selection
-
+      s.$on('tag:selected', function(e, tag, allActiveTags){
+        // filter posts to just the tag thats selected
+        if(allActiveTags.length==0){
+          s.tagSelectionOn = false;
+          //reset to original
+          orderPosts(allPosts);
+        } else {
+          s.tagSelectionOn = true;
+          var activeTagIds = _.pluck(allActiveTags, '_id');
+          var taggedPosts = _.filter(allPosts, function(p){
+            return _.filter(p.tags, function(t) { return _.contains(activeTagIds, t._id);}).length > 0;
+          });
+          s.posts = orderByFilter(taggedPosts, '-created');
+        }
       });
 
       s.$on('image:removed', function(e) {
@@ -160,12 +193,12 @@ window.angular.module('App.controllers').controller("PostsCtrl", ["$scope", "$ro
 
       s.progress = function(percentDone) {
         s.fileUploading = true;
-            console.log("progress: " + percentDone + "%");
+            // console.log("progress: " + percentDone + "%");
       };
 
       s.done = function(files, data) {
-            console.log("upload complete");
-            console.log("data: " + JSON.stringify(data));
+            // console.log("upload complete");
+            // console.log("data: " + JSON.stringify(data));
             writeFiles(files, data);
       };
 
@@ -175,18 +208,18 @@ window.angular.module('App.controllers').controller("PostsCtrl", ["$scope", "$ro
       };
 
       s.error = function(files, type, msg) {
-            console.log("Upload error: " + msg);
-            console.log("Error type:" + type);
+            // console.log("Upload error: " + msg);
+            // console.log("Error type:" + type);
             writeFiles(files);
       }
 
       function writeFiles(files, data)
       {
 
-            console.log('Files')
-            for (var i = 0; i < files.length; i++) {
-                  console.log('\t' + files[i].name);
-            }
+            // console.log('Files')
+            // for (var i = 0; i < files.length; i++) {
+            //       console.log('\t' + files[i].name);
+            // }
             if(data) {
               var imageName = data.filenames[0];
               image = new ImagesService({
@@ -208,8 +241,8 @@ window.angular.module('App.controllers').controller("PostsCtrl", ["$scope", "$ro
         populatePosts();
         resetActivePost();
 
-        PagesService.query({route:'news'}, function (pages) {
-          s.page = _.first(pages);
+        PagesCache.getPage({route:'news'}).then(function (page) {
+          s.page = page;
         });
       }
 

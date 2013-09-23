@@ -1,8 +1,8 @@
-window.angular.module('App.controllers').controller("PartnersCtrl", ["$scope", "$rootScope", "$filter", "$timeout", "PagesService", function(s, $rootScope, $filter, $timeout, PagesService) {
+window.angular.module('App.controllers').controller("PartnersCtrl", ["$scope", "$rootScope", "$filter", "$timeout", "PagesCache", function(s, $rootScope, $filter, $timeout, PagesCache) {
 
-    PagesService.query({route:'partners'}, function (pages) {
-          s.page = _.first(pages);
-        });
+    PagesCache.getPage({route:'partners'}).then(function (page) {
+      s.page = page;
+    });
 
 
   }
