@@ -462,7 +462,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#4baad3', end
 /* --------------------------------------------------------	*/
 
 .faq ul {list-style-type:none; }
-.faq ul > li {padding:6px 0;border-bottom:1px solid #eee;}
+.faq ul > li {padding:6px 0;}
 .faq ul > li > a {font-size:16px;font-weight:bold; cursor:pointer;}
 .faq ul > li > p {font-size:1.05em;line-height:1.6em;}
 .faq input[type=text] {
@@ -495,7 +495,6 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#4baad3', end
 	margin:0 0 20px 0;
 }
 .pricing ul li {
-	border-bottom:1px solid #eee;
 	padding:4px 0px;
 	font-size:1.2em;
 	color:#222;
@@ -522,6 +521,21 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#4baad3', end
 	line-height: 42px;
 	padding:4px 0;
 }
+.pricing h2.standard {
+	color:#000 !important;
+}
+h2.product-title {
+	text-align: center;
+}
+h2.product-title span[data-icon] {
+	display:none;
+}
+.pricing h2 span[data-icon] {
+	font-size: 12px;
+	position: relative;
+	top: -15px;
+	right: -6px;
+}
 .pricing h2.item-0 {
 	background: #1E7145 !important;
 }
@@ -533,11 +547,16 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#4baad3', end
 	/*background: #2D89EF !important;*/
 	/*background: #99B433 !important;*/
 }
+.pricing h2.item-overview {
+	background:#999  !important;
+}
 .pricing h2 a {
 	color:#fff;
 }
 .pricing h2 a:hover {
 	color:#fff;
+	text-decoration: none;
+	text-shadow: 1px 1px 1px rgba(0,0,0,.9);
 }
 .pricing .most-popular {
 	margin-top:-15px;

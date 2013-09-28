@@ -6,7 +6,7 @@
 
 <div class="container" data-ng-if="showNewForm">
   <hr/>
-  <h3 style="text-align:center;margin: 0 0 10px;"><span>{{editing|booleanText:'Edit':'New'}}</span><span data-ng-if="editing" style="display:inline-block;margin-left:10px;">"{{activeProduct.name}}"</span></h3>
+  <h3 style="text-align:center;margin: 0 0 10px;"><span>{{editing|booleanText:'Edit':'New'}}</span><span data-ng-if="editing" style="display:inline-block;margin-left:10px;" data-ng-bind-html="activeProduct.name"></span></h3>
   <form class="form-horizontal">
               <p style="font-style:italic; color:red;" data-ng-show="failed">Product save failed, please verify your input.</p>
               <fieldset>
@@ -83,7 +83,7 @@
   <h3 style="text-align:center;">Products</h3>
   <ul class="software-overview-list">
     <li data-ng-repeat="product in products">
-      <a data-ng-click="editProduct(product)">{{product.name}}</a>
+      <a data-ng-click="editProduct(product)" data-ng-bind-html="product.name"></a>
     </li>
   </ul>
 </div>

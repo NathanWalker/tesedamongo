@@ -1,8 +1,7 @@
 <div class="hero-unit">
-    <div class="container">
-      <p class="ac">
-        <strong>{{product.name}}</strong>
-      </p>
+    <div class="container pricing">
+      <h2 class="product-title item-{{product.featuredOrder-1}}" data-ng-class="{standard:product.featuredOrder==0}" data-ng-bind-html="product.name">
+      </h2>
     </div>
   </div>
 
@@ -12,7 +11,5 @@
         <p data-ng-bind-html="product.content"></p>
       </div>
     </div>
-
-    <hr />
 
   </div>
