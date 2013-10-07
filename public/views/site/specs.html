@@ -1,7 +1,43 @@
 <div class="hero-unit">
-    <div class="ac">
-      <p data-ng-bind-html="page.title"></p>
-    </div>
+  <div class="ac">
+    <p data-ng-bind-html="page.title"></p>
   </div>
+</div>
 
-  <div id="explore" data-ng-bind-html="page.content"></div>
+<div id="explore" data-ng-bind-html="page.content"></div>
+
+<div
+  class="items"
+  >
+  <table
+    class="table spec-table"
+    data-ng-table="tableOptions"
+    >
+    <tr
+      class="item"
+      data-ng-repeat="spec in $parent.specFiles"
+      >
+      <td
+        data-title="Name"
+        data-column="name"
+        data-sortable="name"
+        >
+        <span
+          class="title"
+          >{{spec.name}}</span>
+        <span
+          class="meta"
+          data-ng-if="spec.description">
+          {{spec.description}}
+        </span>
+      </td>
+      <td
+        data-title="Download"
+        data-column="order"
+        data-sortable="order"
+        >
+       <a data-icon="4" data-ng-href="{{$root.global.imagePath()}}{{spec.fileName}}" target="_blank">PDF {{spec.fileSize|fileSize}}</a>
+     </td>
+    </tr>
+  </table>
+</div>
