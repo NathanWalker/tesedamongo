@@ -22,7 +22,7 @@
     "tag": "0.1.3",
     "commit": "4afeca2cc1d4da4721221373b63d68da5a1edf8c"
   },
-  "_source": "git://github.com/infowrap/ng-table.git",
-  "_target": "~0.1.3",
-  "_originalSource": "infowrap-ng-table"
+  "_source": "git@github.com:infowrap/ng-table.git",
+  "_target": "0.1.3",
+  "_originalSource": "git@github.com:infowrap/ng-table.git"
 }

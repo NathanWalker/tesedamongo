@@ -16,7 +16,7 @@
     </p>
   </div>
 
-  <tabset class="span9" data-ng-if="global.isSignedIn()">
+  <tabset class="span9" data-ng-show="$root.global.isSignedIn()">
     <tab heading="Client Profile" on-select="$root.resetScroll()">
       <div class="tab-pane">
         <p>
@@ -29,7 +29,7 @@
       </div>
     </tab>
 
-    <tab heading="Edit Users" data-ng-if="global.isAdmin()">
+    <tab heading="Edit Users" data-ng-show="$root.global.isAdmin()">
         <div class="tab-pane" data-ng-controller="UsersCtrl">
           <!-- <div class="btn btn-primary" style="float:right;" data-ng-click="openNewForm()" data-ng-hide="showUserForm">New</div> -->
             <form class="form-horizontal" data-ng-if="showUserForm">
@@ -100,7 +100,7 @@
             </div>
           </div>
     </tab>
-    <tab heading="Edit Pages" data-ng-if="global.isAdmin()">
+    <tab heading="Edit Pages" data-ng-show="$root.global.isAdmin()">
       <div class="tab-pane" data-ng-controller="PagesCtrl">
           <div style="margin:0 0 10px 12px;font-style:italic;"><strong>Click to edit page</strong> or <strong>Drag to re-order navigation</strong></div>
             <div>
@@ -114,7 +114,7 @@
     </tab>
   </tabset>
 
-<tabset class="span9" id="form-area" data-ng-if="!global.isSignedIn()">
+<tabset class="span9" id="form-area" data-ng-hide="$root.global.isSignedIn()">
     <tab heading="Login">
         <div class="tab-pane" data-ng-controller="LoginCtrl">
             <form class="form-horizontal" action="/users/session" method="post">
@@ -209,6 +209,5 @@
     </tab>
   </tabset>
 </div>
-
 
 

@@ -24,7 +24,7 @@
     "tag": "0.1.0",
     "commit": "c7d162c52ad769558baa61dda91fc466ad3b39dc"
   },
-  "_source": "git://github.com/infowrap/isotope.git",
-  "_target": "~0.1.0",
-  "_originalSource": "infowrap-isotope"
+  "_source": "git@github.com:infowrap/isotope.git",
+  "_target": "0.1.0",
+  "_originalSource": "git@github.com:infowrap/isotope.git"
 }

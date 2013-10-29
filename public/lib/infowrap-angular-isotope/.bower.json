@@ -1,6 +1,6 @@
 {
   "name": "infowrap-angular-isotope",
-  "version": "0.1.5",
+  "version": "0.2.0",
   "main": "dist/infowrap-angular-isotope",
   "ignore": [
     "**/.*",
@@ -15,14 +15,19 @@
     "Gruntfile.js",
     "karma.conf.js"
   ],
+  "devDependencies": {
+    "infowrap-angular": "git@github.com:infowrap/angular.js.git#0.2.3",
+    "infowrap-isotope": "git@github.com:infowrap/isotope.git#0.1.0",
+    "jquery": "~2.0.3"
+  },
   "homepage": "https://github.com/infowrap/angular-isotope",
-  "_release": "0.1.5",
+  "_release": "0.2.0",
   "_resolution": {
     "type": "version",
-    "tag": "0.1.5",
-    "commit": "67abaf1354f96583e00bc5bf0c285f1929a13d67"
+    "tag": "0.2.0",
+    "commit": "756791de1218d81d8e3889dba15bece48ff255e9"
   },
-  "_source": "git://github.com/infowrap/angular-isotope.git",
-  "_target": "~0.1.5",
-  "_originalSource": "infowrap-angular-isotope"
+  "_source": "git@github.com:infowrap/angular-isotope.git",
+  "_target": "0.2.0",
+  "_originalSource": "git@github.com:infowrap/angular-isotope.git"
 }

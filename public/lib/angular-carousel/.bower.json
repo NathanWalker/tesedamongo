@@ -1,0 +1,27 @@
+{
+  "author": "revolunet",
+  "name": "angular-carousel",
+  "description": "Mobile friendly AngularJS carousel",
+  "version": "0.0.9",
+  "homepage": "https://github.com/revolunet/angular-carousel",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/revolunet/angular-carousel.git"
+  },
+  "main": "./dist/angular-carousel.js",
+  "dependencies": {
+    "angular": "1.2.0-rc.2",
+    "angular-mocks": "1.2.0-rc.2",
+    "jquery": "1.9.1",
+    "angular-touch": "~1.2.0-rc.2"
+  },
+  "_release": "0.0.9",
+  "_resolution": {
+    "type": "version",
+    "tag": "0.0.9",
+    "commit": "660e9a95dcc2b24469ac31f9fa796190cdd370bb"
+  },
+  "_source": "git@github.com:infowrap/angular-carousel.git",
+  "_target": "0.0.9",
+  "_originalSource": "git@github.com:infowrap/angular-carousel.git"
+}

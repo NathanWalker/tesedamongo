@@ -8,11 +8,17 @@
 
     <!-- Carousel -->
     <div id="default_carousel" class="">
-        <carousel id="carousel" interval="carouselInterval">
+        <!-- <carousel id="carousel" interval="carouselInterval">
           <slide data-ng-repeat="slide in slides" active="slide.active">
             <div data-ng-include="slide.view"></div>
           </slide>
-      </carousel>
+      </carousel> -->
+
+      <ul id="carousel" data-rn-carousel class="image">
+        <li ng-repeat="slide in slides" active="slide.active">
+          <div data-ng-include="slide.view"></div>
+        </li>
+      </ul>
     </div>
 
    <!--  <div id="macbook_carousel" class="">
