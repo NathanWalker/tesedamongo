@@ -146,5 +146,23 @@ window.angular.module("App.directives", []).directive('scrollTopLink', [
       };
     }
   };
+}]).directive("supportAuthenticated", ['$rootScope', function($rootScope) {
+  return {
+    restrict:"A",
+    compile:function(el) {
+      if (!$rootScope.global.isSignedIn()){
+        el.remove();
+      }
+    }
+  };
+}]).directive("supportUnAuthenticated", ['$rootScope', function($rootScope) {
+  return {
+    restrict:"A",
+    compile:function(el) {
+      if ($rootScope.global.isSignedIn()){
+        el.remove();
+      }
+    }
+  };
 }]);
 

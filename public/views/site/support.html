@@ -16,198 +16,202 @@
     </p>
   </div>
 
-  <tabset class="span9" data-ng-show="$root.global.isSignedIn()">
-    <tab heading="Client Profile" on-select="$root.resetScroll()">
-      <div class="tab-pane">
-        <p>
-          <strong>{{global.currentUser().name}}</strong><br/>
-          <span data-ng-show="global.currentUser().company">{{global.currentUser().company}}<br/></span>
-          <br/>
-          {{global.currentUser().username}}<br/><br/>
-          <a href="/signout" data-icon="!">&nbsp;&nbsp;Log out</a>
-        </p>
-      </div>
-    </tab>
+  <div data-support-authenticated>
+    <tabset class="span9">
+      <tab heading="Client Profile" on-select="$root.resetScroll()">
+        <div class="tab-pane">
+          <p>
+            <strong>{{global.currentUser().name}}</strong><br/>
+            <span data-ng-show="global.currentUser().company">{{global.currentUser().company}}<br/></span>
+            <br/>
+            {{global.currentUser().username}}<br/><br/>
+            <a href="/signout" data-icon="!">&nbsp;&nbsp;Log out</a>
+          </p>
+        </div>
+      </tab>
 
-    <tab heading="Edit Users" data-ng-show="$root.global.isAdmin()">
-        <div class="tab-pane" data-ng-controller="UsersCtrl">
-          <!-- <div class="btn btn-primary" style="float:right;" data-ng-click="openNewForm()" data-ng-hide="showUserForm">New</div> -->
-            <form class="form-horizontal" data-ng-if="showUserForm">
-              <p style="font-style:italic; color:red;" data-ng-show="failed">User failed to update.</p>
-              <fieldset>
+      <tab heading="Edit Users" data-ng-show="$root.global.isAdmin()">
+          <div class="tab-pane" data-ng-controller="UsersCtrl">
+            <!-- <div class="btn btn-primary" style="float:right;" data-ng-click="openNewForm()" data-ng-hide="showUserForm">New</div> -->
+              <form class="form-horizontal" data-ng-if="showUserForm">
+                <p style="font-style:italic; color:red;" data-ng-show="failed">User failed to update.</p>
+                <fieldset>
 
-                <div class="control-group">
-                  <label class="control-label"  for="create-nameEdit">Name<span class="req-input">*</span></label>
-                  <div class="controls">
-                    <input type="text" id="create-nameEdit" placeholder="Name" name="name" class="input-xlarge" data-ng-model="activeUser.name">
+                  <div class="control-group">
+                    <label class="control-label"  for="create-nameEdit">Name<span class="req-input">*</span></label>
+                    <div class="controls">
+                      <input type="text" id="create-nameEdit" placeholder="Name" name="name" class="input-xlarge" data-ng-model="activeUser.name">
+                    </div>
                   </div>
-                </div>
 
-                <div class="control-group">
-                  <label class="control-label"  for="create-companyEdit">Company</label>
-                  <div class="controls">
-                    <input type="text" id="create-companyEdit" placeholder="Company name" name="company" class="input-xlarge" data-ng-model="activeUser.company">
+                  <div class="control-group">
+                    <label class="control-label"  for="create-companyEdit">Company</label>
+                    <div class="controls">
+                      <input type="text" id="create-companyEdit" placeholder="Company name" name="company" class="input-xlarge" data-ng-model="activeUser.company">
+                    </div>
                   </div>
-                </div>
 
-                <div class="control-group">
-                  <label class="control-label"  for="create-client-idEdit">Client ID<span class="req-input">*</span></label>
-                  <div class="controls">
-                    <input type="text" id="create-client-idEdit" placeholder="Client ID" name="clientId" class="input-xlarge" data-ng-model="activeUser.clientId">
+                  <div class="control-group">
+                    <label class="control-label"  for="create-client-idEdit">Client ID<span class="req-input">*</span></label>
+                    <div class="controls">
+                      <input type="text" id="create-client-idEdit" placeholder="Client ID" name="clientId" class="input-xlarge" data-ng-model="activeUser.clientId">
+                    </div>
                   </div>
-                </div>
 
-                <hr/>
-                <div class="control-group">
-                  <label class="control-label"  for="create-usernameEdit">Login<span class="req-input">*</span></label>
-                  <div class="controls">
-                    <input type="text" id="create-usernameEdit" placeholder="Your email" name="username" class="input-xlarge" data-ng-model="activeUser.username">
+                  <hr/>
+                  <div class="control-group">
+                    <label class="control-label"  for="create-usernameEdit">Login<span class="req-input">*</span></label>
+                    <div class="controls">
+                      <input type="text" id="create-usernameEdit" placeholder="Your email" name="username" class="input-xlarge" data-ng-model="activeUser.username">
+                    </div>
                   </div>
-                </div>
 
-                <div class="control-group">
-                  <!-- Password-->
-                  <label class="control-label" for="create-passwordEdit">Password<span class="req-input">*</span></label>
-                  <div class="controls">
-                    <input type="password" id="create-passwordEdit" name="password" placeholder="Password" class="input-xlarge" data-ng-model="activeUser.password">
+                  <div class="control-group">
+                    <!-- Password-->
+                    <label class="control-label" for="create-passwordEdit">Password<span class="req-input">*</span></label>
+                    <div class="controls">
+                      <input type="password" id="create-passwordEdit" name="password" placeholder="Password" class="input-xlarge" data-ng-model="activeUser.password">
+                    </div>
                   </div>
-                </div>
 
-                <div class="control-group">
-                  <!-- Password-->
-                  <label class="control-label" for="create-confirmEdit">Confirm<span class="req-input">*</span></label>
-                  <div class="controls">
-                    <input type="password" id="create-confirmEdit" placeholder="Confirm password" class="input-xlarge" data-ng-model="userConfirm.confirmPassword">
+                  <div class="control-group">
+                    <!-- Password-->
+                    <label class="control-label" for="create-confirmEdit">Confirm<span class="req-input">*</span></label>
+                    <div class="controls">
+                      <input type="password" id="create-confirmEdit" placeholder="Confirm password" class="input-xlarge" data-ng-model="userConfirm.confirmPassword">
+                    </div>
                   </div>
-                </div>
 
 
-                <div class="control-group">
-                  <div class="controls">
-                    <button class="btn btn-primary" data-ng-click="create(activeUser)">{{editing|booleanText:'Update':'Save'}}</button>
-                    <button class="btn" data-ng-click="toggleNew(false)">Cancel</button>
-                    <button class="btn btn-danger" data-ng-click="remove(activeUser)" style="float:right;">Delete</button>
+                  <div class="control-group">
+                    <div class="controls">
+                      <button class="btn btn-primary" data-ng-click="create(activeUser)">{{editing|booleanText:'Update':'Save'}}</button>
+                      <button class="btn" data-ng-click="toggleNew(false)">Cancel</button>
+                      <button class="btn btn-danger" data-ng-click="remove(activeUser)" style="float:right;">Delete</button>
+                    </div>
                   </div>
-                </div>
-              </fieldset>
-            </form>
+                </fieldset>
+              </form>
 
-            <div>
-              <h5>All Users</h5>
-              <ul class="user-list">
-                <li data-ng-repeat="user in users|orderBy:'+name'"><a data-ng-click="editUser(user)">{{user.name}}</a></li>
-              </ul>
+              <div>
+                <h5>All Users</h5>
+                <ul class="user-list">
+                  <li data-ng-repeat="user in users|orderBy:'+name'"><a data-ng-click="editUser(user)">{{user.name}}</a></li>
+                </ul>
+              </div>
             </div>
-          </div>
-    </tab>
-    <tab heading="Edit Pages" data-ng-show="$root.global.isAdmin()">
-      <div class="tab-pane" data-ng-controller="PagesCtrl">
-          <div style="margin:0 0 10px 12px;font-style:italic;"><strong>Click to edit page</strong> or <strong>Drag to re-order navigation</strong></div>
-            <div>
-              <ul class="user-list page-sortable-list" data-ng-class="{resorting:updatingSort}" data-ui-sortable="sortableOptions" ng-model="pages">
-                <li data-ng-repeat="page in pages" class="sortable-item" data-page-id="{{page._id}}"><a data-ng-href="/#!/pages/{{page._id}}">{{page.navName}}</a></li>
-                <li data-ng-if="updatingSort" style="font-style:italic;">One moment, re-sorting navigation...</li>
-                <li class="divider"><a data-ng-href="/#!/products/edit">product listings, etc</a></li>
-              </ul>
+      </tab>
+      <tab heading="Edit Pages" data-ng-show="$root.global.isAdmin()">
+        <div class="tab-pane" data-ng-controller="PagesCtrl">
+            <div style="margin:0 0 10px 12px;font-style:italic;"><strong>Click to edit page</strong> or <strong>Drag to re-order navigation</strong></div>
+              <div>
+                <ul class="user-list page-sortable-list" data-ng-class="{resorting:updatingSort}" data-ui-sortable="sortableOptions" ng-model="pages">
+                  <li data-ng-repeat="page in pages" class="sortable-item" data-page-id="{{page._id}}"><a data-ng-href="/#!/pages/{{page._id}}">{{page.navName}}</a></li>
+                  <li data-ng-if="updatingSort" style="font-style:italic;">One moment, re-sorting navigation...</li>
+                  <li class="divider"><a data-ng-href="/#!/products/edit">product listings, etc</a></li>
+                </ul>
+              </div>
             </div>
-          </div>
-    </tab>
-  </tabset>
+      </tab>
+    </tabset>
+</div>
 
-<tabset class="span9" id="form-area" data-ng-hide="$root.global.isSignedIn()">
-    <tab heading="Login">
-        <div class="tab-pane" data-ng-controller="LoginCtrl">
-            <form class="form-horizontal" action="/users/session" method="post">
-              <p style="font-style:italic; color:red;" data-ng-show="failed">Invalid login and/or password</p>
-              <fieldset>
-                <div class="control-group">
-                  <label class="control-label"  for="username">Login</label>
-                  <div class="controls">
-                    <input type="text" id="username" placeholder="Your email" name="username" class="input-xlarge">
+<div data-support-un-authenticated>
+  <tabset class="span9" id="form-area">
+      <tab heading="Login">
+          <div class="tab-pane" data-ng-controller="LoginCtrl">
+              <form class="form-horizontal" action="/users/session" method="post">
+                <p style="font-style:italic; color:red;" data-ng-show="failed">Invalid login and/or password</p>
+                <fieldset>
+                  <div class="control-group">
+                    <label class="control-label"  for="username">Login</label>
+                    <div class="controls">
+                      <input type="text" id="username" placeholder="Your email" name="username" class="input-xlarge">
+                    </div>
                   </div>
-                </div>
 
-                <div class="control-group">
-                  <label class="control-label" for="password">Password</label>
-                  <div class="controls">
-                    <input type="password" id="password" placeholder="Password" name="password" class="input-xlarge">
+                  <div class="control-group">
+                    <label class="control-label" for="password">Password</label>
+                    <div class="controls">
+                      <input type="password" id="password" placeholder="Password" name="password" class="input-xlarge">
+                    </div>
                   </div>
-                </div>
 
 
-                <div class="control-group">
-                  <div class="controls">
-                    <button class="btn btn-success">Login</button>
-                    <span style="color:#666;font-size:12px; margin-left:8px;">Need a login? <a data-ng-click="selectRegister()">Register</a></span>
+                  <div class="control-group">
+                    <div class="controls">
+                      <button class="btn btn-success">Login</button>
+                      <span style="color:#666;font-size:12px; margin-left:8px;">Need a login? <a data-ng-click="selectRegister()">Register</a></span>
+                    </div>
                   </div>
-                </div>
-              </fieldset>
-            </form>
-          </div>
+                </fieldset>
+              </form>
+            </div>
 
-    </tab>
+      </tab>
 
-    <tab heading="Register">
-      <div class="tab-pane" data-ng-controller="RegisterCtrl">
-            <form class="form-horizontal" action="/users" method="post">
-              <p style="font-style:italic; color:red;" data-ng-show="failed">Registration failed, please verify your input.</p>
-              <fieldset>
-                <div class="control-group">
-                  <label class="control-label"  for="create-name">Name<span class="req-input">*</span></label>
-                  <div class="controls">
-                    <input type="text" id="create-name" placeholder="Name" name="name" class="input-xlarge">
+      <tab heading="Register">
+        <div class="tab-pane" data-ng-controller="RegisterCtrl">
+              <form class="form-horizontal" action="/users" method="post">
+                <p style="font-style:italic; color:red;" data-ng-show="failed">Registration failed, please verify your input.</p>
+                <fieldset>
+                  <div class="control-group">
+                    <label class="control-label"  for="create-name">Name<span class="req-input">*</span></label>
+                    <div class="controls">
+                      <input type="text" id="create-name" placeholder="Name" name="name" class="input-xlarge">
+                    </div>
                   </div>
-                </div>
 
-                <div class="control-group">
-                  <label class="control-label"  for="create-company">Company</label>
-                  <div class="controls">
-                    <input type="text" id="create-company" placeholder="Company name" name="company" class="input-xlarge">
+                  <div class="control-group">
+                    <label class="control-label"  for="create-company">Company</label>
+                    <div class="controls">
+                      <input type="text" id="create-company" placeholder="Company name" name="company" class="input-xlarge">
+                    </div>
                   </div>
-                </div>
 
-                <div class="control-group">
-                  <label class="control-label"  for="create-client-id">Client ID<span class="req-input">*</span></label>
-                  <div class="controls">
-                    <input type="text" id="create-client-id" placeholder="Client ID" name="clientId" class="input-xlarge">
+                  <div class="control-group">
+                    <label class="control-label"  for="create-client-id">Client ID<span class="req-input">*</span></label>
+                    <div class="controls">
+                      <input type="text" id="create-client-id" placeholder="Client ID" name="clientId" class="input-xlarge">
+                    </div>
                   </div>
-                </div>
 
-                <hr/>
-                <div class="control-group">
-                  <label class="control-label"  for="create-username">Login<span class="req-input">*</span></label>
-                  <div class="controls">
-                    <input type="text" id="create-username" placeholder="Your email" name="username" class="input-xlarge">
+                  <hr/>
+                  <div class="control-group">
+                    <label class="control-label"  for="create-username">Login<span class="req-input">*</span></label>
+                    <div class="controls">
+                      <input type="text" id="create-username" placeholder="Your email" name="username" class="input-xlarge">
+                    </div>
                   </div>
-                </div>
 
-                <div class="control-group">
-                  <!-- Password-->
-                  <label class="control-label" for="create-password">Password<span class="req-input">*</span></label>
-                  <div class="controls">
-                    <input type="password" id="create-password" name="password" placeholder="Password" class="input-xlarge">
+                  <div class="control-group">
+                    <!-- Password-->
+                    <label class="control-label" for="create-password">Password<span class="req-input">*</span></label>
+                    <div class="controls">
+                      <input type="password" id="create-password" name="password" placeholder="Password" class="input-xlarge">
+                    </div>
                   </div>
-                </div>
 
-                <div class="control-group">
-                  <!-- Password-->
-                  <label class="control-label" for="create-confirm">Confirm<span class="req-input">*</span></label>
-                  <div class="controls">
-                    <input type="password" id="create-confirm" placeholder="Confirm password" class="input-xlarge">
+                  <div class="control-group">
+                    <!-- Password-->
+                    <label class="control-label" for="create-confirm">Confirm<span class="req-input">*</span></label>
+                    <div class="controls">
+                      <input type="password" id="create-confirm" placeholder="Confirm password" class="input-xlarge">
+                    </div>
                   </div>
-                </div>
 
 
-                <div class="control-group">
-                  <div class="controls">
-                    <button class="btn btn-primary">Create Account</button>
+                  <div class="control-group">
+                    <div class="controls">
+                      <button class="btn btn-primary">Create Account</button>
+                    </div>
                   </div>
-                </div>
-              </fieldset>
-            </form>
-          </div>
-    </tab>
-  </tabset>
+                </fieldset>
+              </form>
+            </div>
+      </tab>
+    </tabset>
+</div>
 </div>
 
 

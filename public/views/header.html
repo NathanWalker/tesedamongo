@@ -21,8 +21,8 @@
 </div> -->
 
 <div class="navbar" data-ng-controller="HeaderController">
-  <div class="navbar-inner">
-    <div class="container">
+  <div class="navbar-inner" data-ng-class="{expanded:!navCollapsed}">
+    <div class="container" data-ng-class="{expanded:!navCollapsed}">
       <a class="btn btn-navbar" data-ng-click="navCollapsed = !navCollapsed" data-icon="0">
       </a>
       <a class="brand" href="/" data-icon="a"></a>

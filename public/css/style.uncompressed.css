@@ -203,6 +203,7 @@ footer input[type=submit].btn {
 	}
 	#footer-extra i {
 		color:#AFDBEA;
+		margin-right: 8px;
 	}
 
 /* --------------------------------------------------------	*/
@@ -214,6 +215,7 @@ footer input[type=submit].btn {
 }
 .navbar .container {
 	width: 940px;
+	height:92px;
 	padding-bottom:0px;
 	border-bottom:0px solid #eee;
 	margin-bottom:0px;
@@ -236,14 +238,16 @@ background: -ms-linear-gradient(top,  rgba(119,171,214,0.3) 0%,rgba(255,255,255,
 background: linear-gradient(to bottom,  rgba(119,171,214,0.3) 0%,rgba(255,255,255,1) 100%);
 filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#4d77abd6', endColorstr='#ffffff',GradientType=0 );*/
 
-background: #4baad3; /* Old browsers */
-background: -moz-linear-gradient(top,  #4baad3 0%, #ffffff 100%); /* FF3.6+ */
-background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#4baad3), color-stop(100%,#ffffff)); /* Chrome,Safari4+ */
-background: -webkit-linear-gradient(top,  #4baad3 0%,#ffffff 100%); /* Chrome10+,Safari5.1+ */
-background: -o-linear-gradient(top,  #4baad3 0%,#ffffff 100%); /* Opera 11.10+ */
-background: -ms-linear-gradient(top,  #4baad3 0%,#ffffff 100%); /* IE10+ */
-background: linear-gradient(to bottom,  #4baad3 0%,#ffffff 100%); /* W3C */
-filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#4baad3', endColorstr='#ffffff',GradientType=0 ); /* IE6-9 */
+background: #B4E6FF;
+/*
+background: -moz-linear-gradient(top,  #4baad3 0%, #ffffff 100%);
+background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#4baad3), color-stop(100%,#ffffff));
+background: -webkit-linear-gradient(top,  #4baad3 0%,#ffffff 100%);
+background: -o-linear-gradient(top,  #4baad3 0%,#ffffff 100%);
+background: -ms-linear-gradient(top,  #4baad3 0%,#ffffff 100%);
+background: linear-gradient(to bottom,  #4baad3 0%,#ffffff 100%);
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#4baad3', endColorstr='#ffffff',GradientType=0 );
+*/
 
 
 }
@@ -282,19 +286,21 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#4baad3', end
 	box-shadow:none;
 	background-position:center bottom;
 	background-repeat:no-repeat;
+	opacity:1;
 }
 .navbar .nav > li {
 	margin:0 0 0 10px;
 }
 .navbar .nav > li > a {
-	padding:26px 10px 26px 10px;
+	padding:44px 10px 28px 10px;
 	color: #444!important;
-	font-size:1.1em;
+	font-size:15px;
 	text-shadow: 0 -1px 0 rgba(255,255,255, 0.25);
+	opacity:.8;
 }
 .navbar .nav > li > a:hover {
 	color:#222;
-	text-decoration:underline;
+	opacity:1;
 }
 .navbar .nav-collapse a.btn {
 	margin-top:22px;
