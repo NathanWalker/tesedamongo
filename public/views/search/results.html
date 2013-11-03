@@ -1,0 +1,27 @@
+<div class="hero-unit" data-ng-controller="SearchCtrl">
+  <div class="search-results">
+    <div data-ng-repeat="group in searchService.resultGroups" data-ng-show="group.results.length>0">
+      <h4 style="border-bottom:1px solid #ccc;">{{group.results.length}} {{group.title}} Results</h4>
+      <div data-ng-repeat="data in group.results" class="search-result">
+        <div data-ng-switch="group.title">
+          <div data-ng-switch-when="Page">
+            <h3><a data-ng-click="search.input='';" data-ng-href="/#!/{{data.route}}" class="search-result-link">{{data.navName}}</a></h3>
+            <p data-ng-bind-html="data.content | highlight:search.input"></p>
+          </div>
+          <div data-ng-switch-when="News">
+            <h3><a data-ng-click="search.input='';" data-ng-href="/#!/news/{{data._id}}" class="search-result-link">{{data.title}}</a></h3>
+            <p data-ng-bind-html="data.content | highlight:search.input"></p>
+          </div>
+        </div>
+
+      </div>
+      <hr/>
+    </div>
+    <div data-ng-show="searchService.searching">
+      <p style="font-style:italic;">Searching ...</p>
+    </div>
+    <div data-ng-show="!searchService.searching && searchService.noResults()">
+      <p>No results found.</p>
+    </div>
+  </div>
+</div>

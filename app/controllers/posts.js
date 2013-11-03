@@ -32,7 +32,6 @@ exports.show = function(req, res){
 }
 
 exports.post = function(req, res, next, id){
-  var Post = mongoose.model('Post')
   Post.load(id, function (err, post) {
     if (err) return next(err)
     if (!post) return next(new Error('Failed to load post ' + id))
@@ -43,13 +42,21 @@ exports.post = function(req, res, next, id){
 
 exports.all = function(req, res){
   var query = req.query ? req.query : {};
- Post.find(query).populate('tags').exec(function(err, posts) {
+  var resultHandler = function(err, posts) {
    if (err) {
       res.jsonp(0);
    } else {
       res.jsonp(posts);
    }
- });
+ };
+
+if (query.search){
+  var re = new RegExp(query.search, "i");
+  Post.find().or([{content: re}, {title: re}]).exec(resultHandler);
+} else {
+  Post.find(query).populate('tags').exec(resultHandler);
+}
+
 }
 
 exports.update = function(req, res){

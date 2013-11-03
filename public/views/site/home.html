@@ -1,34 +1,34 @@
 <div class=""><!--homepage-->
   <div class="container">
-  <div class="hero-unit">
+    <div class="hero-unit homepage">
 
-    <!-- headin gtext -->
-    <p class="ac" data-ng-bind-html="page.title"></p>
-    <!-- <a data-ng-if="global.isAdmin()" class="btn new-btn" href="/#!/pages/{{page._id}}" data-icon="d">Edit</a> -->
+      <!-- headin gtext -->
+      <p class="ac" data-ng-bind-html="page.title"></p>
+      <!-- <a data-ng-if="global.isAdmin()" class="btn new-btn" href="/#!/pages/{{page._id}}" data-icon="d">Edit</a> -->
 
-    <!-- Carousel -->
-    <div id="default_carousel" class="">
-        <!-- <carousel id="carousel" interval="carouselInterval">
-          <slide data-ng-repeat="slide in slides" active="slide.active">
+      <!-- Carousel -->
+      <div id="default_carousel" class="">
+          <carousel id="carousel" interval="carouselInterval">
+            <slide data-ng-repeat="slide in banner.slides" active="slide.active">
+              <div data-ng-bind-html="slide.markup"></div>
+            </slide>
+        </carousel>
+
+        <!-- <ul id="carousel" data-rn-carousel data-rn-carousel-indicator class="image">
+          <li ng-repeat="slide in slides" active="slide.active">
             <div data-ng-include="slide.view"></div>
-          </slide>
-      </carousel> -->
+          </li>
+        </ul> -->
+      </div>
 
-      <ul id="carousel" data-rn-carousel data-rn-carousel-indicator class="image">
-        <li ng-repeat="slide in slides" active="slide.active">
-          <div data-ng-include="slide.view"></div>
-        </li>
-      </ul>
+     <!--  <div id="macbook_carousel" class="">
+          <carousel id="carousel" interval="carouselInterval">
+            <slide data-ng-repeat="slide in slides2" active="slide.active">
+              <img data-ng-src="{{slide.view}}" alt="" />
+            </slide>
+        </carousel>
+      </div> -->
     </div>
-
-   <!--  <div id="macbook_carousel" class="">
-        <carousel id="carousel" interval="carouselInterval">
-          <slide data-ng-repeat="slide in slides2" active="slide.active">
-            <img data-ng-src="{{slide.view}}" alt="" />
-          </slide>
-      </carousel>
-    </div> -->
-  </div>
 
   <div class="row">
     <div class="span8">

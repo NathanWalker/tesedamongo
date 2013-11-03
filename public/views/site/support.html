@@ -108,7 +108,9 @@
                 <ul class="user-list page-sortable-list" data-ng-class="{resorting:updatingSort}" data-ui-sortable="sortableOptions" ng-model="pages">
                   <li data-ng-repeat="page in pages" class="sortable-item" data-page-id="{{page._id}}"><a data-ng-href="/#!/pages/{{page._id}}">{{page.navName}}</a></li>
                   <li data-ng-if="updatingSort" style="font-style:italic;">One moment, re-sorting navigation...</li>
-                  <li class="divider"><a data-ng-href="/#!/products/edit">product listings, etc</a></li>
+                  <li class="divider"><div>Custom Edit Features</div></li>
+                  <li><a data-ng-href="/#!/banner-edit">Homepage Banner</a></li>
+                  <li><a data-ng-href="/#!/products/edit">Product Listings</a></li>
                 </ul>
               </div>
             </div>

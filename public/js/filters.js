@@ -6,6 +6,10 @@ window.angular.module('App.filters', []).filter('booleanText', function() {
   return function(array) {
     return _.map(array, function(tag){ return tag.name.replace(/[ ]/ig, '-').replace(/[.]/ig, '-'); }).join(' ');
   };
+}).filter("capitalize", function(){
+  return function(input, scope) {
+      return input.substring(0,1).toUpperCase()+input.substring(1);
+  };
 }).filter("fileSize", function() {
 
   return function(bytes) {

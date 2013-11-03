@@ -71,6 +71,26 @@ module.exports = function (app, passport, auth) {
 
   app.param('tagId', tags.tag)
 
+    // banner routes
+  var banners = require('../app/controllers/banners')
+  app.get('/banners', banners.all)
+  app.post('/banners', auth.requiresLogin, banners.create)
+  app.get('/banners/:bannerId', banners.show)
+  app.put('/banners/:bannerId', auth.requiresLogin, banners.update)
+  app.del('/banners/:bannerId', auth.requiresLogin, banners.destroy)
+
+  app.param('bannerId', banners.banner)
+
+  // slides routes
+  var slides = require('../app/controllers/slides')
+  app.get('/slides', slides.all)
+  app.post('/slides', auth.requiresLogin, slides.create)
+  app.get('/slides/:slideId', slides.show)
+  app.put('/slides/:slideId', auth.requiresLogin, slides.update)
+  app.del('/slides/:slideId', auth.requiresLogin, slides.destroy)
+
+  app.param('slideId', slides.slide)
+
   // videos routes
   var images = require('../app/controllers/images')
   app.get('/images', images.all)
@@ -90,6 +110,16 @@ module.exports = function (app, passport, auth) {
   app.del('/pages/:pageId', auth.requiresLogin, pages.destroy)
 
   app.param('pageId', pages.page)
+
+    // specs routes
+  var specs = require('../app/controllers/specs')
+  app.get('/specs', specs.all)
+  app.post('/specs', auth.requiresLogin, specs.create)
+  app.get('/specs/:specId', specs.show)
+  app.put('/specs/:specId', auth.requiresLogin, specs.update)
+  app.del('/specs/:specId', auth.requiresLogin, specs.destroy)
+
+  app.param('specId', specs.spec)
 
   // files
   app.post('/files', function(req, res){

@@ -25,13 +25,20 @@ exports.page = function(req, res, next, id){
 
 exports.all = function(req, res){
   var query = req.query ? req.query : {};
- Page.find(query).exec(function(err, pages) {
+  var resultHandler = function(err, pages) {
    if (err) {
       res.render('error', {status: 500});
    } else {
       res.jsonp(pages);
    }
- });
+ };
+
+  if (query.content){
+    // search for any content
+    Page.where('content').regex(new RegExp(query.content, "i")).exec(resultHandler);
+  } else {
+    Page.find(query).exec(resultHandler);
+  }
 }
 
 exports.update = function(req, res){

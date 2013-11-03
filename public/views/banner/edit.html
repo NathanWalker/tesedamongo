@@ -1,0 +1,80 @@
+<div class="hero-unit">
+      <p class="ac">Homepage Banner Edit</p>
+      <div data-ng-if="global.isWebAdmin() && !showNewForm" class="btn new-btn" data-icon="d" data-ng-click="openNewForm()">New</div>
+  </div>
+
+  <div class="container" data-ng-if="showNewForm && global.isModerator()">
+    <hr/>
+    <h3 style="text-align:center;margin: 0 0 10px;">{{editing|booleanText:'Edit':'New'}}</h3>
+    <form class="form-horizontal" >
+        <p style="font-style:italic; color:red;" data-ng-show="failed">Banner failed to update.</p>
+        <fieldset>
+            <div class="control-group" data-ng-if="global.isWebAdmin()">
+              <label class="control-label"  for="create-title">Title</label>
+              <div class="controls">
+                <input type="text" id="create-title" placeholder="Title" name="title" class="input-xlarge" data-ng-model="activeBanner.title">
+              </div>
+            </div>
+
+            <div class="control-group" data-ng-if="global.isWebAdmin()">
+              <label class="control-label"  for="create-route">Route</label>
+              <div class="controls">
+                <input type="text" id="create-route" placeholder="Route" name="route" class="input-xlarge" data-ng-model="activeBanner.route">
+              </div>
+            </div>
+
+            <hr/>
+            <div class="banner-slide-list" data-ng-class="{resorting:updatingSort}" data-ui-sortable="sortableOptions" ng-model="activeBanner.slides">
+              <div data-ng-repeat="slide in activeBanner.slides | orderBy:'+order'" class="banner-edit-slide sortable-item" data-slide-id="{{slide._id}}">
+                <textarea data-ng-model="slide.markup" placeholder="Slide Content"></textarea>
+                <div class="btn btn-danger" data-ng-click="deleteSlide(slide)">Delete Slide</div>
+              </div>
+
+            </div>
+            <hr/>
+
+            <div class="btn banner-add-slide" data-icon="d" data-ng-click="addSlide()">New Slide</div>
+
+            <!-- <div class="control-group" data-ng-if="!uploadedImage">
+              <div
+                  data-lvl-file-upload
+                 auto-upload='true'
+                 choose-file-button-text='Choose image'
+                 upload-file-button-text='Upload image'
+                 upload-url='/files'
+                 max-files='1'
+                 max-file-size-mb='5'
+                 get-additional-data='getData(files)'
+                 on-done='done(files, data)'
+                 on-progress='progress(percentDone)'
+                 on-error='error(files, type, msg)'/>
+            </div>
+            <div class="control-group" data-ng-if="uploadedImage">
+              <div data-preview-image="uploadedImage"></div>
+            </div> -->
+
+
+          <div class="control-group" data-ng-hide="fileUploading">
+            <div class="controls">
+              <button class="btn btn-primary" data-ng-click="create(activeBanner)">{{editing|booleanText:'Update':'Save'}}</button>
+              <button class="btn" data-ng-click="toggleNew(false)">Cancel</button>
+              <button class="btn btn-danger" data-ng-click="remove(activeBanner)" style="float:right;" data-ng-if="editing && global.isWebAdmin()">Delete</button>
+            </div>
+          </div>
+          <div class="control-group" data-ng-show="fileUploading">
+            <div class="controls">
+              <span style="font-style:italic;">File uploading...</span>
+            </div>
+          </div>
+        </fieldset>
+      </form>
+      <hr/>
+    </div>
+
+  <div class="container">
+    <ul class="software-overview-list page-sortable-list" style="width:150px;margin:0 auto;">
+      <li data-ng-repeat="banner in banners">
+        <a data-ng-click="editBanner(banner)">{{banner.route}}</a>
+      </li>
+    </ul>
+  </div>

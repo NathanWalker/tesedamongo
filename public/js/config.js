@@ -17,15 +17,20 @@ window.app.config(['$routeProvider', '$sceProvider', function($routeProvider, $s
         templateUrl:'views/site/products.html',
         controller:'ProductsCtrl'
       })
+      .when('/products/:product',
+      {
+        templateUrl:'views/products/show.html',
+        controller:'ProductsCtrl'
+      })
       .when('/products/edit',
       {
         templateUrl:'views/products/edit.html',
         controller:'ProductsEditCtrl'
       })
-      .when('/products/:product',
+      .when('/banner-edit',
       {
-        templateUrl:'views/products/show.html',
-        controller:'ProductsCtrl'
+        templateUrl:'views/banner/edit.html',
+        controller:'BannerEditCtrl'
       })
       .when('/tutorials',
       {
@@ -57,6 +62,11 @@ window.app.config(['$routeProvider', '$sceProvider', function($routeProvider, $s
         controller:'PartnersCtrl'
       })
       .when('/specs',
+      {
+        templateUrl:'views/site/specs.html',
+        controller:'SpecCtrl'
+      })
+      .when('/specs/:spec',
       {
         templateUrl:'views/site/specs.html',
         controller:'SpecCtrl'

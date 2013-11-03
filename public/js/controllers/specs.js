@@ -28,10 +28,11 @@ window.angular.module('App.controllers').controller("SpecCtrl", ["$scope", "$roo
         }
       ];
 
-      if ($routeParams.id) {
+      if ($routeParams.spec) {
         s.filtered = true;
+        s.otherSpecsTotal = allSpecFiles.length - 1;
         s.specFiles = _.select(allSpecFiles, function(file) {
-          return file._id == $routeParams.id;
+          return file._id == $routeParams.spec;
         });
       } else {
         s.specFiles = allSpecFiles;
@@ -48,7 +49,6 @@ window.angular.module('App.controllers').controller("SpecCtrl", ["$scope", "$roo
       s.$watch("tableOptions", function(params) {
         var orderedData;
         orderedData = params.sorting ? orderByFilter(s.specFiles, params.orderBy()) : s.specFiles;
-        console.log(orderedData);
         return s.specFiles = orderedData;
       }, true);
 

@@ -23,8 +23,10 @@
 <div class="navbar" data-ng-controller="HeaderController">
   <div class="navbar-inner" data-ng-class="{expanded:!navCollapsed}">
     <div class="container" data-ng-class="{expanded:!navCollapsed}">
+
       <a class="btn btn-navbar" data-ng-click="navCollapsed = !navCollapsed" data-icon="0">
       </a>
+      <!-- <a class="btn btn-navbar icon-user" href="/#!/support" data-ng-if="!global.isSignedIn()">Login</a> -->
       <a class="brand" href="/" data-icon="a"></a>
       <a class="brand arc" href="/" data-icon="b"></a>
       <div class="nav-collapse" collapse="navCollapsed">
@@ -33,6 +35,53 @@
         </ul>
 
       </div><!--/.nav-collapse -->
+      <ul class="loginbar pull-right">
+          <li>
+              <i class="icon-phone"></i>
+              <a href="tel:8668373321">866-TESEDA1</a>
+          </li>
+          <li class="devider"></li>
+          <li>
+              <i class="icon-search"></i>
+              <a data-ng-click="toggleTopSearch()">Search</a>
+            </li>
+          <li class="devider"></li>
+          <li data-ng-if="!global.isSignedIn()">
+            <i class="icon-user"></i>
+            <a data-ng-click="toggleTopLogin()">Login</a>
+          </li>
+          <li data-ng-if="global.isSignedIn()">
+            <a href="/#!/support">{{global.currentUser().name}}</a>
+          </li>
+      </ul>
+      <div class="search-input-top" data-ng-show="search.active">
+        <input type="text" class="input-xlarge" data-ng-model="search.input" placeholder="Search" autofocus/>
+      </div>
+      <div class="login-input-top" data-ng-show="loginForm.active">
+        <form action="/users/session" method="post">
+            <fieldset>
+              <div class="control-group">
+                <div class="controls">
+                  <input type="text" id="username" placeholder="Your email" name="username" class="input-xlarge">
+                </div>
+              </div>
+
+              <div class="control-group">
+                <div class="controls">
+                  <input type="password" id="password" placeholder="Password" name="password" class="input-xlarge">
+                </div>
+              </div>
+
+
+              <div class="control-group last">
+                <div class="controls">
+                  <button class="btn btn-success">Login</button>
+                  <span style="color:#666;font-size:12px; margin-left:8px;">Need a login? <a href="/#!/support?t=r">Register</a></span>
+                </div>
+              </div>
+            </fieldset>
+          </form>
+      </div>
     </div><!-- end .container -->
   </div><!-- end .navbar-inner -->
 </div><!-- end .navbar -->
