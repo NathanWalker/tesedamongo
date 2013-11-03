@@ -17,6 +17,10 @@ window.angular.module('App.services')
         specs:{
           title:'Datasheet',
           results:[]
+        },
+        videos:{
+          title:'Video',
+          results:[]
         }
       };
 
@@ -43,6 +47,16 @@ window.angular.module('App.services')
 
         SpecService.query({search:input}, function(results){
           populateResults('specs', results);
+        });
+
+        VideosService.query({search:input}, function (results) {
+          if(!$rootScope.global.isSignedIn()){
+            // reject any exclusive videos because the user is not signed in and cannot see exclusive videos in results
+            results = _.reject(results, function(v){
+              return v.exclusive;
+            });
+          }
+          populateResults('videos', results);
         });
 
       };

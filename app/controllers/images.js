@@ -3,7 +3,19 @@ var mongoose = require('mongoose')
   , Image = mongoose.model('Image')
   , _ = require('underscore')
   , rimraf = require('rimraf')
-  , path = require('path');
+  , path = require('path')
+  , AWS = require('aws-sdk');
+
+var accessKeyId =  process.env.AWS_ACCESS_KEY_ID || "xxxxxx";
+var secretAccessKey = process.env.AWS_SECRET_ACCESS_KEY || "+xxxxxx+B+xxxxxxx";
+AWS.config.update({
+    accessKeyId: accessKeyId,
+    secretAccessKey: secretAccessKey,
+    region:'us-west-2'
+});
+
+var s3 = new AWS.S3();
+var nodeEnv = process.env.NODE_ENV || 'development';
 
 exports.create = function (req, res) {
   var image = new Image(req.body)
@@ -26,13 +38,16 @@ exports.image = function(req, res, next, id){
 }
 
 exports.all = function(req, res){
- Image.find().exec(function(err, images) {
+  var query = req.query ? req.query : {};
+  var resultHandler = function(err, images) {
    if (err) {
-      res.render('error', {status: 500});
+      res.jsonp(0);
    } else {
       res.jsonp(images);
    }
- });
+ };
+
+  Image.find(query).exec(resultHandler);
 }
 
 exports.update = function(req, res){
@@ -46,20 +61,43 @@ exports.update = function(req, res){
 exports.destroy = function(req, res){
   var image = req.image
   // remove from filesystem first
-  var basePath = path.join(__dirname, '../../public/uploads')
-  var fileName = image.url
-  var filePath = path.join(basePath, fileName);
-  console.log('deleting file: ' + filePath);
-  rimraf(filePath, function(err) {
-    if (err) { throw err; }
-    // done
-    image.remove(function(err){
-      if (err) {
-        res.render('error', {status: 500});
-      } else {
-        res.jsonp(1);
-      }
-    })
-  })
 
+  if(nodeEnv == 'development'){
+    var basePath = path.join(__dirname, '../../public/uploads')
+      var filePath = path.join(basePath, image.url);
+      console.log('deleting file from: ' + filePath);
+      rimraf(filePath, function(err) {
+        if (err) { throw err; }
+        // done
+        image.remove(function(err){
+          if (err) {
+            res.render('error', {status: 500});
+          } else {
+            res.jsonp(1);
+          }
+        })
+      })
+    } else {
+
+      // amazon s3
+      var params = {
+          Bucket: 'tesedamongo',
+          Key: image.url
+      };
+
+      s3.deleteObject(params, function (perr, pres) {
+          if (perr) {
+              console.log("Error deleting: ", perr);
+          } else {
+              console.log("Successfully deleted: tesedamongo/" + image.url);
+              image.remove(function(err){
+                if (err) {
+                  res.render('error', {status: 500});
+                } else {
+                  res.jsonp(1);
+                }
+              })
+          }
+      });
+    }
 }

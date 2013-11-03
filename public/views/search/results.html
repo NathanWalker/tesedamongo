@@ -4,13 +4,20 @@
       <h4 style="border-bottom:1px solid #ccc;">{{group.results.length}} {{group.title}} Results</h4>
       <div data-ng-repeat="data in group.results" class="search-result">
         <div data-ng-switch="group.title">
-          <div data-ng-switch-when="Page">
+          <div data-ng-switch-when="Page" class="clearfix">
             <h3><a data-ng-click="search.input='';" data-ng-href="/#!/{{data.route}}" class="search-result-link">{{data.navName}}</a></h3>
             <p data-ng-bind-html="data.content | highlight:search.input"></p>
           </div>
-          <div data-ng-switch-when="News">
-            <h3><a data-ng-click="search.input='';" data-ng-href="/#!/news/{{data._id}}" class="search-result-link">{{data.title}}</a></h3>
+          <div data-ng-switch-when="News" class="clearfix">
+            <h3><a data-ng-click="search.input='';" data-ng-href="/#!/news/{{data._id}}" class="search-result-link" data-ng-bind-html="data.title"></a></h3>
             <p data-ng-bind-html="data.content | highlight:search.input"></p>
+          </div>
+          <div data-ng-switch-when="Datasheet" class="clearfix">
+            <h3><a data-ng-click="search.input='';" data-ng-href="/#!/specs/{{data._id}}" class="search-result-link" data-ng-bind-html="data.name"></a></h3>
+            <p data-ng-bind-html="data.description | highlight:search.input"></p>
+          </div>
+          <div data-ng-switch-when="Video" class="clearfix">
+            <h3><a data-ng-click="search.input='';" data-ng-href="/#!/tutorials" class="search-result-link" data-ng-bind-html="data.title | highlight:search.input"></a></h3>
           </div>
         </div>
 

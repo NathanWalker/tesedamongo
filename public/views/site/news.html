@@ -70,8 +70,6 @@
       ================================================== -->
       <article class="post" data-ng-class="{'image-post':post.image}" data-ng-repeat="post in posts | filter:searchNews">
 
-        <div data-ng-if="global.isModerator()" class="btn edit-news" data-icon="d" data-ng-click="editPost(post)">Edit</div>
-
         <!-- entry media -->
         <a data-ng-href="/#!/news/{{post._id}}" class="entry-media" data-ng-if="post.image">
           <img data-ng-src="{{$root.global.imagePath()}}{{$parent.post.image}}" alt=""
@@ -110,6 +108,8 @@
             </li>
           </ul>
         </div>
+
+        <div data-ng-if="global.isModerator()" class="btn edit-news" data-icon="d" data-ng-click="editPost(post)">Edit</div>
 
         <hr />
       </article><!-- end item -->

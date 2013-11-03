@@ -46,10 +46,34 @@ window.angular.module('App.controllers').controller("VideosCtrl", ["$scope", "$r
       var populateVideos = function(query) {
         VideosService.query(query, function (videos) {
           orderVideos(videos);
+          populateTags();
           $timeout(function(){
             $rootScope.$broadcast('isotope:refresh');
           }, 800);
         });
+      };
+
+      var populateTags = function(){
+        if(!$rootScope.global.isModerator()){
+          // when no logged in user, load all tags, then filter them down
+          TagsService.query({type:'tutorials'}, function (tags) {
+            // ensure only tags that are available in the video list are available
+            // this basically filters out the tags that apply to exclusive videos
+            var videoTagIds = [];
+            var videoTags = [];
+            for(var i = 0; i < s.videos.length; i++){
+              var video = s.videos[i];
+              videoTagIds = videoTagIds.concat(_.pluck(video.tags, '_id'));
+            }
+            for(var a=0; a < tags.length; a++){
+              var tag = tags[a];
+              if(_.contains(videoTagIds, tag._id)){
+                videoTags.push(tag);
+              }
+            }
+            s.videoTags = videoTags;
+          });
+        }
       };
 
       var getIdFromVideoUrl = function(video) {
@@ -161,16 +185,6 @@ window.angular.module('App.controllers').controller("VideosCtrl", ["$scope", "$r
         }
       };
 
-      if($rootScope.global.isModerator()){
-        s.$on('tag:loaded', function(e, tags) {
-          s.videoTags = tags;
-        });
-      } else {
-        TagsService.query({type:'tutorials'}, function (tags) {
-          s.videoTags = tags;
-        });
-      }
-
       s.tagFilterName = function(tag) {
         return '.' + tag.name.replace(/[ ]/ig, '-').replace(/[.]/ig, '-');
       };
@@ -251,6 +265,12 @@ window.angular.module('App.controllers').controller("VideosCtrl", ["$scope", "$r
         });
         populateVideos();
         resetActiveVideo();
+      }
+
+      if($rootScope.global.isModerator()){
+        s.$on('tag:loaded', function(e, tags) {
+          s.videoTags = tags;
+        });
       }
 
   }

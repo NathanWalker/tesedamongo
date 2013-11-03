@@ -23,6 +23,7 @@
 
 .search-input-top {
   position: absolute;
+  z-index:999;
   right: 0;
   top: 20px;
   padding: 15px;
@@ -47,7 +48,7 @@
 
 .search-input-top input {
   margin-bottom: 0;
-  width:195px;
+  width:175px;
 }
 
 .search-result-link {
@@ -56,7 +57,7 @@
 
 .login-input-top {
   position: absolute;
-  z-index: 1000;
+  z-index: 999;
   right: 0;
   top: 20px;
   padding: 15px;
@@ -95,7 +96,7 @@
 ul.loginbar {
   margin: 0;
   padding: 2px 10px;
-  z-index: 9999;
+  z-index: 1000;
   position: absolute;
   right:0;
   top:-2px;
@@ -134,6 +135,7 @@ ul.loginbar > li > a, ul.loginbar > li > a:hover {
   color: #7c8082;
   font-size: 11px;
   text-transform: uppercase;
+  cursor: pointer;
 }
 
 ul.loginbar > li > a::selection {
@@ -172,7 +174,7 @@ ul.loginbar > li > a::selection {
   width:100%;
   text-align:center;
   position:absolute;
-  z-index:10000;
+  z-index:1000;
   bottom: -18px;
 }
 .carousel-indicators{
@@ -262,10 +264,12 @@ ul.loginbar > li > a::selection {
 .spec-table [data-column="name"] .title {
   display:block;
   font-weight: bold;
+  margin:0 0 10px;
 }
 .spec-table [data-column="name"] .meta {
   display:block;
-  color:#999;
+  font-size: 0.9em;
+  color: #777;
 }
 .spec-table [data-column="order"]{
   width:100px;
@@ -279,12 +283,30 @@ line-height: 28px;
   display:block;
 }
 
+.spec-table tr:nth-child(even) {
+  background: #f5f5f5;
+}
+
+.datasheet-download-link {
+  border-bottom: 1px solid #ccc;
+  margin-bottom: 10px;
+  display: block;
+}
+
+.remove-spec-file {
+  margin-left:20px;
+}
+
+.remove-spec-file:before {
+  margin-right:8px;
+}
+
 @media (min-width: 979px) {
   .spec-table [data-column="name"] .title {
     font-size:17px;
   }
   .spec-table [data-column="name"] .meta {
-    font-size:15px;
+    font-size: 1.0em;
   }
    .spec-table [data-column="order"] [data-icon]:before {
     font-size:18px;
@@ -328,7 +350,7 @@ line-height: 28px;
     font-size:16px;
   }
   .spec-table [data-column="name"] .meta {
-    font-size:14px;
+    font-size: 0.8em;
   }
 
   ul.loginbar {
@@ -362,9 +384,6 @@ line-height: 28px;
   .spec-table [data-column="name"] .title {
     font-size:15px;
   }
-  .spec-table [data-column="name"] .meta {
-    font-size:13px;
-  }
 }
 
 @media (max-width:600px) {
@@ -373,9 +392,6 @@ line-height: 28px;
   }
   .spec-table [data-column="name"] .title {
     font-size:14px;
-  }
-  .spec-table [data-column="name"] .meta {
-    font-size:12px;
   }
   .spec-table [data-column="order"] [data-icon]:before {
     font-size:15px;
@@ -432,6 +448,10 @@ line-height: 28px;
 		-webkit-background-size:280px 103px !important;
 		-moz-background-size:280px 103px !important;
 	}
+}
+
+#portfolio-filter {
+  margin-bottom: 20px;
 }
 
 #portfolio .widget {

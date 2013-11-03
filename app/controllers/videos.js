@@ -42,13 +42,21 @@ exports.video = function(req, res, next, id){
 }
 
 exports.all = function(req, res){
- Video.find().populate('tags').exec(function(err, videos) {
+  var query = req.query ? req.query : {};
+  var resultHandler = function(err, videos) {
    if (err) {
-      res.render('error', {status: 500});
+      res.jsonp(0);
    } else {
       res.jsonp(videos);
    }
- });
+ };
+
+  if (query.search){
+    var re = new RegExp(query.search, "i");
+    Video.find().or([{title: re}]).exec(resultHandler);
+  } else {
+    Video.find(query).populate('tags').exec(resultHandler);
+  }
 }
 
 exports.update = function(req, res){

@@ -6,8 +6,8 @@ var mongoose = require('mongoose')
 var SpecSchema = new Schema({
   name: {type : String},
   description: {type : String},
-  fileSize: {type : Number},
-  fileName: {type: 'String'},
+  datasheetName: {type : String},
+  specName: {type: String},
   order: {type: Number}
 });
 

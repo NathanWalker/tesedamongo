@@ -1,8 +1,95 @@
 <div class="hero-unit">
   <div class="ac">
     <p data-ng-bind-html="page.title"></p>
+    <div data-ng-if="global.isModerator() && !showNewForm" class="btn new-btn" data-icon="d" data-ng-click="openNewForm()">New</div>
   </div>
 </div>
+
+<div class="container" data-ng-if="showNewForm && global.isModerator()">
+    <hr/>
+    <h3 style="text-align:center;margin: 0 0 10px;">{{editing|booleanText:'Edit':'New'}}</h3>
+    <form class="form-horizontal" >
+        <p style="font-style:italic; color:red;" data-ng-show="failed">Page failed to update.</p>
+        <fieldset>
+          <div class="control-group">
+                  <label class="control-label"  for="create-name">Name</label>
+                  <div class="controls">
+                    <input type="text" id="create-name" placeholder="Name" name="name" class="input-xlarge" data-ng-model="activeSpec.name">
+                  </div>
+                </div>
+
+                <div class="control-group">
+                  <label class="control-label"  for="create-description">Description</label>
+                  <div class="controls">
+                    <textarea id="create-description" placeholder="Description" name="description" class="input-xlarge" data-ng-model="activeSpec.description" style="width:500px;height:300px;"></textarea>
+                  </div>
+                </div>
+
+                <div class="control-group" data-ng-if="activeSpec.datasheetName" style="margin-left: 135px;">
+                  <div style="font-style:italic;">Current Datasheet:</div>
+                  <a data-icon="4" data-ng-href="{{$root.global.imagePath()}}{{activeSpec.datasheetName}}" target="_blank">{{activeSpec.datasheetName}}</a>
+                  <a data-icon=")" class="remove-spec-file" data-ng-click="removeFile(activeSpec.datasheetName, 'datasheet')">Remove</a>
+                </div>
+                <div class="control-group" data-ng-if="activeSpec.specName" style="margin-left: 135px;">
+                  <div style="font-style:italic;">Current Specs:</div>
+                  <a data-icon="4" data-ng-href="{{$root.global.imagePath()}}{{activeSpec.specName}}" target="_blank">{{activeSpec.specName}}</a>
+                  <a data-icon=")" class="remove-spec-file" data-ng-click="removeFile(activeSpec.specName, 'spec')">Remove</a>
+                </div>
+
+                <div class="control-group" data-ng-click="uploadToggleType()">
+                  <div
+                      data-lvl-file-upload
+                     auto-upload='true'
+                     choose-file-button-text='Choose Datasheet'
+                     upload-file-button-text='Upload Datasheet'
+                     upload-url='/files'
+                     max-files='1'
+                     max-file-size-mb='5'
+                     get-additional-data='getData(files)'
+                     on-done='done(files, data)'
+                     on-progress='progress(percentDone)'
+                     on-error='error(files, type, msg)'/>
+                </div>
+                <div class="control-group" data-ng-if="uploadedDatasheet" style="margin-left: 135px;">
+                  <div style="font-style:italic;">Datasheet to {{activeSpec.datasheetName==''||activeSpec.datasheetName==undefined|booleanText:'save':'change to'}}:</div>
+                  <a data-icon="4" data-ng-href="{{$root.global.imagePath()}}{{uploadedDatasheet.url}}" target="_blank">{{uploadedDatasheet.url}}</a>
+                </div>
+                <div class="control-group" data-ng-click="uploadToggleType('spec')">
+                  <div
+                      data-lvl-file-upload
+                     auto-upload='true'
+                     choose-file-button-text='Choose Specification'
+                     upload-file-button-text='Upload Specification'
+                     upload-url='/files'
+                     max-files='1'
+                     max-file-size-mb='5'
+                     get-additional-data='getData(files)'
+                     on-done='done(files, data)'
+                     on-progress='progress(percentDone)'
+                     on-error='error(files, type, msg)'/>
+                </div>
+                <div class="control-group" data-ng-if="uploadedSpec" style="margin-left: 135px;">
+                  <div style="font-style:italic;">Specs to {{activeSpec.specName==''||activeSpec.specName==undefined|booleanText:'save':'change to'}}:</div>
+                  <a data-icon="4" data-ng-href="{{$root.global.imagePath()}}{{uploadedSpec.url}}" target="_blank">{{uploadedSpec.url}}</a>
+                </div>
+
+
+          <div class="control-group" data-ng-hide="fileUploading">
+            <div class="controls">
+              <button class="btn btn-primary" data-ng-click="create(activeSpec)">{{editing|booleanText:'Update':'Save'}}</button>
+              <button class="btn" data-ng-click="toggleNew(false)">Cancel</button>
+              <button class="btn btn-danger" data-ng-click="remove(activeSpec)" style="float:right;" data-ng-if="editing">Delete</button>
+            </div>
+          </div>
+          <div class="control-group" data-ng-show="fileUploading">
+            <div class="controls">
+              <span style="font-style:italic;">Datasheet uploading...</span>
+            </div>
+          </div>
+        </fieldset>
+      </form>
+      <hr/>
+    </div>
 
 <div id="explore" data-ng-bind-html="page.content"></div>
 
@@ -12,31 +99,44 @@
   <table
     class="table spec-table"
     data-ng-table="tableOptions"
+    data-ui-sortable="$parent.sortableOptions"
+    data-ng-model="$parent.specs"
     >
     <tr
       class="item"
-      data-ng-repeat="spec in $parent.specFiles"
+      data-ng-repeat="spec in $parent.specs"
       >
       <td
         data-title="Name"
         data-column="name"
         data-sortable="name"
         >
-        <span
+        <div
           class="title"
-          >{{spec.name}}</span>
-        <span
+          data-ng-bind-html="spec.name"
+          >
+        </div>
+        <div
           class="meta"
-          data-ng-if="spec.description">
-          {{spec.description}}
-        </span>
+          data-ng-if="spec.description"
+          data-ng-bind-html="spec.description">
+        </div>
+        <div
+          data-ng-if="$root.global.isModerator()"
+          class="btn edit-news"
+          data-icon="d"
+          data-ng-click="$parent.$parent.$parent.editSpec(spec)"
+          style="margin-top:8px;">
+          Edit
+        </div>
       </td>
       <td
         data-title="Download"
         data-column="order"
         data-sortable="order"
         >
-       <a data-icon="4" data-ng-href="{{$root.global.imagePath()}}{{spec.fileName}}" target="_blank">PDF {{spec.fileSize|fileSize}}</a>
+       <a class="datasheet-download-link" data-icon="4" data-ng-if="spec.datasheetName" data-ng-href="{{$root.global.imagePath()}}{{spec.datasheetName}}" target="_blank">Datasheet</a>
+       <a data-icon="4" data-ng-if="spec.specName" data-ng-href="{{$root.global.imagePath()}}{{spec.specName}}" target="_blank">Specs</a>
      </td>
     </tr>
   </table>
