@@ -1,4 +1,4 @@
-window.angular.module('App.controllers').controller("SpecCtrl", ["$scope", "$rootScope", "$q", "$filter", "$timeout", "PagesCache", "ngTableOptions", "orderByFilter", "$routeParams", "SpecService", "ImagesService", function(s, $rootScope, $q, $filter, $timeout, PagesCache, ngTableOptions, orderByFilter, $routeParams, SpecService, ImagesService) {
+window.angular.module('App.controllers').controller("SpecCtrl", ["$scope", "$rootScope", "$q", "$window", "$filter", "$timeout", "PagesCache", "ngTableOptions", "orderByFilter", "$routeParams", "SpecService", "ImagesService", function(s, $rootScope, $q, $window, $filter, $timeout, PagesCache, ngTableOptions, orderByFilter, $routeParams, SpecService, ImagesService) {
 
       var allSpecs = [];
       var addingSpec = false;
@@ -185,10 +185,20 @@ window.angular.module('App.controllers').controller("SpecCtrl", ["$scope", "$roo
 
       s.remove = function (spec) {
         if($window.confirm('Are you sure you want to delete?')){
+          var specId = spec._id;
           spec.$remove();
           for (var i in s.specs) {
-            if (s.specs[i]._id == post._id) {
+            if (s.specs[i]._id == specId) {
               s.specs.splice(i, 1);
+
+              // remove from all specs
+              for(var a = 0; a < allSpecs.length; a++){
+                var sp = allSpecs[a];
+                if(sp._id == specId){
+                  allSpecs.splice(a, 1);
+                  break;
+                }
+              }
 
               s.toggleNew(false);
               resetActiveSpec();
