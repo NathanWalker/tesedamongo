@@ -17,15 +17,15 @@ window.app.config(['$routeProvider', '$sceProvider', function($routeProvider, $s
         templateUrl:'views/site/products.html',
         controller:'ProductsCtrl'
       })
-      .when('/products/:product',
-      {
-        templateUrl:'views/products/show.html',
-        controller:'ProductsCtrl'
-      })
       .when('/products/edit',
       {
         templateUrl:'views/products/edit.html',
         controller:'ProductsEditCtrl'
+      })
+      .when('/products/:product',
+      {
+        templateUrl:'views/products/show.html',
+        controller:'ProductsCtrl'
       })
       .when('/banner-edit',
       {

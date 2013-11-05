@@ -342,6 +342,18 @@ line-height: 28px;
 		-moz-background-size:560px 206px !important;
 	}
 
+  #default_carousel .image-bg.second {
+    background-size:560px 206px !important;
+    -webkit-background-size:560px 206px !important;
+    -moz-background-size:560px 206px !important;
+  }
+
+  #default_carousel .image-bg.third {
+    background-size:560px 206px !important;
+    -webkit-background-size:560px 206px !important;
+    -moz-background-size:560px 206px !important;
+  }
+
   .partners {
     width:550px !important;
   }
@@ -381,6 +393,18 @@ line-height: 28px;
 		-moz-background-size:400px 147px !important;
 	}
 
+  #default_carousel .image-bg.second {
+    background-size:400px 147px !important;
+    -webkit-background-size:400px 147px !important;
+    -moz-background-size:400px 147px !important;
+  }
+
+  #default_carousel .image-bg.third {
+    background-size:400px 147px !important;
+    -webkit-background-size:400px 147px !important;
+    -moz-background-size:400px 147px !important;
+  }
+
   .spec-table [data-column="name"] .title {
     font-size:15px;
   }
@@ -409,15 +433,21 @@ line-height: 28px;
 	}
 
 	#default_carousel .image-bg.second {
-		background-size:215px 150px !important;
+		/*background-size:215px 150px !important;
 		-webkit-background-size:215px 150px !important;
-		-moz-background-size:215px 150px !important;
+		-moz-background-size:215px 150px !important;*/
+    background-size:300px 111px !important;
+    -webkit-background-size:300px 111px !important;
+    -moz-background-size:300px 111px !important;
 	}
 
       #default_carousel .image-bg.third {
-        background-size:215px 140px !important;
+        /*background-size:215px 140px !important;
           -webkit-background-size:215px 140px !important;
-          -moz-background-size:215px 140px !important;
+          -moz-background-size:215px 140px !important;*/
+          background-size:300px 111px !important;
+    -webkit-background-size:300px 111px !important;
+    -moz-background-size:300px 111px !important;
       }
 
       #default_carousel .image-bg.fourth {
@@ -448,6 +478,18 @@ line-height: 28px;
 		-webkit-background-size:280px 103px !important;
 		-moz-background-size:280px 103px !important;
 	}
+
+  #default_carousel .image-bg.second {
+    background-size:280px 103px !important;
+    -webkit-background-size:280px 103px !important;
+    -moz-background-size:280px 103px !important;
+  }
+
+  #default_carousel .image-bg.third {
+    background-size:280px 103px !important;
+    -webkit-background-size:280px 103px !important;
+    -moz-background-size:280px 103px !important;
+  }
 }
 
 #portfolio-filter {
@@ -685,24 +727,30 @@ margin: 0 auto !important;
 }
 
 #default_carousel .image-bg.first {
-	background:url('/img/products/Teseda-V550_final-er.jpg') no-repeat center center;
+	background:url('/img/products/FieldTriage.jpg') no-repeat center center;
 	background-size:900px 332px;
 		-webkit-background-size:900px 332px;
 		-moz-background-size:900px 332px;
 }
 
 #default_carousel .image-bg.second {
-	background:url('/img/products/DC-Field-Triage-Automated-Curve-Tracing.jpg') no-repeat center center;
-	background-size:360px 251px;
+	background:url('/img/products/DefectScanner.jpg') no-repeat center center;
+	/*background-size:360px 251px;
 		-webkit-background-size:360px 251px;
-		-moz-background-size:360px 251px;
+		-moz-background-size:360px 251px;*/
+    background-size:900px 332px;
+    -webkit-background-size:900px 332px;
+    -moz-background-size:900px 332px;
 }
 
 #default_carousel .image-bg.third {
-  background:url('/img/products/DC-Device-Characterization.jpg') no-repeat center center;
-  background-size:360px 251px;
+  background:url('/img/products/DILab.jpg') no-repeat center center;
+  /*background-size:360px 251px;
     -webkit-background-size:360px 251px;
-    -moz-background-size:360px 251px;
+    -moz-background-size:360px 251px;*/
+    background-size:900px 332px;
+    -webkit-background-size:900px 332px;
+    -moz-background-size:900px 332px;
 }
 
 #default_carousel .image-bg.fourth {
