@@ -29,8 +29,8 @@ window.angular.module('App.controllers').controller("PostsCtrl", ["$scope", "$ro
       };
 
       s.limitedContent = function(post){
-        if(post.content.length > 500){
-          return post.content.substring(0, 500) + "&nbsp;<a href='/#!/news/" + post._id + "'>Read more ...</a>";
+        if(post.content.length > 1000){
+          return post.content.substring(0, 1000) + "&nbsp;<a href='/#!/news/" + post._id + "'>Read more ...</a>";
         } else {
           return post.content;
         }

@@ -855,6 +855,7 @@ html:not(.osx) ::-webkit-scrollbar-thumb:vertical {
 		display:inline-block;
 		margin:10px 0 10px 0;
 		font-weight:normal;
+		line-height: 22px;
 	}
 	.post.single-post .entry-body h2 {
 		color:#000;
