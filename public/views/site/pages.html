@@ -37,6 +37,13 @@
                 </div>
 
                 <div class="control-group" data-ng-if="global.isWebAdmin()">
+                  <label class="control-label"  for="create-content">Custom CSS Style</label>
+                  <div class="controls">
+                    <textarea id="create-custom-style" placeholder="Custom CSS Style" name="customStyle" class="input-xlarge" data-ng-model="activePage.customStyle" style="width:300px;height:100px;"></textarea>
+                  </div>
+                </div>
+
+                <div class="control-group" data-ng-if="global.isWebAdmin()">
                   <label class="control-label"  for="create-route">Page Route</label>
                   <div class="controls">
                     <input type="text" id="create-route" placeholder="Page shortname" name="route" class="input-xlarge" data-ng-model="activePage.route">

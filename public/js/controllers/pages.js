@@ -42,7 +42,8 @@ window.angular.module('App.controllers').controller("PagesCtrl", ["$scope", "$ro
             title: activePage.title,
             subheading: activePage.subheading,
             content: activePage.content,
-            route: activePage.route
+            route: activePage.route,
+            customStyle: activePage.customStyle
           });
 
           if(activePage.navShow && activePage.navName){

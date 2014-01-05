@@ -1,4 +1,6 @@
-<div class="hero-unit">
+<div>
+  <style data-ng-bind-html="page.customStyle"></style>
+  <div class="hero-unit">
     <div class="container">
       <!-- <h1 class="ac">Suite of Products</h1> -->
       <p class="ac" data-ng-bind-html="page.title"></p>
@@ -17,17 +19,14 @@
         <div class="product-features">
           <p data-ng-bind-html="product.description"></p>
           <div data-ng-bind-html="product.featureList"></div>
-          <p class="ac">
-            <a data-ng-href="/#!{{product.shortUrl}}">Learn more &raquo;</a>
-          </p>
         </div>
       </div>
     </div>
-
-  <hr />
+  </div>
 
   <div class="row">
     <div class="span12" data-ng-bind-html="page.content">
     </div>
   </div>
+</div>
 

@@ -1,4 +1,6 @@
-<div class="hero-unit">
+<div>
+  <style data-ng-bind-html="page.customStyle"></style>
+  <div class="hero-unit">
     <div class="ac">
       <!-- <h1>Video Tutorials</h1> -->
       <p data-ng-bind-html="page.title"></p>
@@ -6,10 +8,10 @@
     </div>
   </div>
 
-  <div class="container" data-ng-if="showNewForm && global.isModerator()">
-    <hr/>
-    <h3 style="text-align:center;margin: 0 0 10px;">{{editing|booleanText:'Edit':'New'}}</h3>
-    <form class="form-horizontal" >
+    <div class="container" data-ng-if="showNewForm && global.isModerator()">
+      <hr/>
+      <h3 style="text-align:center;margin: 0 0 10px;">{{editing|booleanText:'Edit':'New'}}</h3>
+      <form class="form-horizontal" >
         <p style="font-style:italic; color:red;" data-ng-show="failed">Page failed to update.</p>
         <fieldset>
           <div class="control-group">
@@ -143,3 +145,5 @@
       </div>
 
   </div>
+
+</div>

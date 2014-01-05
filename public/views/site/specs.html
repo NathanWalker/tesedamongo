@@ -1,11 +1,13 @@
-<div class="hero-unit">
-  <div class="ac">
-    <p data-ng-bind-html="page.title"></p>
-    <div data-ng-if="global.isModerator() && !showNewForm" class="btn new-btn" data-icon="d" data-ng-click="openNewForm()">New</div>
+<div>
+  <style data-ng-bind-html="page.customStyle"></style>
+  <div class="hero-unit">
+    <div class="ac">
+      <p data-ng-bind-html="page.title"></p>
+      <div data-ng-if="global.isModerator() && !showNewForm" class="btn new-btn" data-icon="d" data-ng-click="openNewForm()">New</div>
+    </div>
   </div>
-</div>
 
-<div class="container" data-ng-if="showNewForm && global.isModerator()">
+  <div class="container" data-ng-if="showNewForm && global.isModerator()">
     <hr/>
     <h3 style="text-align:center;margin: 0 0 10px;">{{editing|booleanText:'Edit':'New'}}</h3>
     <form class="form-horizontal" >
@@ -91,56 +93,57 @@
       <hr/>
     </div>
 
-<div id="explore" data-ng-bind-html="page.content"></div>
+  <div id="explore" data-ng-bind-html="page.content"></div>
 
-<div
-  class="items"
-  >
-  <table
-    class="table spec-table"
-    data-ng-table="tableOptions"
-    data-ui-sortable="$parent.sortableOptions"
-    data-ng-model="$parent.specs"
+  <div
+    class="items"
     >
-    <tr
-      class="item"
-      data-ng-repeat="spec in $parent.specs"
+    <table
+      class="table spec-table"
+      data-ng-table="tableOptions"
+      data-ui-sortable="$parent.sortableOptions"
+      data-ng-model="$parent.specs"
       >
-      <td
-        data-title="Name"
-        data-column="name"
-        data-sortable="name"
+      <tr
+        class="item"
+        data-ng-repeat="spec in $parent.specs"
         >
-        <div
-          class="title"
-          data-ng-bind-html="spec.name"
+        <td
+          data-title="Name"
+          data-column="name"
+          data-sortable="name"
           >
-        </div>
-        <div
-          class="meta"
-          data-ng-if="spec.description"
-          data-ng-bind-html="spec.description">
-        </div>
-        <div
-          data-ng-if="$root.global.isModerator()"
-          class="btn edit-news"
-          data-icon="d"
-          data-ng-click="$parent.$parent.$parent.editSpec(spec)"
-          style="margin-top:8px;">
-          Edit
-        </div>
-      </td>
-      <td
-        data-title="Download"
-        data-column="order"
-        data-sortable="order"
-        >
-       <a class="datasheet-download-link" data-icon="4" data-ng-if="spec.datasheetName" data-ng-href="{{$root.global.imagePath()}}{{spec.datasheetName}}" target="_blank">Datasheet</a>
-       <a data-icon="4" data-ng-if="spec.specName" data-ng-href="{{$root.global.imagePath()}}{{spec.specName}}" target="_blank">Specs</a>
-     </td>
-    </tr>
-  </table>
-  <div data-ng-show="filtered" style="margin: 0 0 20px;text-align: center;">
-    <a href="/#!/specs">See {{otherSpecsTotal}} others</a>
+          <div
+            class="title"
+            data-ng-bind-html="spec.name"
+            >
+          </div>
+          <div
+            class="meta"
+            data-ng-if="spec.description"
+            data-ng-bind-html="spec.description">
+          </div>
+          <div
+            data-ng-if="$root.global.isModerator()"
+            class="btn edit-news"
+            data-icon="d"
+            data-ng-click="$parent.$parent.$parent.editSpec(spec)"
+            style="margin-top:8px;">
+            Edit
+          </div>
+        </td>
+        <td
+          data-title="Download"
+          data-column="order"
+          data-sortable="order"
+          >
+         <a class="datasheet-download-link" data-icon="4" data-ng-if="spec.datasheetName" data-ng-href="{{$root.global.imagePath()}}{{spec.datasheetName}}" target="_blank">Datasheet</a>
+         <a data-icon="4" data-ng-if="spec.specName" data-ng-href="{{$root.global.imagePath()}}{{spec.specName}}" target="_blank">Specs</a>
+       </td>
+      </tr>
+    </table>
+    <div data-ng-show="filtered" style="margin: 0 0 20px;text-align: center;">
+      <a href="/#!/specs">See {{otherSpecsTotal}} others</a>
+    </div>
   </div>
 </div>

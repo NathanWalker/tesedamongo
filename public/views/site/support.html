@@ -1,22 +1,22 @@
-<div class="hero-unit">
+<div>
+  <style data-ng-bind-html="page.customStyle"></style>
+  <div class="hero-unit">
     <div class="ac">
       <p data-ng-bind-html="page.title"></p>
     </div>
   </div>
 
 
-<div class="well row support-well">
-  <div class="span3" style="margin-right:18px;">
-    <div data-ng-bind-html="page.subheading"></div>
+  <div class="well row support-well">
+    <div class="span3" style="margin-right:18px;">
+      <div data-ng-bind-html="page.subheading"></div>
       <br/>
       <br/>
       <span data-ng-if="!global.isSignedIn()" data-ng-bind-html="page.content">
-
       </span>
-    </p>
-  </div>
+    </div>
 
-  <div data-support-authenticated>
+    <div data-support-authenticated>
     <tabset class="span9">
       <tab heading="Client Profile" on-select="$root.resetScroll()">
         <div class="tab-pane">
@@ -116,9 +116,10 @@
             </div>
       </tab>
     </tabset>
-</div>
+  </div>
 
-<div data-support-un-authenticated>
+
+    <div data-support-un-authenticated>
   <tabset class="span9" id="form-area">
       <tab heading="Login">
           <div class="tab-pane" data-ng-controller="LoginCtrl">
@@ -214,6 +215,9 @@
       </tab>
     </tabset>
 </div>
+  </div>
+
+
 </div>
 
 

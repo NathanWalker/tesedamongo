@@ -12,7 +12,8 @@ var PageSchema = new Schema({
   navName: {type: String},
   order: {type: Number},
   overviewVideo: {type: String},
-  showBanner: {type: Boolean, default:false}
+  showBanner: {type: Boolean, default:false},
+  customStyle:{type: String}
 });
 
  PageSchema.statics = {
