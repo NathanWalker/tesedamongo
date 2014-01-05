@@ -15,7 +15,7 @@
   <div class="row pricing">
     <div class="span4" data-ng-repeat="product in products">
       <div class="well">
-        <h2 class="item-{{$index}}"><a data-ng-href="/#!{{product.shortUrl}}" data-ng-bind-html="product.name"></a></h2>
+        <h2 class="item-{{$index}}"><div data-ng-bind-html="product.name"></div></h2>
         <div class="product-features">
           <p data-ng-bind-html="product.description"></p>
           <div data-ng-bind-html="product.featureList"></div>
