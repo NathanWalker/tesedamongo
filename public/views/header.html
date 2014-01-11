@@ -51,7 +51,7 @@
             <a data-ng-click="toggleTopLogin()">Login</a>
           </li>
           <li data-ng-if="global.isSignedIn()">
-            <a href="/#!/support">{{global.currentUser().name}}</a>
+            <a data-ng-click="toggleAccountDetail()">{{global.currentUser().name}}</a>
           </li>
       </ul>
       <div class="search-input-top" data-ng-show="search.active">
@@ -81,6 +81,10 @@
               </div>
             </fieldset>
           </form>
+      </div>
+
+      <div class="login-input-top" data-ng-show="accountDetail.active" style="text-align:right; width:150px;">
+          <a href="/#!/support">View Account</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href="/signout">Log Out</a>
       </div>
     </div><!-- end .container -->
   </div><!-- end .navbar-inner -->

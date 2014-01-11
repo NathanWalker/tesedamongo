@@ -3,7 +3,7 @@ window.app = angular.module('tesedaApp', ['ngCookies', 'ngResource', 'ngSanitize
     refreshDelay: 300,
     refreshEvent: 'isotope:refresh'
 })
-.run(['$rootScope', '$location', '$anchorScroll', '$timeout', 'Global', 'SearchService', function($rootScope, $location, $anchorScroll, $timeout, Global, searchService){
+.run(['$rootScope', '$location', '$window', '$anchorScroll', '$timeout', 'Global', 'SearchService', "SpecService", function($rootScope, $location, $window, $anchorScroll, $timeout, Global, searchService, SpecService){
 
     $rootScope.global = Global;
     $rootScope.navCollapsed = true;
@@ -12,6 +12,9 @@ window.app = angular.module('tesedaApp', ['ngCookies', 'ngResource', 'ngSanitize
       input:''
     };
     $rootScope.loginForm = {
+      active:false
+    };
+    $rootScope.accountDetail = {
       active:false
     };
 
@@ -50,6 +53,11 @@ window.app = angular.module('tesedaApp', ['ngCookies', 'ngResource', 'ngSanitize
       }
     };
 
+    $rootScope.toggleAccountDetail = function(){
+      $rootScope.accountDetail.active=!$rootScope.accountDetail.active;
+      $rootScope.search.active=false;
+    };
+
     $rootScope.isCurrentLocation = function(routeArray) {
       return _.contains(routeArray, $location.url());
     };
@@ -78,16 +86,33 @@ window.app = angular.module('tesedaApp', ['ngCookies', 'ngResource', 'ngSanitize
       }
     };
 
+    $rootScope.$on("$locationChangeStart", function(e){
+      if($location.url().indexOf('/datasheet') == 0){
+        e.preventDefault();
+        // download datasheet
+        var id = _.last($location.url().split('/'));
+        SpecService.query({_id:id}, function (specs) {
+          if(specs){
+            var datasheet = _.first(specs);
+            $window.location.href = Global.imagePath() + datasheet.datasheetName;
+          }
+        });
+      }
+    });
+
 
     $rootScope.$on("$routeChangeStart", function(e, next, current) {
+
       $rootScope.navCollapsed = true;
       $rootScope.search.active = false;
       $rootScope.search.input = '';
       $rootScope.loginForm.active = false;
+      $rootScope.accountDetail.active = false;
     });
 
     $rootScope.$on("$routeChangeError", function(event, current, previous, rejection) {
-      log("ROUTE CHANGE ERROR: " + rejection);
+      // console.log("ROUTE CHANGE ERROR:");
+      // console.log(rejection);
     });
 
 

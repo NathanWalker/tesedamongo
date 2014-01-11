@@ -101,6 +101,7 @@ window.angular.module("App.directives", []).directive('scrollTopLink', [
         template:
             '<div>' +
             '<ul class="tags">' +
+                '<li data-ng-if="isPosts"><a data-ng-click="selectAll()" data-ng-class="{active:allSelected}">All</a></li>' +
                 '<li ng-repeat="(idx, tag) in tags" data-lvl-draggable="true" data-tag-id="{{tag._id}}"><div data-ng-if="$root.global.isModerator()" class="drag-area" data-icon="0" ></div><a data-ng-click="selectTag(tag)" data-ng-class="{editing:$root.global.isModerator(),active:tag.active}">{{tag.name}}</a></li>' +
             '</ul>' +
             '<div data-ng-if="$root.global.isModerator()" style="margin-top:10px;"><form class="form-horizontal"><input type="text" placeholder="Add a category..." ng-model="activeTag.name"/>' +
@@ -110,13 +111,36 @@ window.angular.module("App.directives", []).directive('scrollTopLink', [
             '</div>',
         link: function ( scope, el ) {
             var input = angular.element( el.children()[1] );
+            scope.isPosts = scope.type == 'posts';
+            scope.allSelected = true;
+
+            var selectTags = function(tag) {
+              if(tag) {
+                for(var i=0; i<scope.tags.length; i++){
+                  var theTag = scope.tags[i];
+                  if(theTag._id != tag._id){
+                    theTag.active = false;
+                  }
+                }
+              } else {
+                // reset all
+                for(var i=0; i<scope.tags.length; i++){
+                  scope.tags[i].active = false;
+                }
+              }
+            };
 
             scope.selectTag = function(tag) {
-              tag.active = !tag.active;
-              var allActive = _.filter(scope.tags, function(t) {
-                return t.active;
-              });
-              $rootScope.$broadcast('tag:selected', tag, allActive);
+              tag.active = true;
+              selectTags(tag);
+              scope.allSelected = false;
+              $rootScope.$broadcast('tag:selected', tag, [tag]);
+            };
+
+            scope.selectAll = function() {
+              scope.allSelected = true;
+              selectTags();
+              $rootScope.$broadcast('tag:selected', null, []);
             };
 
             scope.dropped = function(dragEl, dropEl) { // function referenced by the drop target
