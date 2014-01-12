@@ -13,6 +13,7 @@
     "test": "NODE_ENV=test ./node_modules/.bin/mocha --reporter spec test/test-*.js"
   },
   "dependencies": {
+    "grunt": "latest",
     "express": "latest",
     "jade": "latest",
     "mongoose": "latest",
@@ -34,7 +35,8 @@
     "mean-logger": "latest",
     "bower": "latest",
     "rimraf": "~2.2.2",
-    "aws-sdk": "~1.6.0"
+    "aws-sdk": "~1.6.0",
+    "postmark": "~0.2.0"
   },
   "devDependencies": {
     "supertest": "latest",

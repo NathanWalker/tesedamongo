@@ -1,12 +1,5 @@
 window.angular.module('App.controllers').controller("PagesCtrl", ["$scope", "$rootScope", "$filter", "$timeout", "$location", "$window", "$routeParams", "Global", "PagesCache", "orderByFilter", function(s, $rootScope, $filter, $timeout, $location, $window, $routeParams, Global, PagesCache, orderByFilter) {
 
-
-      if(!Global.isAdmin()){
-        // unauthorized, redirect to home
-        $location.url('/');
-        return;
-      }
-
       s.showNewForm = false;
       s.editing = false;
 
@@ -147,15 +140,19 @@ window.angular.module('App.controllers').controller("PagesCtrl", ["$scope", "$ro
           });
       };
 
-      initPages();
-      resetActivePage();
+      if(Global.isAdmin()){
+        // must be administrator to access all pages
+        initPages();
+        resetActivePage();
 
-      if ($routeParams.page) {
-        PagesCache.getPage({_id:$routeParams.page}).then(function(page){
-          if(page){
-            s.editPage(page);
-          }
-        });
+        if ($routeParams.page) {
+          PagesCache.getPage({_id:$routeParams.page}).then(function(page){
+            if(page){
+              s.editPage(page);
+            }
+          });
+        }
       }
+
   }
 ]);

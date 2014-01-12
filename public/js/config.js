@@ -74,7 +74,8 @@ window.app.config(['$routeProvider', '$sceProvider', function($routeProvider, $s
       .when('/support',
       {
         templateUrl:'views/site/support.html',
-        controller:'SupportCtrl'
+        controller:'SupportCtrl',
+        reloadOnSearch:false
       })
       .when('/news',
       {

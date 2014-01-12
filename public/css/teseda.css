@@ -325,6 +325,7 @@ line-height: 28px;
 	}
 
 	.nav-collapse, .nav-collapse.collapse {
+        /*position: relative;*/
 		top:28px !important;
 	}
 

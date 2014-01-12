@@ -1,4 +1,4 @@
-window.angular.module('App.controllers').controller("UsersCtrl", ["$scope", "$rootScope", "$filter", "$timeout", "$window", "$routeParams", "UsersService", function(s, $rootScope, $filter, $timeout, $window, $routeParams, UsersService) {
+window.angular.module('App.controllers').controller("UsersCtrl", ["$scope", "Global", "$rootScope", "$filter", "$timeout", "$window", "$routeParams", "UsersService", function(s, Global, $rootScope, $filter, $timeout, $window, $routeParams, UsersService) {
 
       s.showUserForm = false;
       s.editing = false;
@@ -99,9 +99,13 @@ window.angular.module('App.controllers').controller("UsersCtrl", ["$scope", "$ro
 
       resetActiveUser();
 
-      UsersService.query(function (users) {
-        s.users = users;
-      });
+
+      if(Global.isAdmin()) {
+        UsersService.query(function (users) {
+          s.users = users;
+        });
+      }
+
 
   }
 ]);

@@ -56,9 +56,19 @@ UserSchema.path('username').validate(function (username) {
   return username.length
 }, 'Username cannot be blank')
 
+UserSchema.path('username').validate(function (username) {
+    // ensure username is actually a company only email
+    // no personal emails allowed
+  return username.indexOf('hotmail') == -1 && username.indexOf('yahoo') == -1 && username.indexOf('gmail') == -1 && username.indexOf('aol') == -1;
+}, 'Login must be a company email. No personal emails allowed (hotmail, yahoo, gmail, aol)')
+
 UserSchema.path('clientId').validate(function (clientId) {
   return clientId.length
 }, 'Client ID cannot be blank')
+
+UserSchema.path('company').validate(function (company) {
+  return company.length
+}, 'Company cannot be blank')
 
 UserSchema.path('hashed_password').validate(function (hashed_password) {
   return hashed_password.length

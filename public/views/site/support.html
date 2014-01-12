@@ -156,26 +156,38 @@
       <tab heading="Register">
         <div class="tab-pane" data-ng-controller="RegisterCtrl">
               <form class="form-horizontal" action="/users" method="post">
-                <p style="font-style:italic; color:red;" data-ng-show="failed">Registration failed, please verify your input.</p>
+                <p style="font-style:italic; color:red;" data-ng-show="failed">Registration failed, please fix the following errors:
+                  <br/>
+                  <ul>
+                    <li data-ng-repeat="error in errors" style="color:red;" >{{error.message}}.</li>
+                  </ul>
+                </p>
                 <fieldset>
                   <div class="control-group">
                     <label class="control-label"  for="create-name">Name<span class="req-input">*</span></label>
                     <div class="controls">
-                      <input type="text" id="create-name" placeholder="Name" name="name" class="input-xlarge">
+                      <input type="text" id="create-name" placeholder="Name" name="name" class="input-xlarge" data-ng-model="registerUser.name">
                     </div>
                   </div>
 
                   <div class="control-group">
-                    <label class="control-label"  for="create-company">Company</label>
+                    <label class="control-label"  for="create-company">Company<span class="req-input">*</span></label>
                     <div class="controls">
-                      <input type="text" id="create-company" placeholder="Company name" name="company" class="input-xlarge">
+                      <input type="text" id="create-company" placeholder="Company name" name="company" class="input-xlarge" data-ng-model="registerUser.company">
                     </div>
                   </div>
 
                   <div class="control-group">
                     <label class="control-label"  for="create-client-id">Client ID<span class="req-input">*</span></label>
                     <div class="controls">
-                      <input type="text" id="create-client-id" placeholder="Client ID" name="clientId" class="input-xlarge">
+                      <input type="text" id="create-client-id" placeholder="Client ID" name="clientId" class="input-xlarge" data-ng-model="registerUser.clientId">
+                    </div>
+                  </div>
+
+                  <div class="control-group">
+                    <label class="control-label"  for="create-client-id">&nbsp;</label>
+                    <div class="controls">
+                      Don't have one?&nbsp;<a data-ng-click="requestClientId()">Request a Client ID</a>
                     </div>
                   </div>
 
@@ -183,7 +195,7 @@
                   <div class="control-group">
                     <label class="control-label"  for="create-username">Login<span class="req-input">*</span></label>
                     <div class="controls">
-                      <input type="text" id="create-username" placeholder="Your email" name="username" class="input-xlarge">
+                      <input type="text" id="create-username" placeholder="Your email" name="username" class="input-xlarge" data-ng-model="registerUser.username">
                     </div>
                   </div>
 

@@ -16,6 +16,10 @@ var nodeEnv = process.env.NODE_ENV || 'development';
 
 module.exports = function (app, passport, auth) {
 
+  // email routes
+  var emailCtrl = require('../app/controllers/email')
+  app.post('/requestId', emailCtrl.requestId)
+
   // user routes
   var users = require('../app/controllers/users')
   app.get('/signin', users.signin)

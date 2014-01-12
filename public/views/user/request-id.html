@@ -1,0 +1,42 @@
+<div>
+  <div class="modal-header">
+      <h3>Request a Client ID</h3>
+  </div>
+  <div class="modal-body">
+    <div data-ng-if="invalidData" class="req-input">
+      All fields are required.
+    </div>
+    <form action="/requestId" method="post">
+      <fieldset>
+          <div class="control-group">
+            <label class="control-label"  for="request-name">Name<span class="req-input">*</span></label>
+            <div class="controls">
+              <input type="text" id="request-name" placeholder="Name" name="name" class="input-xlarge" data-ng-model="request.name">
+            </div>
+          </div>
+
+          <div class="control-group">
+            <label class="control-label"  for="request-email">Email<span class="req-input">*</span></label>
+            <div class="controls">
+              <input type="text" id="request-email" placeholder="Email" name="email" class="input-xlarge" data-ng-model="request.email">
+            </div>
+          </div>
+
+          <div class="control-group">
+            <label class="control-label"  for="request-phone">Phone<span class="req-input">*</span></label>
+            <div class="controls">
+              <input type="text" id="request-phone" placeholder="Phone" name="phone" class="input-xlarge" data-ng-model="request.phone">
+            </div>
+          </div>
+
+
+          <div class="control-group">
+            <div class="controls">
+              <a class="btn" data-ng-click="cancel()">Cancel</a>&nbsp;&nbsp;&nbsp;
+              <button class="btn btn-primary" type="submit">Submit Request</button>
+            </div>
+          </div>
+        </fieldset>
+    </form>
+  </div>
+</div>

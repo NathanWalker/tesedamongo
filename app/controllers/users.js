@@ -75,8 +75,7 @@ exports.create = function (req, res) {
   }
   user.save(function (err) {
     if (err) {
-      var errors = err.errors.toString();
-      return res.redirect('/#!/support?f=2&err=' + errors + '&user=' + user.toJSON() + '#form-area')
+      return res.redirect('/#!/support?f=2&err=' + JSON.stringify(err.errors) + '&user=' + JSON.stringify(user))
       /*res.render('users/signup', { errors: err.errors, user: user })*/
     }
     req.logIn(user, function(err) {

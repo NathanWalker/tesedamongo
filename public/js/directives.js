@@ -170,20 +170,20 @@ window.angular.module("App.directives", []).directive('scrollTopLink', [
       };
     }
   };
-}]).directive("supportAuthenticated", ['$rootScope', function($rootScope) {
+}]).directive("supportAuthenticated", ['$rootScope', 'Global', function($rootScope, Global) {
   return {
     restrict:"A",
     compile:function(el) {
-      if (!$rootScope.global.isSignedIn()){
+      if (!Global.isSignedIn()){
         el.remove();
       }
     }
   };
-}]).directive("supportUnAuthenticated", ['$rootScope', function($rootScope) {
+}]).directive("supportUnAuthenticated", ['$rootScope', 'Global', function($rootScope, Global) {
   return {
     restrict:"A",
     compile:function(el) {
-      if ($rootScope.global.isSignedIn()){
+      if (Global.isSignedIn()){
         el.remove();
       }
     }
