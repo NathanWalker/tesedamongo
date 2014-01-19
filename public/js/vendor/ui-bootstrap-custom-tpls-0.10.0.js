@@ -1,5 +1,12 @@
-angular.module("ui.bootstrap", ["ui.bootstrap.tpls", "ui.bootstrap.transition","ui.bootstrap.carousel","ui.bootstrap.collapse","ui.bootstrap.modal","ui.bootstrap.tabs"]);
-angular.module("ui.bootstrap.tpls", ["template/modal/backdrop.html","template/modal/window.html","template/tabs/tab.html","template/tabs/tabset.html"]);
+/*
+ * angular-ui-bootstrap
+ * http://angular-ui.github.io/bootstrap/
+
+ * Version: 0.10.0 - 2014-01-18
+ * License: MIT
+ */
+angular.module("ui.bootstrap", ["ui.bootstrap.tpls", "ui.bootstrap.transition","ui.bootstrap.collapse","ui.bootstrap.accordion","ui.bootstrap.carousel","ui.bootstrap.modal","ui.bootstrap.tabs"]);
+angular.module("ui.bootstrap.tpls", ["template/accordion/accordion-group.html","template/accordion/accordion.html","template/carousel/slide.html","template/modal/backdrop.html","template/modal/window.html","template/tabs/tab.html","template/tabs/tabset.html"]);
 angular.module('ui.bootstrap.transition', [])
 
 /**
@@ -82,6 +89,221 @@ angular.module('ui.bootstrap.transition', [])
   $transition.animationEndEventName = findEndEventName(animationEndEventNames);
   return $transition;
 }]);
+
+angular.module('ui.bootstrap.collapse', ['ui.bootstrap.transition'])
+
+  .directive('collapse', ['$transition', function ($transition, $timeout) {
+
+    return {
+      link: function (scope, element, attrs) {
+
+        var initialAnimSkip = true;
+        var currentTransition;
+
+        function doTransition(change) {
+          var newTransition = $transition(element, change);
+          if (currentTransition) {
+            currentTransition.cancel();
+          }
+          currentTransition = newTransition;
+          newTransition.then(newTransitionDone, newTransitionDone);
+          return newTransition;
+
+          function newTransitionDone() {
+            // Make sure it's this transition, otherwise, leave it alone.
+            if (currentTransition === newTransition) {
+              currentTransition = undefined;
+            }
+          }
+        }
+
+        function expand() {
+          if (initialAnimSkip) {
+            initialAnimSkip = false;
+            expandDone();
+          } else {
+            element.removeClass('collapse').addClass('collapsing');
+            doTransition({ height: element[0].scrollHeight + 'px' }).then(expandDone);
+          }
+        }
+
+        function expandDone() {
+          element.removeClass('collapsing');
+          element.addClass('collapse in');
+          element.css({height: 'auto'});
+        }
+
+        function collapse() {
+          if (initialAnimSkip) {
+            initialAnimSkip = false;
+            collapseDone();
+            element.css({height: 0});
+          } else {
+            // CSS transitions don't work with height: auto, so we have to manually change the height to a specific value
+            element.css({ height: element[0].scrollHeight + 'px' });
+            //trigger reflow so a browser realizes that height was updated from auto to a specific value
+            var x = element[0].offsetWidth;
+
+            element.removeClass('collapse in').addClass('collapsing');
+
+            doTransition({ height: 0 }).then(collapseDone);
+          }
+        }
+
+        function collapseDone() {
+          element.removeClass('collapsing');
+          element.addClass('collapse');
+        }
+
+        scope.$watch(attrs.collapse, function (shouldCollapse) {
+          if (shouldCollapse) {
+            collapse();
+          } else {
+            expand();
+          }
+        });
+      }
+    };
+  }]);
+
+angular.module('ui.bootstrap.accordion', ['ui.bootstrap.collapse'])
+
+.constant('accordionConfig', {
+  closeOthers: true
+})
+
+.controller('AccordionController', ['$scope', '$attrs', 'accordionConfig', function ($scope, $attrs, accordionConfig) {
+
+  // This array keeps track of the accordion groups
+  this.groups = [];
+
+  // Ensure that all the groups in this accordion are closed, unless close-others explicitly says not to
+  this.closeOthers = function(openGroup) {
+    var closeOthers = angular.isDefined($attrs.closeOthers) ? $scope.$eval($attrs.closeOthers) : accordionConfig.closeOthers;
+    if ( closeOthers ) {
+      angular.forEach(this.groups, function (group) {
+        if ( group !== openGroup ) {
+          group.isOpen = false;
+        }
+      });
+    }
+  };
+
+  // This is called from the accordion-group directive to add itself to the accordion
+  this.addGroup = function(groupScope) {
+    var that = this;
+    this.groups.push(groupScope);
+
+    groupScope.$on('$destroy', function (event) {
+      that.removeGroup(groupScope);
+    });
+  };
+
+  // This is called from the accordion-group directive when to remove itself
+  this.removeGroup = function(group) {
+    var index = this.groups.indexOf(group);
+    if ( index !== -1 ) {
+      this.groups.splice(this.groups.indexOf(group), 1);
+    }
+  };
+
+}])
+
+// The accordion directive simply sets up the directive controller
+// and adds an accordion CSS class to itself element.
+.directive('accordion', function () {
+  return {
+    restrict:'EA',
+    controller:'AccordionController',
+    transclude: true,
+    replace: false,
+    templateUrl: 'template/accordion/accordion.html'
+  };
+})
+
+// The accordion-group directive indicates a block of html that will expand and collapse in an accordion
+.directive('accordionGroup', ['$parse', function($parse) {
+  return {
+    require:'^accordion',         // We need this directive to be inside an accordion
+    restrict:'EA',
+    transclude:true,              // It transcludes the contents of the directive into the template
+    replace: true,                // The element containing the directive will be replaced with the template
+    templateUrl:'template/accordion/accordion-group.html',
+    scope:{ heading:'@' },        // Create an isolated scope and interpolate the heading attribute onto this scope
+    controller: function() {
+      this.setHeading = function(element) {
+        this.heading = element;
+      };
+    },
+    link: function(scope, element, attrs, accordionCtrl) {
+      var getIsOpen, setIsOpen;
+
+      accordionCtrl.addGroup(scope);
+
+      scope.isOpen = false;
+
+      if ( attrs.isOpen ) {
+        getIsOpen = $parse(attrs.isOpen);
+        setIsOpen = getIsOpen.assign;
+
+        scope.$parent.$watch(getIsOpen, function(value) {
+          scope.isOpen = !!value;
+        });
+      }
+
+      scope.$watch('isOpen', function(value) {
+        if ( value ) {
+          accordionCtrl.closeOthers(scope);
+        }
+        if ( setIsOpen ) {
+          setIsOpen(scope.$parent, value);
+        }
+      });
+    }
+  };
+}])
+
+// Use accordion-heading below an accordion-group to provide a heading containing HTML
+// <accordion-group>
+//   <accordion-heading>Heading containing HTML - <img src="..."></accordion-heading>
+// </accordion-group>
+.directive('accordionHeading', function() {
+  return {
+    restrict: 'EA',
+    transclude: true,   // Grab the contents to be used as the heading
+    template: '',       // In effect remove this element!
+    replace: true,
+    require: '^accordionGroup',
+    compile: function(element, attr, transclude) {
+      return function link(scope, element, attr, accordionGroupCtrl) {
+        // Pass the heading to the accordion-group controller
+        // so that it can be transcluded into the right place in the template
+        // [The second parameter to transclude causes the elements to be cloned so that they work in ng-repeat]
+        accordionGroupCtrl.setHeading(transclude(scope, function() {}));
+      };
+    }
+  };
+})
+
+// Use in the accordion-group template to indicate where you want the heading to be transcluded
+// You must provide the property on the accordion-group controller that will hold the transcluded element
+// <div class="accordion-group">
+//   <div class="accordion-heading" ><a ... accordion-transclude="heading">...</a></div>
+//   ...
+// </div>
+.directive('accordionTransclude', function() {
+  return {
+    require: '^accordionGroup',
+    link: function(scope, element, attr, controller) {
+      scope.$watch(function() { return controller[attr.accordionTransclude]; }, function(heading) {
+        if ( heading ) {
+          element.html('');
+          element.append(heading);
+        }
+      });
+    }
+  };
+});
 
 /**
 * @ngdoc overview
@@ -429,83 +651,7 @@ function CarouselDemoCtrl($scope) {
   };
 }]);
 
-angular.module('ui.bootstrap.collapse', ['ui.bootstrap.transition'])
-
-  .directive('collapse', ['$transition', function ($transition, $timeout) {
-
-    return {
-      link: function (scope, element, attrs) {
-
-        var initialAnimSkip = true;
-        var currentTransition;
-
-        function doTransition(change) {
-          var newTransition = $transition(element, change);
-          if (currentTransition) {
-            currentTransition.cancel();
-          }
-          currentTransition = newTransition;
-          newTransition.then(newTransitionDone, newTransitionDone);
-          return newTransition;
-
-          function newTransitionDone() {
-            // Make sure it's this transition, otherwise, leave it alone.
-            if (currentTransition === newTransition) {
-              currentTransition = undefined;
-            }
-          }
-        }
-
-        function expand() {
-          if (initialAnimSkip) {
-            initialAnimSkip = false;
-            expandDone();
-          } else {
-            element.removeClass('collapse').addClass('collapsing');
-            doTransition({ height: element[0].scrollHeight + 'px' }).then(expandDone);
-          }
-        }
-
-        function expandDone() {
-          element.removeClass('collapsing');
-          element.addClass('collapse in');
-          element.css({height: 'auto'});
-        }
-
-        function collapse() {
-          if (initialAnimSkip) {
-            initialAnimSkip = false;
-            collapseDone();
-            element.css({height: 0});
-          } else {
-            // CSS transitions don't work with height: auto, so we have to manually change the height to a specific value
-            element.css({ height: element[0].scrollHeight + 'px' });
-            //trigger reflow so a browser relaizes that height was updated from auto to a specific value
-            var x = element[0].offsetWidth;
-
-            element.removeClass('collapse in').addClass('collapsing');
-
-            doTransition({ height: 0 }).then(collapseDone);
-          }
-        }
-
-        function collapseDone() {
-          element.removeClass('collapsing');
-          element.addClass('collapse');
-        }
-
-        scope.$watch(attrs.collapse, function (shouldCollapse) {
-          if (shouldCollapse) {
-            collapse();
-          } else {
-            expand();
-          }
-        });
-      }
-    };
-  }]);
-
-angular.module('ui.bootstrap.modal', [])
+angular.module('ui.bootstrap.modal', ['ui.bootstrap.transition'])
 
 /**
  * A helper, internal data structure that acts as a map but also allows getting / removing
@@ -585,7 +731,8 @@ angular.module('ui.bootstrap.modal', [])
     return {
       restrict: 'EA',
       scope: {
-        index: '@'
+        index: '@',
+        animate: '='
       },
       replace: true,
       transclude: true,
@@ -612,13 +759,12 @@ angular.module('ui.bootstrap.modal', [])
     };
   }])
 
-  .factory('$modalStack', ['$document', '$compile', '$rootScope', '$$stackedMap',
-    function ($document, $compile, $rootScope, $$stackedMap) {
+  .factory('$modalStack', ['$transition', '$timeout', '$document', '$compile', '$rootScope', '$$stackedMap',
+    function ($transition, $timeout, $document, $compile, $rootScope, $$stackedMap) {
 
       var OPENED_MODAL_CLASS = 'modal-open';
 
-      var backdropjqLiteEl, backdropDomEl;
-      var backdropScope = $rootScope.$new(true);
+      var backdropDomEl, backdropScope;
       var openedWindows = $$stackedMap.createNew();
       var $modalStack = {};
 
@@ -634,7 +780,9 @@ angular.module('ui.bootstrap.modal', [])
       }
 
       $rootScope.$watch(backdropIndex, function(newBackdropIndex){
-        backdropScope.index = newBackdropIndex;
+        if (backdropScope) {
+          backdropScope.index = newBackdropIndex;
+        }
       });
 
       function removeModalWindow(modalInstance) {
@@ -646,17 +794,53 @@ angular.module('ui.bootstrap.modal', [])
         openedWindows.remove(modalInstance);
 
         //remove window DOM element
-        modalWindow.modalDomEl.remove();
+        removeAfterAnimate(modalWindow.modalDomEl, modalWindow.modalScope, 300, checkRemoveBackdrop);
         body.toggleClass(OPENED_MODAL_CLASS, openedWindows.length() > 0);
+      }
 
-        //remove backdrop if no longer needed
-        if (backdropDomEl && backdropIndex() == -1) {
-          backdropDomEl.remove();
-          backdropDomEl = undefined;
+      function checkRemoveBackdrop() {
+          //remove backdrop if no longer needed
+          if (backdropDomEl && backdropIndex() == -1) {
+            var backdropScopeRef = backdropScope;
+            removeAfterAnimate(backdropDomEl, backdropScope, 150, function () {
+              backdropScopeRef.$destroy();
+              backdropScopeRef = null;
+            });
+            backdropDomEl = undefined;
+            backdropScope = undefined;
+          }
+      }
+
+      function removeAfterAnimate(domEl, scope, emulateTime, done) {
+        // Closing animation
+        scope.animate = false;
+
+        var transitionEndEventName = $transition.transitionEndEventName;
+        if (transitionEndEventName) {
+          // transition out
+          var timeout = $timeout(afterAnimating, emulateTime);
+
+          domEl.bind(transitionEndEventName, function () {
+            $timeout.cancel(timeout);
+            afterAnimating();
+            scope.$apply();
+          });
+        } else {
+          // Ensure this call is async
+          $timeout(afterAnimating, 0);
         }
 
-        //destroy scope
-        modalWindow.modalScope.$destroy();
+        function afterAnimating() {
+          if (afterAnimating.done) {
+            return;
+          }
+          afterAnimating.done = true;
+
+          domEl.remove();
+          if (done) {
+            done();
+          }
+        }
       }
 
       $document.bind('keydown', function (evt) {
@@ -681,17 +865,20 @@ angular.module('ui.bootstrap.modal', [])
           keyboard: modal.keyboard
         });
 
-        var body = $document.find('body').eq(0);
+        var body = $document.find('body').eq(0),
+            currBackdropIndex = backdropIndex();
 
-        if (backdropIndex() >= 0 && !backdropDomEl) {
-            backdropjqLiteEl = angular.element('<div modal-backdrop></div>');
-            backdropDomEl = $compile(backdropjqLiteEl)(backdropScope);
-            body.append(backdropDomEl);
+        if (currBackdropIndex >= 0 && !backdropDomEl) {
+          backdropScope = $rootScope.$new(true);
+          backdropScope.index = currBackdropIndex;
+          backdropDomEl = $compile('<div modal-backdrop></div>')(backdropScope);
+          body.append(backdropDomEl);
         }
 
         var angularDomEl = angular.element('<div modal-window></div>');
         angularDomEl.attr('window-class', modal.windowClass);
         angularDomEl.attr('index', openedWindows.length() - 1);
+        angularDomEl.attr('animate', 'animate');
         angularDomEl.html(modal.content);
 
         var modalDomEl = $compile(angularDomEl)(modal.scope);
@@ -713,6 +900,14 @@ angular.module('ui.bootstrap.modal', [])
         if (modalWindow) {
           modalWindow.deferred.reject(reason);
           removeModalWindow(modalInstance);
+        }
+      };
+
+      $modalStack.dismissAll = function (reason) {
+        var topModal = this.getTop();
+        while (topModal) {
+          this.dismiss(topModal.key, reason);
+          topModal = this.getTop();
         }
       };
 
@@ -1116,8 +1311,53 @@ angular.module('ui.bootstrap.tabs', [])
       node.tagName.toLowerCase() === 'data-tab-heading'
     );
   }
-});
+})
 
+;
+
+angular.module("template/accordion/accordion-group.html", []).run(["$templateCache", function($templateCache) {
+  $templateCache.put("template/accordion/accordion-group.html",
+    "<div class=\"panel panel-default\">\n" +
+    "  <div class=\"panel-heading\">\n" +
+    "    <h4 class=\"panel-title\">\n" +
+    "      <a class=\"accordion-toggle\" ng-click=\"isOpen = !isOpen\" accordion-transclude=\"heading\">{{heading}}</a>\n" +
+    "    </h4>\n" +
+    "  </div>\n" +
+    "  <div class=\"panel-collapse\" collapse=\"!isOpen\">\n" +
+    "	  <div class=\"panel-body\" ng-transclude></div>\n" +
+    "  </div>\n" +
+    "</div>");
+}]);
+
+angular.module("template/accordion/accordion.html", []).run(["$templateCache", function($templateCache) {
+  $templateCache.put("template/accordion/accordion.html",
+    "<div class=\"panel-group\" ng-transclude></div>");
+}]);
+
+// angular.module("template/carousel/carousel.html", []).run(["$templateCache", function($templateCache) {
+//   $templateCache.put("template/carousel/carousel.html",
+//     "<div ng-mouseenter=\"pause()\" ng-mouseleave=\"play()\" class=\"carousel\">\n" +
+//     "    <ol class=\"carousel-indicators\" ng-show=\"slides().length > 1\">\n" +
+//     "        <li ng-repeat=\"slide in slides()\" ng-class=\"{active: isActive(slide)}\" ng-click=\"select(slide)\"></li>\n" +
+//     "    </ol>\n" +
+//     "    <div class=\"carousel-inner\" ng-transclude></div>\n" +
+//     "    <a class=\"left carousel-control\" ng-click=\"prev()\" ng-show=\"slides().length > 1\"><span class=\"icon-prev\"></span></a>\n" +
+//     "    <a class=\"right carousel-control\" ng-click=\"next()\" ng-show=\"slides().length > 1\"><span class=\"icon-next\"></span></a>\n" +
+//     "</div>\n" +
+//     "");
+// }]);
+
+angular.module("template/carousel/slide.html", []).run(["$templateCache", function($templateCache) {
+  $templateCache.put("template/carousel/slide.html",
+    "<div ng-class=\"{\n" +
+    "    'active': leaving || (active && !entering),\n" +
+    "    'prev': (next || active) && direction=='prev',\n" +
+    "    'next': (next || active) && direction=='next',\n" +
+    "    'right': direction=='prev',\n" +
+    "    'left': direction=='next'\n" +
+    "  }\" class=\"item text-center\" ng-transclude></div>\n" +
+    "");
+}]);
 
 angular.module("template/modal/backdrop.html", []).run(["$templateCache", function($templateCache) {
   $templateCache.put("template/modal/backdrop.html",

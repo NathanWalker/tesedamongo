@@ -30,6 +30,62 @@
         </div>
       </tab>
 
+      <tab heading="Downloads" on-select="$root.resetScroll()">
+        <div class="tab-pane" data-ng-controller="DownloadsCtrl">
+
+          <div data-ng-if="$root.global.isModerator() && !showDownloadForm" class="btn" data-icon="d" data-ng-click="openNewDownloadForm()" style="margin-bottom:10px;">New</div>
+
+          <form class="form-horizontal" data-ng-if="showDownloadForm &&  $root.global.isModerator()">
+                <fieldset>
+
+                  <div class="control-group">
+                    <label class="control-label"  for="create-itemName">Name</label>
+                    <div class="controls">
+                      <input type="text" id="create-itemName" placeholder="Name" name="name" class="input-xlarge" data-ng-model="activeItem.name">
+                    </div>
+                  </div>
+
+                  <div class="control-group">
+                    <label class="control-label"  for="create-itemDesc">Description</label>
+                    <div class="controls">
+                      <textarea id="create-itemDesc" placeholder="Description" name="description" class="input-xlarge" data-ng-model="activeItem.description" style="height:200px;"/>
+                    </div>
+                  </div>
+
+                  <div class="control-group">
+                    <label class="control-label"  for="create-itemOrder">Order</label>
+                    <div class="controls">
+                      <input type="text" id="create-itemOrder" placeholder="Order" name="name" class="input-xlarge" data-ng-model="activeItem.order">
+                    </div>
+                  </div>
+
+
+                  <div class="control-group">
+                    <div class="controls">
+                      <button class="btn btn-primary" data-ng-click="create(activeItem)">{{editing|booleanText:'Update':'Save'}}</button>
+                      <button class="btn" data-ng-click="openNewDownloadForm(false)">Cancel</button>
+                      <button class="btn btn-danger" data-ng-if="editing" data-ng-click="remove(activeItem)" style="float:right;">Delete</button>
+                    </div>
+                  </div>
+                </fieldset>
+              </form>
+
+          <accordion close-others="oneAtATime">
+
+            <accordion-group heading="{{software.name}}" is-open="software.isopen" ng-repeat="software in downloads" ng-class="{active: isOpen}">
+              <accordion-heading>
+                    {{software.name}} <i class="pull-right glyphicon" ng-class="{'icon-chevron-down': software.isopen, 'icon-chevron-right': !software.isopen}"></i>
+                </accordion-heading>
+                <p data-ng-bind-html="software.description" class="clearfix"></p>
+                <div data-ng-if="$root.global.isModerator()">
+                  <div class="btn" data-icon="d" data-ng-click="openNewDownloadForm(true, software)">Edit</div>
+                </div>
+            </accordion-group>
+
+          </accordion>
+        </div>
+      </tab>
+
       <tab heading="Edit Users" data-ng-show="$root.global.isAdmin()">
           <div class="tab-pane" data-ng-controller="UsersCtrl">
             <!-- <div class="btn btn-primary" style="float:right;" data-ng-click="openNewForm()" data-ng-hide="showUserForm">New</div> -->

@@ -3,6 +3,7 @@ window.angular.module('App.services')
 
     var _pages = [];
     var _initialized = false;
+    var _killListener = undefined;
     var _events = {
       init:'pagesCache:init',
       updatedPage:'pagesCache:updatedPage'
@@ -57,8 +58,9 @@ window.angular.module('App.services')
         if(_initialized){
           resolvePage();
         } else {
-          kill = $rootScope.$on(_events.init, function(){
-            kill();
+          _killListener = $rootScope.$on(_events.init, function(){
+            if (_killListener)
+              _killListener();
             resolvePage();
           });
         }

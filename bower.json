@@ -7,7 +7,7 @@
     "infowrap-ng-table": "git@github.com:infowrap/ng-table.git#0.1.3",
     "infowrap-isotope": "git@github.com:infowrap/isotope.git#0.1.0",
     "infowrap-angular-isotope": "git@github.com:infowrap/angular-isotope.git#0.2.0",
-    "angular-ui-sortable": "git@github.com:infowrap/ui-sortable.git#0.0.1",
+    "angular-ui-sortable": "git@github.com:infowrap/ui-sortable.git#0.0.2",
     "angular-carousel": "git@github.com:infowrap/angular-carousel.git#0.1.0",
     "json3": "git@github.com:infowrap/json3.git#3.2.5",
     "jquery": "git@github.com:infowrap/jquery.git#1.10.2",

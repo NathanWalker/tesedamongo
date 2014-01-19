@@ -222,7 +222,7 @@ window.angular.module('App.controllers').controller("PostsCtrl", ["$scope", "$ro
             // }
             if(data) {
               var imageName = data.filenames[0];
-              image = new ImagesService({
+              var image = new ImagesService({
                 url: imageName
               });
               image.$save(function (response) {

@@ -1,12 +1,8 @@
-window.bootstrap = function () {
+window.init = function () {
     angular.bootstrap(document, ['tesedaApp']);
 }
 
-window.init = function () {
-    window.bootstrap();
-}
-
 $(document).ready(function () {
-	if (window.location.hash == "#_=_") window.location.hash = "";
+    if (window.location.hash == "#_=_") window.location.hash = "";
     window.init();
 });

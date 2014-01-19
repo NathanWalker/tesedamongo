@@ -4,20 +4,28 @@ window.angular.module('App.controllers').controller("SupportCtrl", ["$scope", "$
       s.page = page;
     });
 
-    if ($routeParams.t == 'r'){
+    var showRegisterTab = function(){
       $timeout(function(){
         angular.element('.nav-tabs li a').last().scope().select();
       }, 300);
+    };
+
+    if ($routeParams.t == 'r'){
+      showRegisterTab();
     }
 
     if($routeParams.request){
       if($routeParams.invalid){
 
+        showRegisterTab();
+
         $timeout(function(){
           var modalInstance = $modal.open({
             templateUrl: 'views/user/request-id.html',
             controller: ['$scope', '$modalInstance', '$routeParams', function(s, $modalInstance, $routeParams){
-              s.invalidData = true;
+              s.invalidCompanyEmail = $routeParams.invalid == '2';
+              s.invalidEmail = $routeParams.invalid == '3';
+              s.invalidData = !s.invalidCompanyEmail && !s.invalidEmail;
               s.request = {
                 name:$routeParams.name,
                 email:$routeParams.email,

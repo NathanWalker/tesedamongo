@@ -6,6 +6,12 @@
     <div data-ng-if="invalidData" class="req-input">
       All fields are required.
     </div>
+    <div data-ng-if="invalidEmail" class="req-input">
+      Your email must be a valid email address.
+    </div>
+    <div data-ng-if="invalidCompanyEmail" class="req-input">
+      Your email must be a 'company' email.<br/>Personal email addresses (hotmail, yahoo, gmail, aol) are not accepted.
+    </div>
     <form action="/requestId" method="post">
       <fieldset>
           <div class="control-group">

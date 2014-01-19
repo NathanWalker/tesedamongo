@@ -244,7 +244,7 @@ window.angular.module('App.controllers').controller("SpecCtrl", ["$scope", "$roo
             // }
             if(data) {
               var fileName = data.filenames[0];
-              image = new ImagesService({
+              var image = new ImagesService({
                 url: fileName
               });
               image.$save(function (response) {

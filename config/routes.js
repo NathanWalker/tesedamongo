@@ -125,6 +125,16 @@ module.exports = function (app, passport, auth) {
 
   app.param('specId', specs.spec)
 
+      // software routes
+  var softwares = require('../app/controllers/software')
+  app.get('/softwares', softwares.all)
+  app.post('/softwares', auth.requiresLogin, softwares.create)
+  app.get('/softwares/:softwareId', softwares.show)
+  app.put('/softwares/:softwareId', auth.requiresLogin, softwares.update)
+  app.del('/softwares/:softwareId', auth.requiresLogin, softwares.destroy)
+
+  app.param('softwareId', softwares.software)
+
   // files
   app.post('/files', function(req, res){
     if (req.body) {
