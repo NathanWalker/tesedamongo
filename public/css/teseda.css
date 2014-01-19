@@ -324,11 +324,6 @@ line-height: 28px;
             height:90px;
 	}
 
-	.nav-collapse, .nav-collapse.collapse {
-        /*position: relative;*/
-		top:28px !important;
-	}
-
 	.carousel-control.right {
 		right: -40px;
 	}

@@ -4,13 +4,31 @@ window.app.config(['$routeProvider', '$sceProvider', function($routeProvider, $s
       $routeProvider
       .when('',
       {
-        templateUrl: 'views/site/home.html',
-                controller:'HomeCtrl'
+          templateUrl: 'views/site/home.html',
+          controller:'HomeCtrl',
+          resolve: {
+            pageLoad: ['$q', 'PagesCache', function($q, PagesCache){
+              var defer = $q.defer();
+              PagesCache.pages().then(function(pages){
+                defer.resolve();
+              });
+              return defer.promise;
+            }]
+          }
       })
 	.when('/',
 	{
 		templateUrl: 'views/site/home.html',
-            controller:'HomeCtrl'
+            controller:'HomeCtrl',
+            resolve: {
+            pageLoad: ['$q', 'PagesCache', function($q, PagesCache){
+                var defer = $q.defer();
+                PagesCache.pages().then(function(pages){
+                  defer.resolve();
+                });
+                return defer.promise;
+              }]
+            }
 	})
       .when('/products',
       {

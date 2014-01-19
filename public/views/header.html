@@ -21,15 +21,15 @@
 </div> -->
 
 <div class="navbar" data-ng-controller="HeaderController">
-  <div class="navbar-inner" data-ng-class="{expanded:!navCollapsed}">
-    <div class="container" data-ng-class="{expanded:!navCollapsed}">
+  <div class="navbar-inner" data-ng-class="{expanded:!$root.navCollapsed}">
+    <div class="container" data-ng-class="{expanded:!$root.navCollapsed}">
 
-      <a class="btn btn-navbar" data-ng-click="navCollapsed = !navCollapsed" data-icon="0">
+      <a class="btn btn-navbar" data-ng-click="$root.navCollapsed = !$root.navCollapsed" data-icon="0">
       </a>
       <!-- <a class="btn btn-navbar icon-user" href="/#!/support" data-ng-if="!global.isSignedIn()">Login</a> -->
       <a class="brand" href="/" data-icon="a"></a>
       <a class="brand arc" href="/" data-icon="b"></a>
-      <div class="nav-collapse" collapse="navCollapsed">
+      <div class="nav-collapse" collapse="$root.navCollapsed">
         <ul class="nav">
           <li data-ng-repeat="page in pages" data-ng-class="{active:isPageActive(page.route)}"><a data-ng-href="/#!/{{page.route}}">{{page.navName}}</a></li>
         </ul>

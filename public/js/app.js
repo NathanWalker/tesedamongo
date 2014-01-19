@@ -100,6 +100,13 @@ window.app = angular.module('tesedaApp', ['ngCookies', 'ngResource', 'ngSanitize
       }
     });
 
+    // $rootScope.$watch("navCollapsed", function() {
+    //   $timeout(function(){
+    //     $(window).trigger('resize');
+    //   });
+
+    // });
+
 
     $rootScope.$on("$routeChangeStart", function(e, next, current) {
 
