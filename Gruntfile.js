@@ -71,6 +71,7 @@ module.exports = function(grunt) {
           'public/js/services/specs.js',
           'public/js/services/search.js',
           'public/js/services/softwares.js',
+          'public/js/services/appnotes.js',
           'public/js/controllers/app.controllers.js',
           'public/js/controllers/header.js',
           'public/js/controllers/footer.js',
@@ -93,6 +94,7 @@ module.exports = function(grunt) {
           'public/js/controllers/support.js',
           'public/js/controllers/search.js',
           'public/js/controllers/downloads.js',
+          'public/js/controllers/appnotes.js',
           'public/js/init.js'
         ],
         dest: "public/js/dist/teseda.min.js"

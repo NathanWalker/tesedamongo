@@ -18,7 +18,7 @@
 
     <div data-support-authenticated>
     <tabset class="span9">
-      <tab heading="Client Profile" on-select="$root.resetScroll()">
+      <tab heading="Account" on-select="$root.resetScroll()">
         <div class="tab-pane">
           <p>
             <strong>{{global.currentUser().name}}</strong><br/>
@@ -86,7 +86,90 @@
         </div>
       </tab>
 
-      <tab heading="Edit Users" data-ng-show="$root.global.isAdmin()">
+      <tab heading="Application Notes" on-select="$root.resetScroll()">
+        <div class="tab-pane" data-ng-controller="AppNotesCtrl">
+
+          <div data-ng-if="$root.global.isModerator() && !showAppNoteForm" class="btn" data-icon="d" data-ng-click="openNewAppNoteForm()" style="margin-bottom:10px;">New</div>
+
+          <form class="form-horizontal" data-ng-if="showAppNoteForm &&  $root.global.isModerator()">
+                <fieldset>
+
+                  <div class="control-group">
+                    <label class="control-label"  for="create-itemName">Name</label>
+                    <div class="controls">
+                      <input type="text" id="create-itemName" placeholder="Name" name="name" class="input-xlarge" data-ng-model="activeItem.name">
+                    </div>
+                  </div>
+
+                  <div class="control-group">
+                    <label class="control-label"  for="create-itemDesc">Description</label>
+                    <div class="controls">
+                      <textarea id="create-itemDesc" placeholder="Description" name="description" class="input-xlarge" data-ng-model="activeItem.description" style="height:200px;"/>
+                    </div>
+                  </div>
+
+                  <div class="control-group">
+                    <label class="control-label"  for="create-itemOrder">Order</label>
+                    <div class="controls">
+                      <input type="text" id="create-itemOrder" placeholder="Order" name="name" class="input-xlarge" data-ng-model="activeItem.order">
+                    </div>
+                  </div>
+
+
+                  <div class="control-group">
+                    <div class="controls">
+                      <button class="btn btn-primary" data-ng-click="create(activeItem)">{{editing|booleanText:'Update':'Save'}}</button>
+                      <button class="btn" data-ng-click="openNewAppNoteForm(false)">Cancel</button>
+                      <button class="btn btn-danger" data-ng-if="editing" data-ng-click="remove(activeItem)" style="float:right;">Delete</button>
+                    </div>
+                  </div>
+                </fieldset>
+              </form>
+
+          <accordion close-others="oneAtATime">
+
+            <accordion-group heading="{{appnote.name}}" is-open="appnote.isopen" ng-repeat="appnote in appnotes" ng-class="{active: isOpen}">
+              <accordion-heading>
+                    {{appnote.name}} <i class="pull-right glyphicon" ng-class="{'icon-chevron-down': software.isopen, 'icon-chevron-right': !software.isopen}"></i>
+                </accordion-heading>
+                <p data-ng-bind-html="appnote.description" class="clearfix"></p>
+                <div data-ng-if="$root.global.isModerator()">
+                  <div class="btn" data-icon="d" data-ng-click="openNewAppNoteForm(true, appnote)">Edit</div>
+                </div>
+            </accordion-group>
+
+          </accordion>
+        </div>
+      </tab>
+
+      <tab heading="FTP" on-select="$root.resetScroll()">
+        <div class="tab-pane">
+          <p>
+            <span style="text-decoration:underline;">How to <strong>retrieve</strong> data placed on FTP server:</span><br/>
+            <ol>
+              <li>ftp ftp.teseda.com</li>
+              <li>At login use ‘anonymous‘</li>
+              <li>At password hit 'return' key</li>
+              <li>cd incoming2</li>
+              <li>bin</li>
+              <li>get EXACT_FILE_NAME</li>
+              <li>should see successful data transfer</li>
+            </ol><br/>
+            <span style="text-decoration:underline;">How to <strong>place</strong> data on FTP server:</span><br/><br/>
+            <ol>
+              <li>ftp ftp.teseda.com</li>
+              <li>At login use ‘anonymous‘</li>
+              <li>At password hit 'return' key</li>
+              <li>cd incoming2</li>
+              <li>bin</li>
+              <li>put EXACT_FILE_NAME</li>
+              <li>should see successful data transfer</li>
+            </ol>
+          </p>
+        </div>
+      </tab>
+
+      <tab heading="Users" data-ng-show="$root.global.isAdmin()">
           <div class="tab-pane" data-ng-controller="UsersCtrl">
             <!-- <div class="btn btn-primary" style="float:right;" data-ng-click="openNewForm()" data-ng-hide="showUserForm">New</div> -->
               <form class="form-horizontal" data-ng-if="showUserForm">
@@ -157,7 +240,7 @@
               </div>
             </div>
       </tab>
-      <tab heading="Edit Pages" data-ng-show="$root.global.isAdmin()">
+      <tab heading="Pages" data-ng-show="$root.global.isAdmin()">
         <div class="tab-pane" data-ng-controller="PagesCtrl">
             <div style="margin:0 0 10px 12px;font-style:italic;"><strong>Click to edit page</strong> or <strong>Drag to re-order navigation</strong></div>
               <div>

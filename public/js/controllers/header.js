@@ -1,5 +1,5 @@
 window.angular.module('App.controllers')
-  .controller('HeaderController', ['$rootScope', '$scope', '$routeParams', 'PagesCache', function ($rootScope, s, $routeParams, PagesCache) {
+  .controller('HeaderController', ['$rootScope', '$scope', '$timeout', '$routeParams', 'PagesCache', function ($rootScope, s, $timeout, $routeParams, PagesCache) {
 
     var resetNav = function(){
       PagesCache.pages().then(function(pages){
@@ -30,11 +30,12 @@ window.angular.module('App.controllers')
       s.navCollapsed = true;
     });
 
-    if($routeParams.a == '1'){
-      // user just created account
-      // show notification
-
-    }
+    s.$watch('navCollapsed', function(value){
+      // fix for weird issue on mobile where nav would not be visible
+      $timeout(function(){
+        angular.element('.nav-collapse.collapsing').css({top:(value ? '0px' : '28px'), position:'relative'});
+      }, 300);
+    });
 
     resetNav();
 }]);

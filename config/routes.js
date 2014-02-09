@@ -135,6 +135,16 @@ module.exports = function (app, passport, auth) {
 
   app.param('softwareId', softwares.software)
 
+        // app notes routes
+  var appnotes = require('../app/controllers/appnotes')
+  app.get('/appnotes', appnotes.all)
+  app.post('/appnotes', auth.requiresLogin, appnotes.create)
+  app.get('/appnotes/:appnoteId', appnotes.show)
+  app.put('/appnotes/:appnoteId', auth.requiresLogin, appnotes.update)
+  app.del('/appnotes/:appnoteId', auth.requiresLogin, appnotes.destroy)
+
+  app.param('appnoteId', appnotes.appnote)
+
   // files
   app.post('/files', function(req, res){
     if (req.body) {

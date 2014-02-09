@@ -322,13 +322,13 @@
   .navbar .nav > li.active > a {
     /*background-image:none!important;*/
   }
-  .nav-collapse {
+  /*.nav-collapse {
     display:block;
-  }
+  }*/
 
   .nav-collapse, .nav-collapse.collapse {
-        position: relative;
-    top:28px !important;
+        /*position: relative;*/
+    /*top:28px !important;*/
   }
 
   .navbar-inner {
