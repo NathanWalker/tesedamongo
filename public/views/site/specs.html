@@ -101,12 +101,12 @@
     <table
       class="table spec-table"
       data-ng-table="tableOptions"
-      data-ui-sortable="$parent.sortableOptions"
-      data-ng-model="$parent.specs"
+      data-ui-sortable="sortableOptions"
+      data-ng-model="specs"
       >
       <tr
         class="item"
-        data-ng-repeat="spec in $parent.specs"
+        data-ng-repeat="spec in specs"
         >
         <td
           data-title="Name"
@@ -127,7 +127,7 @@
             data-ng-if="$root.global.isModerator()"
             class="btn edit-news"
             data-icon="d"
-            data-ng-click="$parent.$parent.$parent.editSpec(spec)"
+            data-ng-click="editSpec(spec)"
             style="margin-top:8px;">
             Edit
           </div>

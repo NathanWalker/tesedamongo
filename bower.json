@@ -2,7 +2,12 @@
   "name": "teseda.com",
   "version": "1.0.0",
   "dependencies": {
-    "infowrap-angular": "git@github.com:infowrap/angular.js.git#0.2.4",
+    "angular": "~1.2.*-build",
+    "angular-route": "~1.2.*-build",
+    "angular-cookies": "~1.2.*-build",
+    "angular-resource": "~1.2.*-build",
+    "angular-sanitize": "~1.2.*-build",
+    "angular-touch": "~1.2.*-build",
     "infowrap-ui-bootstrap": "git@github.com:infowrap/bootstrap.git#infowrap0.2.6",
     "infowrap-ng-table": "git@github.com:infowrap/ng-table.git#0.1.3",
     "infowrap-isotope": "git@github.com:infowrap/isotope.git#0.1.0",
@@ -14,5 +19,8 @@
     "jquery-ui": "git@github.com:infowrap/jqueryui.git#1.10.3",
     "lodash": "git@github.com:infowrap/lodash.git#2.2.1",
     "angular-ui-utils": "~0.0.4"
+  },
+  "resolutions": {
+    "angular": "~1.2.*-build"
   }
 }

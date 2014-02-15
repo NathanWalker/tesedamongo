@@ -32,15 +32,18 @@ head
   link(href='/css/teseda.css', rel='stylesheet')
   link(href='/css/bootstrap-override.css', rel='stylesheet')
   link(href='/css/font-awesome/font-awesome.css', rel='stylesheet')
-  //if IE 7
-    link(href='/css/font-awesome/font-awesome-ie7.css', rel='stylesheet')
+  | <!--[if IE 7]>
+  |  <link href="/css/font-awesome/font-awesome-ie7.css" rel="stylesheet">
+  | <![endif]-->
   link(href='https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800', rel='stylesheet', type='text/css')
 
   link(href='/css/fancybox/jquery.fancybox.css', rel='stylesheet')
   link(href='/css/fancybox/jquery.fancybox-buttons.css', rel='stylesheet')
 
-  //if lt IE 9
-    script(src='http://html5shim.googlecode.com/svn/trunk/html5.js')
+  | <!--[if lt IE 10]>
+  |  <script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script>
+  |  <script src="//cdnjs.cloudflare.com/ajax/libs/es5-shim/2.2.0/es5-shim.min.js"></script>
+  | <![endif]-->
 
   script(type="text/javascript").
     window.user = !{user};

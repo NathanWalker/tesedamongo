@@ -27,7 +27,7 @@ angular
 
 				if (!tAttrs.maxFiles) {
 					tAttrs.maxFiles = 1;
-					fileInput.removeAttr("multiple")
+					fileInput.removeAttr("multiple");
 				} else {
 					fileInput.attr("multiple", "multiple");
 				}
@@ -36,7 +36,7 @@ angular
 					tAttrs.maxFileSizeMb = 50;
 				}
 
-				var fileId = uuid.new();
+				var fileId = uuid['new']();
 				fileInput.attr("id", fileId);
 				fileLabel.attr("for", fileId);
 
@@ -110,7 +110,7 @@ angular
 						fileInput.remove();
 						fileInput = angular.element("<input type='file'/>");
 
-						var inputId = uuid.new();
+						var inputId = uuid['new']();
 						fileInput.attr('id', inputId);
 						fileInput.attr('style', 'opacity:0;position:absolute; z-index:0;');
 						fileLabel.attr("for", inputId);
