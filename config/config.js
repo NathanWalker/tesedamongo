@@ -14,7 +14,7 @@ var path = require('path')
 
 module.exports = {
   development: {
-    db: 'mongodb://localhost/teseda-dev',
+    db: 'mongodb://localhost/heroku_app18212749',
     root: rootPath,
     notifier: notifier,
     app: {
@@ -30,7 +30,7 @@ module.exports = {
     }
   },
   production: {
-    db: process.env.MONGOLAB_URI || process.env.MONGOHQ_URL || 'mongodb://localhost/teseda-dev',
+    db: process.env.MONGOLAB_URI || process.env.MONGOHQ_URL || 'mongodb://localhost/heroku_app18212749',
     root: rootPath,
     notifier: notifier,
     app: {

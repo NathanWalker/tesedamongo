@@ -31,7 +31,7 @@ module.exports = function (app, passport, auth) {
   app.get('/users', users.all)
   app.get('/users/:userId', users.show)
   app.put('/users/:userId', auth.requiresLogin, users.update)
-  app.del('/users/:userId', auth.requiresLogin, users.destroy)
+  app.delete('/users/:userId', auth.requiresLogin, users.destroy)
 
   app.param('userId', users.user)
 
@@ -41,7 +41,7 @@ module.exports = function (app, passport, auth) {
   app.post('/products', auth.requiresLogin, products.create)
   app.get('/products/:productId', products.show)
   app.put('/products/:productId', auth.requiresLogin, products.update)
-  app.del('/products/:productId', auth.requiresLogin, products.destroy)
+  app.delete('/products/:productId', auth.requiresLogin, products.destroy)
 
   app.param('productId', products.product)
 
@@ -51,7 +51,7 @@ module.exports = function (app, passport, auth) {
   app.post('/videos', auth.requiresLogin, videos.create)
   app.get('/videos/:videoId', videos.show)
   app.put('/videos/:videoId', auth.requiresLogin, videos.update)
-  app.del('/videos/:videoId', auth.requiresLogin, videos.destroy)
+  app.delete('/videos/:videoId', auth.requiresLogin, videos.destroy)
 
   app.param('videoId', videos.video)
 
@@ -61,7 +61,7 @@ module.exports = function (app, passport, auth) {
   app.post('/posts', auth.requiresLogin, posts.create)
   app.get('/posts/:postId', posts.show)
   app.put('/posts/:postId', auth.requiresLogin, posts.update)
-  app.del('/posts/:postId', auth.requiresLogin, posts.destroy)
+  app.delete('/posts/:postId', auth.requiresLogin, posts.destroy)
 
   app.param('postId', posts.post)
 
@@ -71,7 +71,7 @@ module.exports = function (app, passport, auth) {
   app.post('/tags', auth.requiresLogin, tags.create)
   app.get('/tags/:tagId', tags.show)
   app.put('/tags/:tagId', auth.requiresLogin, tags.update)
-  app.del('/tags/:tagId', auth.requiresLogin, tags.destroy)
+  app.delete('/tags/:tagId', auth.requiresLogin, tags.destroy)
 
   app.param('tagId', tags.tag)
 
@@ -81,7 +81,7 @@ module.exports = function (app, passport, auth) {
   app.post('/banners', auth.requiresLogin, banners.create)
   app.get('/banners/:bannerId', banners.show)
   app.put('/banners/:bannerId', auth.requiresLogin, banners.update)
-  app.del('/banners/:bannerId', auth.requiresLogin, banners.destroy)
+  app.delete('/banners/:bannerId', auth.requiresLogin, banners.destroy)
 
   app.param('bannerId', banners.banner)
 
@@ -91,7 +91,7 @@ module.exports = function (app, passport, auth) {
   app.post('/slides', auth.requiresLogin, slides.create)
   app.get('/slides/:slideId', slides.show)
   app.put('/slides/:slideId', auth.requiresLogin, slides.update)
-  app.del('/slides/:slideId', auth.requiresLogin, slides.destroy)
+  app.delete('/slides/:slideId', auth.requiresLogin, slides.destroy)
 
   app.param('slideId', slides.slide)
 
@@ -101,7 +101,7 @@ module.exports = function (app, passport, auth) {
   app.post('/images', auth.requiresLogin, images.create)
   app.get('/images/:imageId', images.show)
   app.put('/images/:imageId', auth.requiresLogin, images.update)
-  app.del('/images/:imageId', auth.requiresLogin, images.destroy)
+  app.delete('/images/:imageId', auth.requiresLogin, images.destroy)
 
   app.param('imageId', images.image)
 
@@ -111,7 +111,7 @@ module.exports = function (app, passport, auth) {
   app.post('/pages', auth.requiresLogin, pages.create)
   app.get('/pages/:pageId', pages.show)
   app.put('/pages/:pageId', auth.requiresLogin, pages.update)
-  app.del('/pages/:pageId', auth.requiresLogin, pages.destroy)
+  app.delete('/pages/:pageId', auth.requiresLogin, pages.destroy)
 
   app.param('pageId', pages.page)
 
@@ -121,7 +121,7 @@ module.exports = function (app, passport, auth) {
   app.post('/specs', auth.requiresLogin, specs.create)
   app.get('/specs/:specId', specs.show)
   app.put('/specs/:specId', auth.requiresLogin, specs.update)
-  app.del('/specs/:specId', auth.requiresLogin, specs.destroy)
+  app.delete('/specs/:specId', auth.requiresLogin, specs.destroy)
 
   app.param('specId', specs.spec)
 
@@ -131,7 +131,7 @@ module.exports = function (app, passport, auth) {
   app.post('/softwares', auth.requiresLogin, softwares.create)
   app.get('/softwares/:softwareId', softwares.show)
   app.put('/softwares/:softwareId', auth.requiresLogin, softwares.update)
-  app.del('/softwares/:softwareId', auth.requiresLogin, softwares.destroy)
+  app.delete('/softwares/:softwareId', auth.requiresLogin, softwares.destroy)
 
   app.param('softwareId', softwares.software)
 
@@ -141,7 +141,7 @@ module.exports = function (app, passport, auth) {
   app.post('/appnotes', auth.requiresLogin, appnotes.create)
   app.get('/appnotes/:appnoteId', appnotes.show)
   app.put('/appnotes/:appnoteId', auth.requiresLogin, appnotes.update)
-  app.del('/appnotes/:appnoteId', auth.requiresLogin, appnotes.destroy)
+  app.delete('/appnotes/:appnoteId', auth.requiresLogin, appnotes.destroy)
 
   app.param('appnoteId', appnotes.appnote)
 
