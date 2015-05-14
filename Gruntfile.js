@@ -24,30 +24,6 @@ module.exports = function(grunt) {
     uglify: {
       dist: {
         src: [
-          'public/lib/lodash/dist/lodash.compat.min.js',
-          'public/lib/jquery/jquery.min.js',
-          'public/lib/jquery-ui/ui/minified/jquery.ui.core.min.js',
-          'public/lib/jquery-ui/ui/minified/jquery.ui.widget.min.js',
-          'public/lib/jquery-ui/ui/minified/jquery.ui.mouse.min.js',
-          'public/lib/jquery-ui/ui/minified/jquery.ui.sortable.min.js',
-          'public/lib/angular/angular.min.js',
-          'public/lib/angular-cookies/angular-cookies.min.js',
-          'public/lib/angular-resource/angular-resource.min.js',
-          'public/lib/angular-sanitize/angular-sanitize.min.js',
-          'public/lib/angular-route/angular-route.min.js',
-          'public/lib/angular-touch/angular-touch.min.js',
-          'public/lib/angular-ui-utils/modules/highlight/highlight.js',
-          'public/js/vendor/ui-bootstrap-custom-tpls-0.10.0.js',
-          'public/lib/angular-ui-sortable/src/sortable.js',
-          'public/lib/infowrap-ng-table/ng-table.src.js',
-          'public/lib/infowrap-isotope/jquery.isotope.js',
-          'public/lib/infowrap-angular-isotope/dist/infowrap-angular-isotope.js',
-          'public/js/theme/jquery.hotkeys.min.js',
-          'public/js/theme/jquery.touchSwipe.js',
-          'public/js/theme/functions.js',
-          'public/js/fancybox/jquery.fancybox.pack.js',
-          'public/js/fancybox/helpers/jquery.fancybox-buttons.js',
-          'public/js/fancybox/helpers/jquery.fancybox-media.js',
           'public/js/lvl-uuid.js',
           'public/js/lvl-drag-drop.js',
           'public/js/lvl-file-upload.js',
@@ -97,12 +73,50 @@ module.exports = function(grunt) {
           'public/js/controllers/appnotes.js',
           'public/js/init.js'
         ],
-        dest: "public/js/dist/teseda.min.js"
+        dest: "mins.js"
       }
-    }
+    },
+    
+    concat: {
+		options: {
+			// define a string to put between each file in the concatenated output
+			separator: ';'
+			},
+		dist: {
+		    // the files to concatenate
+		    src: ['public/lib/lodash/dist/lodash.compat.min.js',
+		          'public/lib/jquery/jquery.min.js',
+		          'public/lib/jquery-ui/ui/minified/jquery.ui.core.min.js',
+		          'public/lib/jquery-ui/ui/minified/jquery.ui.widget.min.js',
+		          'public/lib/jquery-ui/ui/minified/jquery.ui.mouse.min.js',
+		          'public/lib/jquery-ui/ui/minified/jquery.ui.sortable.min.js',
+		          'public/lib/angular/angular.min.js',
+		          'public/lib/angular-cookies/angular-cookies.min.js',
+		          'public/lib/angular-resource/angular-resource.min.js',
+		          'public/lib/angular-sanitize/angular-sanitize.min.js',
+		          'public/lib/angular-route/angular-route.min.js',
+		          'public/lib/angular-touch/angular-touch.min.js',
+		          'public/lib/angular-ui-utils/modules/highlight/highlight.js',
+		          'public/js/vendor/ui-bootstrap-custom-tpls-0.10.0.js',
+		          'public/lib/angular-ui-sortable/src/sortable.js',
+		          'public/lib/infowrap-ng-table/ng-table.src.js',
+		          'public/lib/infowrap-isotope/jquery.isotope.js',
+		          'public/lib/infowrap-angular-isotope/dist/infowrap-angular-isotope.js',
+		          'public/js/theme/jquery.hotkeys.min.js',
+		          'public/js/theme/jquery.touchSwipe.js',
+		          'public/js/theme/functions.js',
+		          'public/js/fancybox/jquery.fancybox.pack.js',
+		          'public/js/fancybox/helpers/jquery.fancybox-buttons.js',
+		          'public/js/fancybox/helpers/jquery.fancybox-media.js',
+		          '<%= uglify.dist.dest %>'
+				  ],
+			// the location of the resulting JS file
+			dest: "public/js/dist/teseda.min.js"
+			}
+		}
   });
 
   // By default, lint and run all tests.
-  grunt.registerTask('default', ['clean:dist', 'uglify:dist']);
+  grunt.registerTask('default', ['clean:dist', 'uglify:dist', 'concat:dist']);
 
 };
